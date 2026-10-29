@@ -1,0 +1,582 @@
+/* The landing page: a real pact, printed, on the desk. Tokens come from tokens.css. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--paper);
+  font-family: var(--printed);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  background-color: var(--leather);
+  background-image: var(--leather-grain),
+    radial-gradient(ellipse 120% 70% at 50% 0%, rgba(93, 120, 152, 0.3), transparent 60%),
+    radial-gradient(ellipse 140% 120% at 50% 50%, transparent 55%, var(--leather-deep));
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.typed {
+  font-family: var(--typed);
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+}
+
+.skip:focus {
+  left: 16px;
+  top: 12px;
+  z-index: 10;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 8px 12px;
+}
+
+/* ---------- Desk chrome ---------- */
+
+.desk-head,
+main,
+.desk-foot {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.desk-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--stitch);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--brass);
+  text-decoration: none;
+  font-size: 1.375rem;
+  font-weight: 600;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.brand img {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+}
+
+.desk-head nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+.desk-head nav a {
+  color: var(--paper-shade);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.desk-head nav a:hover {
+  color: #fff;
+  border-bottom-color: var(--brass);
+}
+
+.desk-foot {
+  padding-top: 28px;
+  padding-bottom: 48px;
+  border-top: 1px dashed var(--stitch);
+  color: var(--paper-shade);
+  font-size: 0.9375rem;
+}
+
+.desk-foot p {
+  margin: 0 0 8px;
+  max-width: 60em;
+}
+
+.desk-foot a {
+  color: var(--brass);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(48px, 8vw, 96px) 0 clamp(56px, 8vw, 96px);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f5f7f6;
+  /* Engraved into the leather. */
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255, 255, 255, 0.06);
+}
+
+.lede {
+  font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+  line-height: 1.55;
+  color: var(--paper-shade);
+  max-width: 32em;
+  margin: 24px 0 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  margin-top: 32px;
+}
+
+.press {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--printed);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--leather-deep);
+  text-decoration: none;
+  padding: 12px 24px 13px;
+  border-radius: 6px;
+  border: 1px solid #8f7d4c;
+  background: linear-gradient(180deg, #f1e6c4 0%, var(--brass) 55%, #c4b07a 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 -2px 0 rgba(0, 0, 0, 0.12) inset, 0 3px 0 #7d6c3f,
+    0 6px 12px -2px rgba(0, 0, 0, 0.5);
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+.press:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 2px 4px rgba(0, 0, 0, 0.3) inset;
+}
+
+.quiet {
+  color: var(--paper);
+  font-style: italic;
+  text-decoration-color: rgba(216, 199, 154, 0.6);
+  text-underline-offset: 4px;
+}
+
+.quiet:hover {
+  text-decoration-color: var(--brass);
+}
+
+.fine {
+  margin: 28px 0 0;
+  font-size: 0.9375rem;
+  color: var(--stitch);
+}
+
+/* ---------- Paper ---------- */
+
+.document {
+  position: relative;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: var(--paper-fibre), linear-gradient(170deg, rgba(255, 255, 255, 0.35), transparent 40%);
+  border-radius: 3px;
+  box-shadow: var(--lift);
+  padding: clamp(40px, 5vw, 56px);
+  overflow: hidden;
+}
+
+.document::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background: var(--guilloche-frame);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.document > * {
+  position: relative;
+}
+
+.document a {
+  color: var(--indigo-ink);
+  text-underline-offset: 3px;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin: 0 0 4px;
+}
+
+/* The pact sheet in the hero, laid slightly askew on the desk. */
+.pact-sheet {
+  transform: rotate(1.2deg);
+}
+
+.pact-sheet::after {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  right: -110px;
+  bottom: -120px;
+  background: url("/print/rosette.svg") center / contain no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.sheet-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.pact-id {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.4vw, 1.125rem);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  max-width: 24em;
+}
+
+.seal {
+  flex: none;
+  filter: drop-shadow(0 2px 1px rgba(11, 23, 54, 0.45)) drop-shadow(0 6px 10px rgba(11, 23, 54, 0.25));
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 26px 0 0;
+  border-top: 1px solid var(--paper-rule);
+}
+
+.fields > div {
+  padding: 12px 14px 12px 0;
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+.fields dd {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.sheet-foot {
+  margin: 18px 0 0;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ---------- Rubber stamps ---------- */
+
+.stamp {
+  --stamp-ink: var(--teal-ink);
+  display: inline-block;
+  font-family: var(--printed);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.3125rem;
+  color: var(--stamp-ink);
+  border: 3px double var(--stamp-ink);
+  border-radius: 7px;
+  padding: 0.12em 0.55em 0.18em;
+  line-height: 1.1;
+  transform: rotate(-6deg);
+  mix-blend-mode: multiply;
+  white-space: nowrap;
+  -webkit-mask-image: var(--ink-wear), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  mask-image: var(--ink-wear), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  -webkit-mask-size: 160px, auto;
+  mask-size: 160px, auto;
+}
+
+.stamp[data-ink="indigo"] {
+  --stamp-ink: var(--indigo-ink);
+}
+
+.stamp[data-ink="red"] {
+  --stamp-ink: var(--red-ink);
+}
+
+.stamp--large {
+  margin-top: 20px;
+  font-size: 2.375rem;
+  border-width: 5px;
+  padding: 0.05em 0.45em 0.12em;
+  -webkit-mask-image: var(--ink-wear);
+  mask-image: var(--ink-wear);
+  -webkit-mask-size: 160px;
+  mask-size: 160px;
+  /* The page's one motion: the stamp lands on the pact. */
+  animation: stamp-land 420ms cubic-bezier(0.3, 1.4, 0.5, 1) 450ms both;
+}
+
+@keyframes stamp-land {
+  0% {
+    transform: rotate(-14deg) scale(1.7);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(-6deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- Bands ---------- */
+
+.band {
+  padding: 0 0 clamp(56px, 7vw, 88px);
+}
+
+.band h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.on-desk {
+  color: #f5f7f6;
+  margin-bottom: 20px !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.on-desk-note {
+  color: var(--paper-shade);
+  max-width: 40em;
+  margin: 20px 0 0;
+}
+
+.prose {
+  color: var(--ink-soft);
+  max-width: 40em;
+  margin: 10px 0 0;
+}
+
+.prose.small {
+  margin-top: 22px;
+  font-size: 0.9375rem;
+}
+
+/* Ledger table */
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+}
+
+.ledger th {
+  text-align: left;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 8px 18px 8px 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+.ledger td {
+  padding: 13px 18px 13px 0;
+  border-bottom: 1px solid var(--paper-rule);
+  vertical-align: top;
+}
+
+.ledger td:first-child {
+  width: 36%;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Perforated stubs */
+.stubs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.stub {
+  --hole: 9px;
+  --perf: 200px;
+  display: grid;
+  grid-template-columns: var(--perf) 1fr;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: var(--paper-fibre);
+  border-radius: 3px;
+  box-shadow: var(--lift);
+  -webkit-mask: radial-gradient(circle var(--hole) at var(--perf) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--hole) at var(--perf) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+  mask: radial-gradient(circle var(--hole) at var(--perf) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--hole) at var(--perf) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+}
+
+.stub-tab {
+  padding: 18px 20px;
+  border-right: 2px dashed var(--paper-rule);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ledger-no {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.stub-body {
+  padding: 18px 24px;
+  display: grid;
+  gap: 8px;
+  align-content: center;
+}
+
+.stub-body p {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.stub-body a {
+  font-size: 0.875rem;
+  color: var(--indigo-ink);
+  width: fit-content;
+}
+
+/* Slips */
+.slips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.slip {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  color: var(--ink);
+  text-decoration: none;
+  background-color: var(--paper);
+  background-image: var(--paper-fibre);
+  border-radius: 3px;
+  padding: 26px;
+  box-shadow: var(--lift);
+  border-top: 6px solid var(--band, var(--teal-ink));
+}
+
+.slip:nth-child(2) {
+  --band: var(--indigo-ink);
+}
+
+.slip:nth-child(3) {
+  --band: #7a5a2a;
+}
+
+.slip h3 {
+  margin: 0;
+  font-size: 1.3125rem;
+}
+
+.slip p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.slip .go {
+  margin-top: 6px;
+  font-style: italic;
+  color: var(--indigo-ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(59, 63, 154, 0.4);
+  text-underline-offset: 3px;
+}
+
+.slip:hover .go {
+  text-decoration-color: currentColor;
+}
+
+.slip:focus-visible {
+  outline-color: var(--focus);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .pact-sheet {
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .desk-head,
+  main,
+  .desk-foot {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .sheet-head .seal {
+    width: 60px;
+    height: 60px;
+  }
+  .ledger td:first-child {
+    width: 42%;
+  }
+  .stub {
+    grid-template-columns: 1fr;
+    -webkit-mask: none;
+    mask: none;
+  }
+  .stub-tab {
+    border-right: 0;
+    border-bottom: 2px dashed var(--paper-rule);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp--large {
+    animation: none;
+  }
+  .press {
+    transition: none;
+  }
+}

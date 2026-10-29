@@ -1,0 +1,321 @@
+/*
+ * The docs: the chrome (header, sidebar, contents) sits on the leather desk; each page is a printed
+ * document on cheque paper. Starlight's own styles are in a cascade layer, so these win.
+ */
+
+/* ---------- The desk: Starlight's dark palette, as leather and brass ---------- */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --sl-font: var(--printed);
+  --sl-font-mono: var(--typed);
+  --sl-color-white: #f3f6f4;
+  --sl-color-gray-1: #e4ede8;
+  --sl-color-gray-2: #c9d6cf;
+  --sl-color-gray-3: #a3b4c4;
+  --sl-color-gray-4: #6f86a0;
+  --sl-color-gray-5: #3b5372;
+  --sl-color-gray-6: #24364c;
+  --sl-color-gray-7: #1a2838;
+  --sl-color-black: var(--leather);
+  --sl-color-accent-low: #2b3c53;
+  --sl-color-accent: var(--brass);
+  --sl-color-accent-high: #efe3bf;
+  --sl-color-text: var(--sl-color-gray-2);
+  --sl-color-text-accent: var(--brass);
+  --sl-color-text-invert: var(--leather-deep);
+  --sl-color-bg: var(--leather);
+  --sl-color-bg-nav: transparent;
+  --sl-color-bg-sidebar: transparent;
+  --sl-color-bg-inline-code: rgba(255, 255, 255, 0.08);
+  --sl-color-bg-accent: var(--brass);
+  --sl-color-hairline-light: var(--stitch);
+  --sl-color-hairline: #2d425c;
+  --sl-color-hairline-shade: var(--leather-deep);
+  --sl-text-h1: 3rem;
+  --sl-text-h2: 1.75rem;
+  --sl-text-h3: 1.3125rem;
+  --sl-content-width: 46rem;
+  --sl-nav-height: 4.25rem;
+}
+
+body {
+  background-color: var(--leather);
+  background-image: var(--leather-grain),
+    radial-gradient(ellipse 120% 70% at 50% 0%, rgba(93, 120, 152, 0.26), transparent 60%),
+    radial-gradient(ellipse 140% 120% at 50% 60%, transparent 55%, var(--leather-deep));
+}
+
+:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* Header: a strip of the desk, divided from the rest by a stitched seam. */
+header.header {
+  background: rgba(20, 32, 48, 0.55);
+  border-bottom: 1px dashed var(--stitch);
+  backdrop-filter: blur(6px);
+}
+
+.site-title {
+  color: var(--brass);
+  font-weight: 600;
+  font-size: 1.3125rem;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.site-title img {
+  height: 2.25rem;
+  width: auto;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+}
+
+/* Sidebar: printed index tabs. */
+.sidebar-pane {
+  background: transparent;
+  border-inline-end: 1px dashed var(--sl-color-hairline);
+}
+
+nav.sidebar .group-label .large {
+  color: var(--brass);
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+nav.sidebar a {
+  font-size: 0.9375rem;
+  color: var(--sl-color-gray-2);
+  border-radius: 3px;
+}
+
+nav.sidebar a:hover {
+  color: #fff;
+}
+
+nav.sidebar a[aria-current="page"],
+nav.sidebar a[aria-current="page"]:hover {
+  color: var(--leather-deep);
+  font-weight: 700;
+  background: linear-gradient(180deg, #ece0bc, var(--brass));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Contents column. */
+.right-sidebar {
+  border-inline-start: 1px dashed var(--sl-color-hairline);
+}
+
+.right-sidebar h2 {
+  color: var(--brass);
+  font-style: italic;
+}
+
+/* ---------- The page: a printed document on cheque paper ---------- */
+main {
+  color-scheme: light;
+  --sl-color-white: var(--ink);
+  --sl-color-gray-1: #262d5c;
+  --sl-color-gray-2: #343c68;
+  --sl-color-gray-3: var(--ink-soft);
+  --sl-color-gray-4: var(--ink-faint);
+  --sl-color-gray-5: var(--paper-rule);
+  --sl-color-gray-6: #cfddd5;
+  --sl-color-gray-7: #dae5df;
+  --sl-color-black: var(--paper);
+  --sl-color-accent-low: #d6dcf1;
+  --sl-color-accent: var(--indigo-ink);
+  --sl-color-accent-high: var(--ink);
+  --sl-color-text: #343c68;
+  --sl-color-text-accent: var(--indigo-ink);
+  --sl-color-text-invert: var(--paper);
+  --sl-color-bg: var(--paper);
+  --sl-color-bg-inline-code: rgba(183, 203, 193, 0.45);
+  --sl-color-bg-accent: var(--indigo-ink);
+  --sl-color-hairline-light: var(--paper-rule);
+  --sl-color-hairline: var(--paper-rule);
+  --sl-color-hairline-shade: var(--paper-rule);
+
+  position: relative;
+  margin: 1.75rem clamp(0.75rem, 2.5vw, 2rem) 3rem;
+  padding: 1.25rem 0 0.5rem;
+  color: var(--sl-color-text);
+  background-color: var(--paper);
+  background-image: var(--paper-fibre), linear-gradient(170deg, rgba(255, 255, 255, 0.35), transparent 40%);
+  border-radius: 3px;
+  box-shadow: var(--lift);
+}
+
+/* The guilloché border printed around the page. */
+main::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background: var(--guilloche-frame);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+main > * {
+  position: relative;
+}
+
+main .content-panel {
+  border-top-color: var(--paper-rule);
+  padding-inline: clamp(1.75rem, 4vw, 3rem);
+}
+
+main .content-panel:first-of-type {
+  border-top: 0;
+}
+
+main :focus-visible {
+  outline-color: var(--focus);
+}
+
+/* Title */
+main h1#_top {
+  font-size: clamp(2.25rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* ---------- Content typography ---------- */
+.sl-markdown-content {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+.sl-markdown-content strong {
+  color: var(--ink);
+}
+
+.sl-markdown-content a {
+  color: var(--indigo-ink);
+  text-decoration-color: rgba(59, 63, 154, 0.4);
+  text-underline-offset: 3px;
+}
+
+.sl-markdown-content a:hover {
+  text-decoration-color: currentColor;
+}
+
+.sl-markdown-content :not(pre) > code {
+  font-size: 0.9em;
+  color: var(--ink);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+  overflow-wrap: anywhere;
+}
+
+/* Tables: ruled ledger pages. */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.sl-markdown-content th {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  padding: 0.45rem 1rem 0.45rem 0;
+  text-align: left;
+}
+
+.sl-markdown-content td {
+  border: 0;
+  border-bottom: 1px solid var(--paper-rule);
+  padding: 0.55rem 1rem 0.55rem 0;
+  vertical-align: top;
+}
+
+/* Names in the first column (variables, options, functions) stay whole; values may wrap. */
+.sl-markdown-content td:first-child code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.sl-markdown-content tr:nth-child(2n) {
+  background: transparent;
+}
+
+/* Asides: a slip of paper clipped to the page. */
+.sl-markdown-content .starlight-aside {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--paper-rule);
+  border-inline-start: 4px solid var(--indigo-ink);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(29, 35, 80, 0.12);
+}
+
+.sl-markdown-content .starlight-aside--caution {
+  border-inline-start-color: #9a6a12;
+}
+
+.sl-markdown-content .starlight-aside--danger {
+  border-inline-start-color: var(--red-ink);
+}
+
+.sl-markdown-content .starlight-aside__title {
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* Page footer inside the document. */
+main .meta,
+main .pagination-links {
+  font-size: 0.9375rem;
+}
+
+main .pagination-links a {
+  border-color: var(--paper-rule);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+
+main .pagination-links a:hover {
+  border-color: var(--indigo-ink);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 50rem) {
+  main {
+    margin: 1rem 0.5rem 2rem;
+  }
+  main .content-panel {
+    padding-inline: 2.25rem;
+  }
+  /* On a phone a long signature would take the whole row: wrap at spaces, and inside a word only if it must. */
+  .sl-markdown-content td:first-child code {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  /* Wide tables scroll inside their own box rather than crushing a column to a sliver. */
+  .sl-markdown-content :is(th, td) {
+    min-width: 8.5rem;
+  }
+  .sl-markdown-content :is(th, td):last-child:not(:first-child) {
+    min-width: 15rem;
+  }
+}

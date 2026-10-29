@@ -1,0 +1,154 @@
+---
+import "@fontsource-variable/bodoni-moda/opsz.css";
+import "@fontsource-variable/bodoni-moda/opsz-italic.css";
+import "@fontsource/courier-prime/400.css";
+import "@fontsource/courier-prime/700.css";
+import "../styles/tokens.css";
+import "../styles/landing.css";
+
+// The pact in the hero is real: opened, judged by the hosted verifier and settled on testnet.
+const PACT = "4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55";
+const tx = (hash: string) => `https://stellar.expert/explorer/testnet/tx/${hash}`;
+const steps = [
+  { stamp: "Opened", ink: "indigo", ledger: 5453755, text: "1.00 USDC locked in escrow.", hash: "b01031165b23c378d3fa9f5c9befbee0b1a733d944a89e1ce13e17ff290d1a5d" },
+  { stamp: "Allowed", ink: "teal", ledger: 5453761, text: "The verifier read the translation and approved 1.00 USDC.", hash: "0225f78b5c3e9b321e1fd5311bc54a61ca9904fa82dbd2b4aeb9f379bc8650db" },
+  { stamp: "Settled", ink: "teal", ledger: 5453762, text: "1.00 USDC to the seller, 0.00 back to the buyer.", hash: "1f4ab38c3881892633c2dcf8d7c99c22bc49831d09512eb1b700e62e23e44924" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pactwright: escrow for AI-agent purchases</title>
+    <meta name="description" content="Escrow, verdicts and receipts for purchases made by AI agents on Stellar. The money waits until a verifier checks the delivery." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Pactwright" />
+    <meta property="og:description" content="Escrow, verdicts and receipts for purchases made by AI agents on Stellar." />
+    <meta property="og:image" content="https://pactwright.github.io/seal.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="desk-head">
+      <a class="brand" href="/"><img src="/seal.svg" alt="" width="40" height="40" />Pactwright</a>
+      <nav aria-label="Site">
+        <a href="/docs/">Docs</a>
+        <a href="/docs/quickstart/">Quickstart</a>
+        <a href="/docs/project/status/">Status</a>
+        <a href="https://github.com/Pactwright">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>Every agent purchase is a pact.</h1>
+          <p class="lede">
+            When an AI agent pays for something, Pactwright holds the money in escrow on Stellar until a verifier checks the
+            delivery against terms agreed before payment. The seller is paid what the delivery earned; the rest goes back.
+          </p>
+          <div class="actions">
+            <a class="press" href="/docs/">Read the docs</a>
+            <a class="quiet" href="/docs/concepts/lifecycle/">How a pact works</a>
+          </div>
+          <p class="fine">On Stellar testnet. Not audited yet.</p>
+        </div>
+
+        <article class="document pact-sheet" aria-label="A real pact on testnet">
+          <header class="sheet-head">
+            <div>
+              <span class="label">Pact ID</span>
+              <p class="pact-id typed">{PACT}</p>
+            </div>
+            <img class="seal" src="/seal.svg" alt="Pactwright seal" width="84" height="84" />
+          </header>
+          <span class="stamp stamp--large" data-ink="teal">Settled</span>
+          <dl class="fields">
+            <div><dt class="label">Bought</dt><dd class="typed">A 4-page Portuguese translation</dd></div>
+            <div><dt class="label">Cap</dt><dd class="typed">1.00 USDC</dd></div>
+            <div><dt class="label">Paid to the seller</dt><dd class="typed">1.00 USDC</dd></div>
+            <div><dt class="label">Returned to the buyer</dt><dd class="typed">0.00 USDC</dd></div>
+            <div><dt class="label">Judged by</dt><dd class="typed">The hosted verifier, gemini-3.5-flash-lite</dd></div>
+            <div><dt class="label">If no verdict in time</dt><dd class="typed">Refund the buyer</dd></div>
+          </dl>
+          <p class="sheet-foot">
+            A real pact on testnet, 29 October 2026.{" "}
+            <a href={`https://pactwright-studio-testnet.onrender.com/pact/${PACT}`}>See it in Studio</a>
+          </p>
+        </article>
+      </section>
+
+      <section class="band" aria-labelledby="wrong-title">
+        <div class="document">
+          <h2 id="wrong-title">What happens when a purchase goes wrong</h2>
+          <p class="prose">An agent has no one to call. So the rules for getting money back are part of the payment.</p>
+          <table class="ledger">
+            <thead><tr><th scope="col">If</th><th scope="col">Then</th></tr></thead>
+            <tbody>
+              <tr><td>The delivery is wrong</td><td>The verifier signs DENY and the buyer gets the whole cap back</td></tr>
+              <tr><td>Only part arrives</td><td>The seller is paid for what arrived; the rest returns, in the same transaction</td></tr>
+              <tr><td>Nothing arrives</td><td>No verdict comes, and after the deadline the money goes back to the buyer</td></tr>
+              <tr><td>The verifier goes silent</td><td>The same: the silence policy agreed up front applies</td></tr>
+              <tr><td>The seller never collects</td><td>After the settle deadline, anyone can return the money to the buyer</td></tr>
+              <tr><td>Someone forges or replays a verdict</td><td>Rejected: each verdict is signed and bound to one pact and one set of terms</td></tr>
+            </tbody>
+          </table>
+          <p class="prose small">Nobody can move the escrow outside these rules. Not the seller, not the verifier, not the admin: there is no function that could.</p>
+        </div>
+      </section>
+
+      <section class="band" aria-labelledby="steps-title">
+        <h2 id="steps-title" class="on-desk">The same pact, step by step</h2>
+        <ol class="stubs">
+          {steps.map((s) => (
+            <li class="stub">
+              <div class="stub-tab">
+                <span class="stamp" data-ink={s.ink}>{s.stamp}</span>
+                <span class="ledger-no typed">Ledger {s.ledger}</span>
+              </div>
+              <div class="stub-body">
+                <p>{s.text}</p>
+                <a class="typed" href={tx(s.hash)}>{s.hash.slice(0, 8)}…{s.hash.slice(-8)}</a>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="on-desk-note">
+          Then the outcome becomes a receipt, anchored on-chain in a batch, so anyone can check later what was paid and why.
+        </p>
+      </section>
+
+      <section class="band" aria-labelledby="who-title">
+        <h2 id="who-title" class="on-desk">Where to start</h2>
+        <div class="slips">
+          <a class="slip" href="/docs/guides/agent/">
+            <h3>You build agents</h3>
+            <p>Find a seller, buy under a pact, wait for the verdict and keep the certificate. As a TypeScript SDK or as MCP tools.</p>
+            <span class="go">Buy as an agent</span>
+          </a>
+          <a class="slip" href="/docs/guides/seller/">
+            <h3>You sell an API</h3>
+            <p>One middleware call puts a route behind a pact: terms in the 402, payment checked before you serve, a signed receipt after.</p>
+            <span class="go">Sell behind a pact</span>
+          </a>
+          <a class="slip" href="/docs/concepts/trust/">
+            <h3>You want to check it</h3>
+            <p>Who can do what, what the contract guarantees, the known limits, and the testnet transactions behind every claim.</p>
+            <span class="go">Who you have to trust</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="desk-foot">
+      <p>
+        Pactwright is open source:{" "}
+        <a href="https://github.com/Pactwright/Pactwright-contracts">contracts</a> (MIT),{" "}
+        <a href="https://github.com/Pactwright/Pactwright-Kit">Kit</a> (Apache-2.0) and{" "}
+        <a href="https://github.com/Pactwright/Pactwright-studio">Studio</a> (MIT). Built on Witness, Accensa and Tollcraft.
+      </p>
+      <p>Runs on Stellar testnet. Not audited, so don't put real money in it yet.</p>
+    </footer>
+  </body>
+</html>
