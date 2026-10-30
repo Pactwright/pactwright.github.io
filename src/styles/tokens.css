@@ -1,13 +1,11 @@
 /*
  * Pactwright tokens, shared by the landing page and the docs (same values as Studio).
- * Web3 base (dark block grid, glass, the brand's teal-to-indigo gradient) with the pieces that carry
- * meaning kept tactile: a holographic seal, neon state stamps, and the pact as a chain of blocks.
+ * Web3 base (dark block grid, flat surfaces, solid teal and indigo; no gradients) with the pieces that
+ * carry meaning kept tactile: the seal, neon state stamps, and the pact as a chain of blocks.
  */
 :root {
   --void: #070b17;
   --deep: #0d1428;
-  --glass: rgba(24, 33, 70, 0.55);
-  --glass-strong: rgba(30, 41, 88, 0.7);
   --hairline: rgba(129, 140, 248, 0.16);
   --hairline-strong: rgba(129, 140, 248, 0.3);
 
@@ -19,7 +17,9 @@
 
   --teal: #2dd4bf;
   --indigo: #6366f1;
-  --brand: linear-gradient(120deg, var(--teal), var(--indigo));
+  --brand: var(--teal);
+  --surface: #111a33;
+  --surface-raised: #16213f;
   --ink-teal: #2dd4bf;
   --ink-rose: #fb7185;
   --ink-indigo: #818cf8;
@@ -30,9 +30,8 @@
   --mono-face: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
 
   --float: 0 30px 60px -30px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  /* Flat 1px grid lines (drawn with gradient syntax, but they render as solid lines, not a gradient). */
   --block-grid:
     linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px,
-    radial-gradient(ellipse 60% 45% at 12% -5%, rgba(45, 212, 191, 0.16), transparent 70%),
-    radial-gradient(ellipse 55% 45% at 92% 0%, rgba(99, 102, 241, 0.22), transparent 70%);
+    linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px;
 }

@@ -1,4 +1,4 @@
-/* The landing page: a real pact as a glass card with its holographic seal. Tokens come from tokens.css. */
+/* The landing page: a real pact as a card with its seal. Tokens come from tokens.css. */
 
 * {
   box-sizing: border-box;
@@ -212,16 +212,15 @@ main,
   color: var(--faint);
 }
 
-/* ---------- Glass panels ---------- */
+/* ---------- Panels ---------- */
 
 .panel {
   position: relative;
   color: var(--text);
   border: 1px solid var(--hairline);
   border-radius: 20px;
-  background: linear-gradient(165deg, var(--glass-strong), var(--glass) 55%, rgba(13, 20, 40, 0.8));
+  background: var(--surface);
   box-shadow: var(--float);
-  backdrop-filter: blur(10px);
   padding: clamp(28px, 5vw, 52px);
   overflow: hidden;
 }
@@ -243,24 +242,10 @@ main,
   margin: 0 0 4px;
 }
 
-/* The hero's pact: the page's one feature panel, with a gradient edge and a glow behind the seal. */
+/* The hero's pact: the page's one feature panel, marked by a solid teal edge. */
 .pact-card {
-  border-color: transparent;
-  background:
-    linear-gradient(165deg, var(--glass-strong), var(--glass) 55%, rgba(13, 20, 40, 0.88)) padding-box,
-    linear-gradient(135deg, rgba(45, 212, 191, 0.75), rgba(99, 102, 241, 0.25) 45%, rgba(99, 102, 241, 0.75)) border-box;
-  box-shadow: var(--float), 0 0 80px -30px rgba(99, 102, 241, 0.55);
-}
-
-.pact-card::before {
-  content: "";
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  right: -150px;
-  top: -190px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.3), rgba(45, 212, 191, 0.08) 45%, transparent 70%);
-  pointer-events: none;
+  border-color: rgba(45, 212, 191, 0.55);
+  background: var(--surface-raised);
 }
 
 .card-head {
@@ -304,7 +289,7 @@ main,
   color: var(--muted);
 }
 
-/* ---------- The holographic seal ---------- */
+/* ---------- The seal ---------- */
 
 .seal {
   position: relative;
@@ -316,27 +301,6 @@ main,
 
 .seal img {
   display: block;
-}
-
-.seal::after {
-  content: "";
-  position: absolute;
-  inset: 4%;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #5eead4, #a5b4fc, #f0abfc, #fde68a, #5eead4, #818cf8, #5eead4);
-  mix-blend-mode: overlay;
-  opacity: 0.55;
-  animation: holo-turn 2.6s cubic-bezier(0.3, 0.6, 0.2, 1) 300ms both;
-  pointer-events: none;
-}
-
-@keyframes holo-turn {
-  from {
-    transform: rotate(-120deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
 }
 
 /* ---------- Neon stamps ---------- */
@@ -479,7 +443,7 @@ main,
   top: 18px;
   bottom: 18px;
   width: 2px;
-  background: linear-gradient(var(--teal), var(--indigo));
+  background: var(--teal);
   box-shadow: 0 0 12px rgba(45, 212, 191, 0.5);
 }
 
@@ -487,7 +451,7 @@ main,
   position: relative;
   display: grid;
   grid-template-columns: 200px 1fr;
-  background: linear-gradient(165deg, rgba(30, 41, 88, 0.6), rgba(13, 20, 40, 0.75));
+  background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: 14px;
   box-shadow: var(--float);
@@ -701,7 +665,6 @@ main,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .seal::after,
   .stamp--large {
     animation: none;
   }

@@ -1,6 +1,6 @@
 /*
  * The docs: Starlight's dark palette mapped to the Pactwright tokens. The chrome sits on the block
- * grid; each page's content is a glass panel. Starlight's own styles are in a cascade layer, so these win.
+ * grid; each page's content is a flat panel. Starlight's own styles are in a cascade layer, so these win.
  */
 
 :root,
@@ -98,7 +98,7 @@ nav.sidebar a[aria-current="page"],
 nav.sidebar a[aria-current="page"]:hover {
   color: var(--text-strong);
   font-weight: 600;
-  background: linear-gradient(90deg, rgba(45, 212, 191, 0.16), rgba(99, 102, 241, 0.16));
+  background: rgba(45, 212, 191, 0.14);
   box-shadow: inset 2px 0 0 var(--teal);
 }
 
@@ -112,31 +112,17 @@ nav.sidebar a[aria-current="page"]:hover {
   color: var(--text-strong);
 }
 
-/* ---------- The page: a glass panel ---------- */
+/* ---------- The page: a flat panel ---------- */
 
 main {
   position: relative;
   margin: 1.75rem clamp(0.75rem, 2.5vw, 2rem) 3rem;
   padding: 1rem 0 0.5rem;
-  border: 1px solid transparent;
+  border: 1px solid rgba(45, 212, 191, 0.3);
   border-radius: 20px;
-  background:
-    linear-gradient(165deg, var(--glass-strong), var(--glass) 40%, rgba(13, 20, 40, 0.85)) padding-box,
-    linear-gradient(135deg, rgba(45, 212, 191, 0.5), rgba(99, 102, 241, 0.15) 40%, rgba(99, 102, 241, 0.45)) border-box;
+  background: var(--surface);
   box-shadow: var(--float);
   overflow: hidden;
-}
-
-/* A glow in the top corner, behind the title. */
-main::before {
-  content: "";
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  right: -170px;
-  top: -210px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.25), rgba(45, 212, 191, 0.06) 45%, transparent 70%);
-  pointer-events: none;
 }
 
 main > * {
