@@ -46,8 +46,7 @@ a {
 /* ---------- Chrome ---------- */
 
 .site-head {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 20;
   display: flex;
   justify-content: space-between;
@@ -64,6 +63,8 @@ a {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--text-strong);
   text-decoration: none;
   font-family: var(--display);
@@ -141,6 +142,9 @@ main,
 
 .hero h1 {
   margin: 0;
+  /* At very large text sizes a long word must still fit the screen. */
+  overflow-wrap: break-word;
+  hyphens: auto;
   font-family: var(--display);
   font-size: clamp(2.5rem, 5.5vw, 4rem);
   line-height: 1.04;
@@ -366,7 +370,9 @@ main,
 
 .stamp--large {
   margin-top: 22px;
-  font-size: 2rem;
+  /* Capped by the viewport so it never runs off a narrow screen, even at large text sizes. */
+  font-size: min(2rem, 10vw);
+  max-width: 100%;
   border-width: 3px;
   border-radius: 12px;
   outline: 1px solid color-mix(in srgb, var(--ink) 45%, transparent);
@@ -440,6 +446,7 @@ main,
 }
 
 .ledger td {
+  overflow-wrap: anywhere;
   padding: 13px 18px 13px 0;
   border-bottom: 1px solid var(--hairline);
   vertical-align: top;
@@ -460,6 +467,8 @@ main,
   margin: 0;
   padding: 0 0 0 calc(var(--rail) * 2 + 4px);
   display: grid;
+  /* minmax(0, …): an implicit column can't shrink below its widest content, which overflowed at large text sizes. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
 }
 
@@ -592,7 +601,45 @@ main,
 
 @media (max-width: 860px) {
   .hero {
-    grid-template-columns: 1fr;
+    /* minmax(0, …): a bare 1fr can't shrink below its longest word, which pushed the hero off-screen. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Sticky only where the screen can spare the room. */
+@media (min-width: 601px) and (min-height: 501px) {
+  .site-head {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* Standalone links: padding offset by an equal negative margin enlarges the target without moving the
+   layout. At least 24px for every pointer; 44px on touch. */
+.quiet,
+.block-body a,
+.card-foot a,
+.panel td a {
+  display: inline-block;
+  padding-block: 4px;
+  margin-block: -4px;
+}
+
+@media (pointer: coarse) {
+  .site-head nav a {
+    padding-block: 12px;
+    min-width: 44px;
+    text-align: center;
+  }
+  .brand {
+    padding-block: 4px;
+  }
+  .quiet,
+  .block-body a,
+  .card-foot a,
+  .panel td a {
+    padding-block: 12px;
+    margin-block: -12px;
   }
 }
 
@@ -602,6 +649,31 @@ main,
   .site-foot {
     padding-left: 16px;
     padding-right: 16px;
+  }
+  .site-head {
+    padding-top: 10px;
+    padding-bottom: 0;
+    gap: 4px;
+  }
+  /* The nav as one swipeable row under the brand, instead of wrapping. */
+  .site-head nav {
+    width: calc(100% + 32px);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 -16px;
+    padding: 0 56px 0 16px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+    mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .site-head nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-head nav a {
+    white-space: nowrap;
+    /* Don't shrink: the row scrolls instead. (min-width replaces the min-content floor, so without this
+       the links shrank and their text overlapped.) */
+    flex: none;
   }
   .fields {
     grid-template-columns: 1fr;
@@ -617,7 +689,7 @@ main,
     --rail: 10px;
   }
   .block {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .block-head {
     border-right: 0;

@@ -278,9 +278,80 @@ main .pagination-links .link-title {
   font-size: 1rem;
 }
 
+/* ---------- Target sizes ---------- */
+
+/* Links that stand alone (in tables, page meta, lists) and the heading anchors: at least 24px for every
+   pointer. Inline padding enlarges the target without moving the text; 44px on touch below. */
+.sl-markdown-content td a,
+.sl-markdown-content li > a,
+.sl-markdown-content p > a:only-child,
+main .meta a {
+  padding-block: 4px;
+}
+
+.sl-markdown-content .sl-anchor-link {
+  padding: 4px;
+  margin: -4px;
+}
+
+@media (pointer: coarse) {
+  .site-title {
+    min-height: 44px;
+  }
+  mobile-starlight-toc .toggle,
+  mobile-starlight-toc a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .expressive-code .copy button {
+    width: 44px;
+    height: 44px;
+  }
+  button.sl-menu-button,
+  site-search > button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  nav.sidebar a {
+    padding-block: 0.6rem;
+  }
+  .sl-markdown-content td a,
+  .sl-markdown-content li > a,
+  .sl-markdown-content p > a:only-child,
+  main .meta a {
+    padding-block: 12px;
+  }
+  .sl-markdown-content .sl-anchor-link {
+    padding: 14px;
+    margin: -14px;
+  }
+}
+
+/* A phone held sideways: Starlight's fixed header plus the fixed "On this page" bar took ~30% of the
+   screen. Slim the header and let the contents bar scroll away with the page. */
+@media (max-height: 500px) and (max-width: 72rem) {
+  :root,
+  :root[data-theme="light"],
+  :root[data-theme="dark"] {
+    --sl-nav-height: 3rem;
+  }
+  mobile-starlight-toc nav {
+    position: static;
+  }
+  /* The bar now scrolls with the page, so drop the space Starlight reserved for it under the header. */
+  .main-frame {
+    padding-top: var(--sl-nav-height);
+  }
+}
+
 /* ---------- Small screens ---------- */
 
 @media (max-width: 50rem) {
+  /* On phones the sidebar is the full-screen menu: it must be opaque, or the page shows through it. */
+  .sidebar-pane {
+    background: var(--block-grid), var(--void);
+  }
   main {
     margin: 1rem 0.5rem 2rem;
   }
