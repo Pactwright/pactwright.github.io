@@ -30,7 +30,7 @@ pnpm check-links    # after a build: every internal link and #anchor must resolv
 ## How it's built and deployed
 
 - [Astro](https://astro.build) with [Starlight](https://starlight.astro.build) for the docs; search is built in (Pagefind).
-- The look is shared with Studio: a web3 base (dark block grid, flat panels, solid teal and indigo, no gradients) that keeps the pieces carrying meaning tactile, namely the seal, neon state stamps and the pact as a chain of blocks. [`src/styles/tokens.css`](src/styles/tokens.css) holds the tokens, [`docs.css`](src/styles/docs.css) themes Starlight, [`landing.css`](src/styles/landing.css) styles the landing page. Fonts (Unbounded, Manrope, JetBrains Mono) are self-hosted.
+- The look is shared with Studio: a web3 base (dark block grid, frosted glass panels, solid teal and indigo, no gradients) that keeps the pieces carrying meaning tactile, namely the seal, neon state stamps and the pact as a chain of blocks. [`src/styles/tokens.css`](src/styles/tokens.css) holds the tokens, [`docs.css`](src/styles/docs.css) themes Starlight, [`landing.css`](src/styles/landing.css) styles the landing page. Fonts (Unbounded, Manrope, JetBrains Mono) are self-hosted.
 - [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds the site, checks every internal link, and publishes it to GitHub Pages on each push to `main`. Pull requests get the build and the link check.
 
 ## License

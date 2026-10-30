@@ -1,7 +1,7 @@
 /*
  * Pactwright tokens, shared by the landing page and the docs (same values as Studio).
- * Web3 base (dark block grid, flat surfaces, solid teal and indigo; no gradients) with the pieces that
- * carry meaning kept tactile: the seal, neon state stamps, and the pact as a chain of blocks.
+ * Web3 base (dark block grid, frosted glass surfaces, solid teal and indigo; no gradients) with the
+ * pieces that carry meaning kept tactile: the seal, neon state stamps, and the pact as a chain of blocks.
  */
 :root {
   --void: #070b17;
@@ -20,6 +20,14 @@
   --brand: var(--teal);
   --surface: #111a33;
   --surface-raised: #16213f;
+
+  /* Glass: a translucent fill that frosts what's behind it (the grid, scrolling content), a light edge,
+     and a 1px shine along the top. Without backdrop-filter support, surfaces fall back to --surface. */
+  --glass: rgba(22, 32, 66, 0.5);
+  --glass-raised: rgba(28, 42, 84, 0.56);
+  --glass-edge: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(18px) saturate(160%);
+  --glass-shine: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   --ink-teal: #2dd4bf;
   --ink-rose: #fb7185;
   --ink-indigo: #818cf8;
@@ -32,6 +40,6 @@
   --float: 0 30px 60px -30px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   /* Flat 1px grid lines (drawn with gradient syntax, but they render as solid lines, not a gradient). */
   --block-grid:
-    linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px;
+    linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px) 0 0 / 56px 56px;
 }

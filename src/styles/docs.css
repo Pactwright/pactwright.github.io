@@ -50,10 +50,12 @@ body {
 
 /* ---------- Chrome ---------- */
 
+/* Glass: the page scrolling under the fixed header is frosted. */
 header.header {
-  background: rgba(7, 11, 23, 0.72);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--hairline);
+  background: rgba(10, 16, 34, 0.62);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-edge);
 }
 
 .site-title {
@@ -121,8 +123,17 @@ main {
   border: 1px solid rgba(45, 212, 191, 0.3);
   border-radius: 20px;
   background: var(--surface);
-  box-shadow: var(--float);
+  box-shadow: var(--float), var(--glass-shine);
   overflow: hidden;
+}
+
+/* Glass, where the browser can frost what's behind it. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  main {
+    background: var(--glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
 }
 
 main > * {
@@ -335,8 +346,11 @@ main .meta a {
 
 @media (max-width: 50rem) {
   /* On phones the sidebar is the full-screen menu: it must be opaque, or the page shows through it. */
+  /* Frosted, but nearly opaque: this panel covers the page text, which must not show through. */
   .sidebar-pane {
-    background: var(--block-grid), var(--void);
+    background: rgba(7, 11, 23, 0.94);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
   main {
     margin: 1rem 0.5rem 2rem;
