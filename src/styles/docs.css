@@ -1,160 +1,141 @@
 /*
- * The docs: the chrome (header, sidebar, contents) sits on the leather desk; each page is a printed
- * document on cheque paper. Starlight's own styles are in a cascade layer, so these win.
+ * The docs: Starlight's dark palette mapped to the Pactwright tokens. The chrome sits on the block
+ * grid; each page's content is a glass panel. Starlight's own styles are in a cascade layer, so these win.
  */
 
-/* ---------- The desk: Starlight's dark palette, as leather and brass ---------- */
 :root,
 :root[data-theme="light"],
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --sl-font: var(--printed);
-  --sl-font-mono: var(--typed);
-  --sl-color-white: #f3f6f4;
-  --sl-color-gray-1: #e4ede8;
-  --sl-color-gray-2: #c9d6cf;
-  --sl-color-gray-3: #a3b4c4;
-  --sl-color-gray-4: #6f86a0;
-  --sl-color-gray-5: #3b5372;
-  --sl-color-gray-6: #24364c;
-  --sl-color-gray-7: #1a2838;
-  --sl-color-black: var(--leather);
-  --sl-color-accent-low: #2b3c53;
-  --sl-color-accent: var(--brass);
-  --sl-color-accent-high: #efe3bf;
-  --sl-color-text: var(--sl-color-gray-2);
-  --sl-color-text-accent: var(--brass);
-  --sl-color-text-invert: var(--leather-deep);
-  --sl-color-bg: var(--leather);
-  --sl-color-bg-nav: transparent;
+  --sl-font: var(--text-face);
+  --sl-font-mono: var(--mono-face);
+  --sl-color-white: var(--text-strong);
+  --sl-color-gray-1: #dfe4f2;
+  --sl-color-gray-2: #c3cae0;
+  --sl-color-gray-3: var(--muted);
+  --sl-color-gray-4: var(--faint);
+  --sl-color-gray-5: #2a3560;
+  --sl-color-gray-6: #141c38;
+  --sl-color-gray-7: #0d1428;
+  --sl-color-black: var(--void);
+  --sl-color-accent-low: rgba(99, 102, 241, 0.18);
+  --sl-color-accent: var(--indigo);
+  --sl-color-accent-high: var(--link);
+  --sl-color-text: #c3cae0;
+  --sl-color-text-accent: var(--link);
+  --sl-color-text-invert: var(--void);
+  --sl-color-bg: var(--void);
+  --sl-color-bg-nav: rgba(7, 11, 23, 0.72);
   --sl-color-bg-sidebar: transparent;
-  --sl-color-bg-inline-code: rgba(255, 255, 255, 0.08);
-  --sl-color-bg-accent: var(--brass);
-  --sl-color-hairline-light: var(--stitch);
-  --sl-color-hairline: #2d425c;
-  --sl-color-hairline-shade: var(--leather-deep);
-  --sl-text-h1: 3rem;
-  --sl-text-h2: 1.75rem;
-  --sl-text-h3: 1.3125rem;
+  --sl-color-bg-inline-code: rgba(129, 140, 248, 0.14);
+  --sl-color-bg-accent: var(--indigo);
+  --sl-color-hairline-light: var(--hairline-strong);
+  --sl-color-hairline: var(--hairline);
+  --sl-color-hairline-shade: var(--void);
+  --sl-text-h1: 2.75rem;
+  --sl-text-h2: 1.5rem;
+  --sl-text-h3: 1.2rem;
   --sl-content-width: 46rem;
-  --sl-nav-height: 4.25rem;
+  --sl-nav-height: 4rem;
 }
 
 body {
-  background-color: var(--leather);
-  background-image: var(--leather-grain),
-    radial-gradient(ellipse 120% 70% at 50% 0%, rgba(93, 120, 152, 0.26), transparent 60%),
-    radial-gradient(ellipse 140% 120% at 50% 60%, transparent 55%, var(--leather-deep));
+  background: var(--block-grid), var(--void);
 }
 
 :focus-visible {
-  outline: 3px solid var(--brass);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
-/* Header: a strip of the desk, divided from the rest by a stitched seam. */
+/* ---------- Chrome ---------- */
+
 header.header {
-  background: rgba(20, 32, 48, 0.55);
-  border-bottom: 1px dashed var(--stitch);
-  backdrop-filter: blur(6px);
+  background: rgba(7, 11, 23, 0.72);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .site-title {
-  color: var(--brass);
+  font-family: var(--display);
   font-weight: 600;
-  font-size: 1.3125rem;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-size: 1.125rem;
+  color: var(--text-strong);
 }
 
 .site-title img {
-  height: 2.25rem;
+  height: 2rem;
   width: auto;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
 }
 
-/* Sidebar: printed index tabs. */
 .sidebar-pane {
   background: transparent;
-  border-inline-end: 1px dashed var(--sl-color-hairline);
+  border-inline-end: 1px solid var(--hairline);
 }
 
 nav.sidebar .group-label .large {
-  color: var(--brass);
-  font-size: 1rem;
+  font-family: var(--display);
+  font-size: 0.8125rem;
   font-weight: 600;
-  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--text-strong);
 }
 
 nav.sidebar a {
   font-size: 0.9375rem;
-  color: var(--sl-color-gray-2);
-  border-radius: 3px;
+  color: var(--muted);
+  border-radius: 8px;
 }
 
 nav.sidebar a:hover {
-  color: #fff;
+  color: var(--text-strong);
+  background: rgba(129, 140, 248, 0.08);
 }
 
+/* The current page: a lit block. */
 nav.sidebar a[aria-current="page"],
 nav.sidebar a[aria-current="page"]:hover {
-  color: var(--leather-deep);
-  font-weight: 700;
-  background: linear-gradient(180deg, #ece0bc, var(--brass));
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 2px 4px rgba(0, 0, 0, 0.35);
+  color: var(--text-strong);
+  font-weight: 600;
+  background: linear-gradient(90deg, rgba(45, 212, 191, 0.16), rgba(99, 102, 241, 0.16));
+  box-shadow: inset 2px 0 0 var(--teal);
 }
 
-/* Contents column. */
 .right-sidebar {
-  border-inline-start: 1px dashed var(--sl-color-hairline);
+  border-inline-start: 1px solid var(--hairline);
 }
 
 .right-sidebar h2 {
-  color: var(--brass);
-  font-style: italic;
+  font-family: var(--display);
+  font-size: 0.8125rem;
+  color: var(--text-strong);
 }
 
-/* ---------- The page: a printed document on cheque paper ---------- */
-main {
-  color-scheme: light;
-  --sl-color-white: var(--ink);
-  --sl-color-gray-1: #262d5c;
-  --sl-color-gray-2: #343c68;
-  --sl-color-gray-3: var(--ink-soft);
-  --sl-color-gray-4: var(--ink-faint);
-  --sl-color-gray-5: var(--paper-rule);
-  --sl-color-gray-6: #cfddd5;
-  --sl-color-gray-7: #dae5df;
-  --sl-color-black: var(--paper);
-  --sl-color-accent-low: #d6dcf1;
-  --sl-color-accent: var(--indigo-ink);
-  --sl-color-accent-high: var(--ink);
-  --sl-color-text: #343c68;
-  --sl-color-text-accent: var(--indigo-ink);
-  --sl-color-text-invert: var(--paper);
-  --sl-color-bg: var(--paper);
-  --sl-color-bg-inline-code: rgba(183, 203, 193, 0.45);
-  --sl-color-bg-accent: var(--indigo-ink);
-  --sl-color-hairline-light: var(--paper-rule);
-  --sl-color-hairline: var(--paper-rule);
-  --sl-color-hairline-shade: var(--paper-rule);
+/* ---------- The page: a glass panel ---------- */
 
+main {
   position: relative;
   margin: 1.75rem clamp(0.75rem, 2.5vw, 2rem) 3rem;
-  padding: 1.25rem 0 0.5rem;
-  color: var(--sl-color-text);
-  background-color: var(--paper);
-  background-image: var(--paper-fibre), linear-gradient(170deg, rgba(255, 255, 255, 0.35), transparent 40%);
-  border-radius: 3px;
-  box-shadow: var(--lift);
+  padding: 1rem 0 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background:
+    linear-gradient(165deg, var(--glass-strong), var(--glass) 40%, rgba(13, 20, 40, 0.85)) padding-box,
+    linear-gradient(135deg, rgba(45, 212, 191, 0.5), rgba(99, 102, 241, 0.15) 40%, rgba(99, 102, 241, 0.45)) border-box;
+  box-shadow: var(--float);
+  overflow: hidden;
 }
 
-/* The guilloché border printed around the page. */
+/* A glow in the top corner, behind the title. */
 main::before {
   content: "";
   position: absolute;
-  inset: 12px;
-  background: var(--guilloche-frame);
-  opacity: 0.8;
+  width: 420px;
+  height: 420px;
+  right: -170px;
+  top: -210px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25), rgba(45, 212, 191, 0.06) 45%, transparent 70%);
   pointer-events: none;
 }
 
@@ -163,52 +144,48 @@ main > * {
 }
 
 main .content-panel {
-  border-top-color: var(--paper-rule);
-  padding-inline: clamp(1.75rem, 4vw, 3rem);
+  border-top-color: var(--hairline);
+  padding-inline: clamp(1.5rem, 4vw, 3rem);
 }
 
 main .content-panel:first-of-type {
   border-top: 0;
 }
 
-main :focus-visible {
-  outline-color: var(--focus);
-}
-
-/* Title */
 main h1#_top {
-  font-size: clamp(2.25rem, 5vw, 3rem);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   line-height: 1.1;
-  color: var(--ink);
+  color: var(--text-strong);
 }
 
-/* ---------- Content typography ---------- */
+/* ---------- Content ---------- */
+
 .sl-markdown-content {
   font-size: 1.0625rem;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .sl-markdown-content :is(h2, h3, h4) {
-  color: var(--ink);
+  font-family: var(--display);
   font-weight: 600;
+  color: var(--text-strong);
   letter-spacing: -0.005em;
 }
 
 .sl-markdown-content h2 {
-  margin-top: 2.5rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--paper-rule);
+  margin-top: 2.75rem;
 }
 
 .sl-markdown-content strong {
-  color: var(--ink);
+  color: var(--text-strong);
 }
 
 .sl-markdown-content a {
-  color: var(--indigo-ink);
-  text-decoration-color: rgba(59, 63, 154, 0.4);
+  color: var(--link);
+  text-decoration-color: rgba(165, 180, 252, 0.35);
   text-underline-offset: 3px;
 }
 
@@ -217,14 +194,14 @@ main h1#_top {
 }
 
 .sl-markdown-content :not(pre) > code {
-  font-size: 0.9em;
-  color: var(--ink);
-  padding: 0.05em 0.3em;
-  border-radius: 3px;
+  font-size: 0.86em;
+  color: #dfe4f2;
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
   overflow-wrap: anywhere;
 }
 
-/* Tables: ruled ledger pages. */
+/* Tables */
 .sl-markdown-content table {
   display: block;
   overflow-x: auto;
@@ -233,21 +210,25 @@ main h1#_top {
 }
 
 .sl-markdown-content th {
-  font-style: italic;
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--muted);
   background: transparent;
   border: 0;
-  border-bottom: 2px solid var(--ink);
-  padding: 0.45rem 1rem 0.45rem 0;
+  border-bottom: 1px solid var(--hairline-strong);
+  padding: 0.5rem 1rem 0.55rem 0;
   text-align: left;
 }
 
 .sl-markdown-content td {
   border: 0;
-  border-bottom: 1px solid var(--paper-rule);
-  padding: 0.55rem 1rem 0.55rem 0;
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.6rem 1rem 0.6rem 0;
   vertical-align: top;
+}
+
+.sl-markdown-content tr:nth-child(2n) {
+  background: transparent;
 }
 
 /* Names in the first column (variables, options, functions) stay whole; values may wrap. */
@@ -256,55 +237,52 @@ main h1#_top {
   overflow-wrap: normal;
 }
 
-.sl-markdown-content tr:nth-child(2n) {
-  background: transparent;
-}
-
-/* Asides: a slip of paper clipped to the page. */
+/* Asides */
 .sl-markdown-content .starlight-aside {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid var(--paper-rule);
-  border-inline-start: 4px solid var(--indigo-ink);
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(29, 35, 80, 0.12);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--hairline);
+  border-inline-start: 3px solid var(--indigo);
+  border-radius: 0 12px 12px 0;
 }
 
 .sl-markdown-content .starlight-aside--caution {
-  border-inline-start-color: #9a6a12;
+  background: rgba(251, 191, 36, 0.08);
+  border-inline-start-color: #fbbf24;
 }
 
 .sl-markdown-content .starlight-aside--danger {
-  border-inline-start-color: var(--red-ink);
+  background: rgba(251, 113, 133, 0.08);
+  border-inline-start-color: var(--ink-rose);
 }
 
 .sl-markdown-content .starlight-aside__title {
-  color: var(--ink);
-  font-style: italic;
+  font-family: var(--display);
+  font-size: 0.875rem;
+  color: var(--text-strong);
 }
 
-/* Page footer inside the document. */
-main .meta,
-main .pagination-links {
-  font-size: 0.9375rem;
-}
-
+/* Footer of each page */
 main .pagination-links a {
-  border-color: var(--paper-rule);
-  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: rgba(7, 11, 23, 0.45);
   box-shadow: none;
 }
 
 main .pagination-links a:hover {
-  border-color: var(--indigo-ink);
+  border-color: var(--hairline-strong);
+}
+
+main .pagination-links .link-title {
+  font-family: var(--display);
+  font-size: 1rem;
 }
 
 /* ---------- Small screens ---------- */
+
 @media (max-width: 50rem) {
   main {
     margin: 1rem 0.5rem 2rem;
-  }
-  main .content-panel {
-    padding-inline: 2.25rem;
   }
   /* On a phone a long signature would take the whole row: wrap at spaces, and inside a word only if it must. */
   .sl-markdown-content td:first-child code {

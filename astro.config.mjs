@@ -14,33 +14,32 @@ export default defineConfig({
       social: [{ icon: "github", label: "Pactwright on GitHub", href: "https://github.com/Pactwright" }],
       editLink: { baseUrl: "https://github.com/Pactwright/pactwright.github.io/edit/main/" },
       lastUpdated: true,
-      // Code reads as typed matter on the page: one light theme, typewriter face, paper frame.
+      // Code sits in a dark glass frame inside the page: one dark theme, JetBrains Mono.
       expressiveCode: {
-        themes: ["github-light"],
+        themes: ["github-dark"],
         useStarlightUiThemeColors: false,
         styleOverrides: {
-          codeFontFamily: '"Courier Prime", "Courier New", monospace',
-          codeFontSize: "0.9rem",
-          codeBackground: "rgba(255, 255, 255, 0.55)",
-          borderColor: "#b7cbc1",
-          borderRadius: "3px",
+          codeFontFamily: '"JetBrains Mono Variable", ui-monospace, monospace',
+          codeFontSize: "0.875rem",
+          codeBackground: "rgba(7, 11, 23, 0.72)",
+          borderColor: "rgba(129, 140, 248, 0.22)",
+          borderRadius: "12px",
           frames: {
-            editorTabBarBackground: "#dae5df",
-            terminalTitlebarBackground: "#dae5df",
-            frameBoxShadowCssValue: "0 2px 6px rgba(29, 35, 80, 0.12)",
+            editorTabBarBackground: "rgba(13, 20, 40, 0.9)",
+            terminalTitlebarBackground: "rgba(13, 20, 40, 0.9)",
+            frameBoxShadowCssValue: "0 20px 40px -24px rgba(0, 0, 0, 0.8)",
           },
         },
       },
       customCss: [
-        "@fontsource-variable/bodoni-moda/opsz.css",
-        "@fontsource-variable/bodoni-moda/opsz-italic.css",
-        "@fontsource/courier-prime/400.css",
-        "@fontsource/courier-prime/700.css",
+        "@fontsource-variable/unbounded",
+        "@fontsource-variable/manrope",
+        "@fontsource-variable/jetbrains-mono",
         "./src/styles/tokens.css",
         "./src/styles/docs.css",
       ],
       components: {
-        // One look, paper on a leather desk, rather than separate light and dark themes.
+        // One look (dark, glass, block grid) rather than separate light and dark themes.
         ThemeSelect: "./src/components/NoThemeSelect.astro",
       },
       sidebar: [

@@ -1,34 +1,38 @@
 /*
- * Pactwright print tokens, shared by the landing page and the docs (same values as Studio).
- * Security printing on a desk blotter: cheque paper, intaglio ink, rubber-stamp inks, navy leather.
+ * Pactwright tokens, shared by the landing page and the docs (same values as Studio).
+ * Web3 base (dark block grid, glass, the brand's teal-to-indigo gradient) with the pieces that carry
+ * meaning kept tactile: a holographic seal, neon state stamps, and the pact as a chain of blocks.
  */
 :root {
-  --leather: #1e2c3d;
-  --leather-deep: #142030;
-  --stitch: #5d7898;
-  --brass: #d8c79a;
+  --void: #070b17;
+  --deep: #0d1428;
+  --glass: rgba(24, 33, 70, 0.55);
+  --glass-strong: rgba(30, 41, 88, 0.7);
+  --hairline: rgba(129, 140, 248, 0.16);
+  --hairline-strong: rgba(129, 140, 248, 0.3);
 
-  --paper: #e4ede8;
-  --paper-shade: #d3e0d9;
-  --paper-rule: #b7cbc1;
-  --ink: #1d2350;
-  --ink-soft: #4a5378;
-  --ink-faint: #6f7895;
-  --teal-ink: #0e6b63;
-  --red-ink: #a8322a;
-  --indigo-ink: #3b3f9a;
-  --focus: #2563eb;
+  --text: #e6eaf5;
+  --text-strong: #f4f6fc;
+  --muted: #8c96b3;
+  --faint: #66708f;
+  --link: #a5b4fc;
 
-  --printed: "Bodoni Moda Variable", "Bodoni 72", Didot, Georgia, serif;
-  --typed: "Courier Prime", "Courier New", Courier, monospace;
+  --teal: #2dd4bf;
+  --indigo: #6366f1;
+  --brand: linear-gradient(120deg, var(--teal), var(--indigo));
+  --ink-teal: #2dd4bf;
+  --ink-rose: #fb7185;
+  --ink-indigo: #818cf8;
+  --focus: #5eead4;
 
-  --lift: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 18px 40px -18px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.35);
-  --leather-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.05 0 0 0 0 0.08 0 0 0 0 0.12 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6 0.04' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.25 0 0 0 0 0.22 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
-  --ink-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 2.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
-  --guilloche-frame:
-    url("/print/guilloche-h.svg") top left / 96px 18px repeat-x,
-    url("/print/guilloche-h.svg") bottom left / 96px 18px repeat-x,
-    url("/print/guilloche-v.svg") top left / 18px 96px repeat-y,
-    url("/print/guilloche-v.svg") top right / 18px 96px repeat-y;
+  --display: "Unbounded Variable", "Unbounded", system-ui, sans-serif;
+  --text-face: "Manrope Variable", "Manrope", system-ui, sans-serif;
+  --mono-face: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+
+  --float: 0 30px 60px -30px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  --block-grid:
+    linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px) 0 0 / 56px 56px,
+    radial-gradient(ellipse 60% 45% at 12% -5%, rgba(45, 212, 191, 0.16), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 92% 0%, rgba(99, 102, 241, 0.22), transparent 70%);
 }
