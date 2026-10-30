@@ -8,6 +8,13 @@
   The Pactwright website and documentation, served at <a href="https://pactwright.github.io/"><b>pactwright.github.io</b></a>.
 </p>
 
+<p align="center">
+  <a href="https://pactwright.github.io/"><b>Home</b></a> ·
+  <a href="https://pactwright.github.io/docs/"><b>Documentation</b></a> ·
+  <a href="https://pactwright.github.io/docs/quickstart/"><b>Quickstart</b></a> ·
+  <a href="https://github.com/Pactwright/pactwright.github.io/actions/workflows/deploy.yml">Deploys</a>
+</p>
+
 Pactwright is escrow, verdicts and receipts for purchases made by AI agents on Stellar. This repository holds its landing page and its documentation. The code lives in [Pactwright-contracts](https://github.com/Pactwright/Pactwright-contracts), [Pactwright-Kit](https://github.com/Pactwright/Pactwright-Kit) and [Pactwright-studio](https://github.com/Pactwright/Pactwright-studio).
 
 ## Edit a page
