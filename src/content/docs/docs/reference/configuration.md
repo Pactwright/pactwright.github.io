@@ -22,7 +22,7 @@ Every Pactwright service refuses to start when its configuration is missing or i
 |---|---|---|
 | Seller | `SELLER_ADDRESS`, `SELLER_DELIVERY_KEY`, `VERIFIER_PUBLIC_KEY`, `VERIFIER_URL`, `FACILITATOR_URL`, `FACILITATOR_API_KEY`, `SELLER_REFUND_VAULT_ID`; for the signing key, `KMS_KEY_ID` (see below) | [Sell behind a pact](/docs/guides/seller/#configure-the-seller) |
 | Agent | `AGENT_SECRET_KEY` (testnet only), `SPONSOR_SECRET_KEY`, `FACILITATOR_URL` | [Buy as an agent](/docs/guides/agent/) |
-| Verifier | `VERIFIER_SECRET_KEY`, `VERIFIER_PROVIDER`, `VERIFIER_MODEL`, `VERIFIER_EFFORT`, `VERIFIER_LLM_API_KEY`, `LLM_BASE_URL`, `EVIDENCE_BUCKET_URL`, `STELLAR_RPC_URL`, `FACILITATOR_URL` | [Run a verifier](/docs/guides/verifier/#configuration) |
+| Verifier | `VERIFIER_SECRET_KEY`, `VERIFIER_PROVIDER`, `VERIFIER_MODEL`, `VERIFIER_EFFORT`, `VERIFIER_LLM_API_KEY`, `LLM_BASE_URL`, `EVIDENCE_BUCKET_URL`, `STELLAR_RPC_URL`, `FACILITATOR_URL`, `VERIFIER_PUBLIC_URL`, `DATABASE_URL` | [Run a verifier](/docs/guides/verifier/#configuration) |
 | Studio | `DATABASE_URL`, `STELLAR_NETWORK`, `STELLAR_RPC_URL`, `PACT_CONTRACT_ID`, `RECEIPT_ANCHOR_ID`, `HISTORY_RPC_URL`, `CRON_SECRET`, `ANCHORER_SECRET`; optionally `INDEX_START_LEDGER`, `REFUND_VAULT_IDS`, `NEXT_PUBLIC_STELLAR_NETWORK` | The [Studio README](https://github.com/Pactwright/Pactwright-studio#readme) |
 
 ## Secrets

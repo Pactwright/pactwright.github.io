@@ -21,11 +21,9 @@ The process refuses to start, listing every problem at once, if anything require
 | `EVIDENCE_BUCKET_URL` | Yes | An `https` prefix the verifier can read evidence from. Evidence outside it is refused before any fetch |
 | `STELLAR_RPC_URL` | Yes | A Soroban RPC. Each escrow attestation is stamped with its latest ledger, which the contract requires |
 | `FACILITATOR_URL` | Yes | The x402 facilitator, for submitting verdicts |
+| `VERIFIER_PUBLIC_URL` | Yes, unless on Render | Where this verifier is reachable; envelope links point at `<url>/v1/envelopes/<sha256>`. On Render, `RENDER_EXTERNAL_URL` is used when this is unset |
+| `DATABASE_URL` (or `VERIFIER_DATABASE_URL`) | In production | Postgres for verdict envelopes, so they survive restarts. With `NODE_ENV=production` (as in the Docker image) the verifier refuses to start without it |
 | `PORT` / `VERIFIER_PORT` | No | Listening port; `VERIFIER_PORT` wins, then the host's `PORT`, then 8787 |
-
-:::caution[Coming with Kit #95]
-[Pull request #95](https://github.com/Pactwright/Pactwright-Kit/pull/95) adds `VERIFIER_PUBLIC_URL` (where envelope links point; on Render, `RENDER_EXTERNAL_URL` is used) and `DATABASE_URL` (Postgres for envelopes, required in production). Until it merges, envelopes are kept in memory and are lost on restart.
-:::
 
 ## Build and run
 
@@ -40,6 +38,8 @@ docker run -p 10000:10000 \
   -e EVIDENCE_BUCKET_URL=https://raw.githubusercontent.com/Pactwright/pactwright-evidence/main/ \
   -e STELLAR_RPC_URL=https://soroban-testnet.stellar.org \
   -e FACILITATOR_URL=https://pactwright-facilitator-testnet.onrender.com \
+  -e VERIFIER_PUBLIC_URL=http://localhost:10000 \
+  -e DATABASE_URL=postgres://… \
   pactwright-verifier
 
 curl http://localhost:10000/health

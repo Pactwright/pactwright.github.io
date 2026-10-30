@@ -127,12 +127,24 @@ main {
   overflow: hidden;
 }
 
-/* Glass, where the browser can frost what's behind it. */
+/* Glass, where the browser can frost what's behind it: the page panel, and the cards inside it
+   (notes, cautions, Previous/Next) as pale frosted glass with a bright edge and a shine. */
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   main {
     background: var(--glass);
     -webkit-backdrop-filter: var(--glass-blur);
     backdrop-filter: var(--glass-blur);
+  }
+  .sl-markdown-content .starlight-aside,
+  main .pagination-links a {
+    background: var(--card-glass);
+    border-color: var(--card-edge);
+    box-shadow: var(--card-shine);
+    -webkit-backdrop-filter: var(--card-blur);
+    backdrop-filter: var(--card-blur);
+  }
+  main .pagination-links a:hover {
+    background: var(--card-glass-hover);
   }
 }
 

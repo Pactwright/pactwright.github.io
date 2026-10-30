@@ -28,6 +28,13 @@
   --glass-edge: rgba(255, 255, 255, 0.1);
   --glass-blur: blur(18px) saturate(160%);
   --glass-shine: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  /* Cards: classic frosted glass, a pale white tint and a bright edge, over flat colour shapes. */
+  --card-glass: rgba(255, 255, 255, 0.06);
+  --card-glass-hover: rgba(255, 255, 255, 0.09);
+  --card-edge: rgba(255, 255, 255, 0.16);
+  --card-blur: blur(22px) saturate(170%);
+  --card-shine: inset 0 1px 0 rgba(255, 255, 255, 0.2);
   --ink-teal: #2dd4bf;
   --ink-rose: #fb7185;
   --ink-indigo: #818cf8;
