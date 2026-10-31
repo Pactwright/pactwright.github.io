@@ -11,7 +11,11 @@ export default defineConfig({
       description: "Escrow, verdicts and receipts for purchases made by AI agents on Stellar.",
       logo: { src: "./src/assets/seal.svg", alt: "Pactwright" },
       favicon: "/favicon.svg",
-      social: [{ icon: "github", label: "Pactwright on GitHub", href: "https://github.com/Pactwright" }],
+      social: [
+        { icon: "github", label: "Pactwright on GitHub", href: "https://github.com/Pactwright" },
+        { icon: "discord", label: "Pactwright on Discord", href: "https://discord.gg/4WFU6fwPe" },
+        { icon: "telegram", label: "Pactwright on Telegram", href: "https://t.me/Pactwright" },
+      ],
       editLink: { baseUrl: "https://github.com/Pactwright/pactwright.github.io/edit/main/" },
       lastUpdated: true,
       // Code sits in a dark glass frame inside the page: one dark theme, JetBrains Mono.
@@ -41,6 +45,7 @@ export default defineConfig({
       components: {
         // One look (dark, glass, block grid) rather than separate light and dark themes.
         ThemeSelect: "./src/components/NoThemeSelect.astro",
+        Footer: "./src/components/CommunityFooter.astro",
       },
       sidebar: [
         {
