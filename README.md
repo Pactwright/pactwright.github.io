@@ -21,16 +21,6 @@
   <a href="https://github.com/Pactwright/pactwright.github.io/actions/workflows/deploy.yml"><b>Deploys</b></a>
 </p>
 
-## Contents
-
-1. [Overview](#-overview)
-2. [What is on the site](#️-what-is-on-the-site)
-3. [Edit a page](#️-edit-a-page)
-4. [Run it locally](#-run-it-locally)
-5. [How it is built and deployed](#️-how-it-is-built-and-deployed)
-6. [Community & Maintainers](#-community--maintainers)
-7. [License](#license)
-
 ## 📖 Overview
 
 Pactwright is escrow, verdicts and receipts for purchases made by AI agents on Stellar. This
@@ -86,7 +76,10 @@ pnpm check-links    # after a build: every internal link and #anchor must resolv
 
 ## 🤝 Community & Maintainers
 
-<!-- socials: add links when available -->
+Join the discussion and get support:
+
+- **Discord**: [discord.gg/4WFU6fwPe](https://discord.gg/4WFU6fwPe)
+- **Telegram**: [t.me/Pactwright](https://t.me/Pactwright)
 
 Content bugs and broken links are welcome as
 [issues](https://github.com/Pactwright/pactwright.github.io/issues).
