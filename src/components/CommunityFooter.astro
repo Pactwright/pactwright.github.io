@@ -1,0 +1,37 @@
+---
+// Docs-page footer: community links above Starlight's own edit/pagination block.
+import DefaultFooter from "@astrojs/starlight/components/Footer.astro";
+---
+
+<nav class="community" aria-label="Community">
+  <a href="https://discord.gg/4WFU6fwPe">Discord</a>
+  <span aria-hidden="true">·</span>
+  <a href="https://t.me/Pactwright">Telegram</a>
+  <span aria-hidden="true">·</span>
+  <a href="https://github.com/Pactwright">GitHub</a>
+</nav>
+<p class="warning">
+  We never DM first; there is no token or airdrop. Security issues go to a repo's <code>SECURITY.md</code>,
+  not chat. Testnet only — not audited.
+</p>
+
+<DefaultFooter />
+
+<style>
+  .community {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    font-size: var(--sl-text-sm);
+  }
+  .community a {
+    color: var(--sl-color-accent-high);
+  }
+  .warning {
+    margin: 0.75rem 0 0;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-3);
+  }
+</style>
