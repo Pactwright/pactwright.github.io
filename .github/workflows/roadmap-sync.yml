@@ -1,0 +1,52 @@
+name: roadmap-sync
+# XC-12: the master ROADMAP.md in this repo and each repo's ROADMAP.md must say the same thing.
+# Runs weekly (the task asked for a weekly sync; it is now a check, not a chore), on demand, and
+# on any change to the roadmaps or the checker itself. The three repos are read-only here: this
+# job never edits a roadmap, it only reports which line disagrees with which.
+on:
+  schedule:
+    - cron: '17 6 * * 1' # Mondays 06:17 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - ROADMAP.md
+      - scripts/check-roadmap-sync.mjs
+      - .github/workflows/roadmap-sync.yml
+  pull_request:
+    paths:
+      - ROADMAP.md
+      - scripts/check-roadmap-sync.mjs
+      - .github/workflows/roadmap-sync.yml
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: site
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: Pactwright/Pactwright-Kit
+          path: kit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: Pactwright/Pactwright-contracts
+          path: contracts
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: Pactwright/Pactwright-studio
+          path: studio
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: site/.nvmrc
+      - name: Check the roadmaps agree
+        run: |
+          node site/scripts/check-roadmap-sync.mjs \
+            --master site/ROADMAP.md \
+            --repo kit=kit/ROADMAP.md \
+            --repo contracts=contracts/ROADMAP.md \
+            --repo studio=studio/ROADMAP.md

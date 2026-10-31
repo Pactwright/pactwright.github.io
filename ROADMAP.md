@@ -1,0 +1,376 @@
+# Pactwright — Roadmap to 100% Readiness
+
+> **⚠ This file must be updated in every contribution.** Every PR — code, docs, tests,
+> config, anything — updates the status of the tasks it touches **and** adds one line to the
+> [Update log](#update-log). See [How to update this file](#how-to-update-this-file).
+
+| | |
+|---|---|
+| Last updated | 2026-10-31 |
+| Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
+| Overall progress | **105 / 141 tasks (74%)** |
+| Current phase | Phase 6 — MVP launch on testnet |
+
+Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
+[`ARCHITECTURE_ESSENTIALS.md`](ARCHITECTURE_ESSENTIALS.md) · [`project_structure.md`](project_structure.md)
+
+---
+
+## Progress summary
+
+| Phase | Scope | Release | Tasks | Done | % |
+|---|---|---|---|---|---|
+| 0 | Foundations | — | 14 | 11 | 79% |
+| 1 | Contracts MVP | MVP | 21 | 21 | 100% |
+| 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
+| 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 17 | 94% |
+| 4 | Verifier | MVP | 12 | 12 | 100% |
+| 5 | Studio MVP | MVP | 11 | 9 | 82% |
+| 6 | MVP launch on testnet | MVP | 8 | 3 | 38% |
+| 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 13 | 72% |
+| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
+| 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
+| X | Cross-cutting (docs, security, ops) | all | 12 | 2 | 17% |
+| **Total** | | | **141** | **105** | **74%** |
+
+---
+
+## Legend
+
+- **Status:** `[ ]` todo · `[~]` in progress · `[x]` done · `[-]` dropped (needs an ADR link)
+- **Owner:** `core` = core team only (security-critical; never labelled `Stellar Wave`) · `wave` = open to Drips Wave contributors
+- **Size** (= Drips complexity): `T` trivial (100 pts) · `M` medium (150) · `H` high (200)
+- **Refs:** `FR-*` → PRD §6 · `§` → ARCHITECTURE · `Q*` → PRD §12 open questions
+- Task line format: `- [ ] **ID** Task — owner · size · deps · refs · Done when: …`
+- When a task is done, append `(#PR, YYYY-MM-DD)`.
+- **Home:** every task is owned by the repo whose `ROADMAP.md` lists it. A master task listed in
+  no repo must end with `· home: org` (programme work no repo owns — outreach, funding, metrics,
+  ops) or `· home: <owner>/<repo>` (work done inside another organisation's repo, e.g.
+  `accensa/x402-facilitator-stellar`). `home:` is **not** a way to skip giving a repo task a row.
+  [`scripts/check-roadmap-sync.mjs`](scripts/check-roadmap-sync.mjs) fails CI on a master task with
+  neither a repo row nor a `home:`, on a repo that tracks an unknown ID, on any status that
+  disagrees between the master and a repo, and on summary counts that do not match their own rows.
+
+---
+
+## Integration coverage (the 7 source projects)
+
+This table ensures that no source project's idea gets lost. Update it when a related task changes status.
+
+| Project | Feature kept in Pactwright | Tasks | Release | Status |
+|---|---|---|---|---|
+| Accensa `x402-facilitator-stellar` | `exact` payments, new `pact` scheme, `/pact/submit`, Bazaar listing | X-01…X-08, K-08, K-09 | MVP | done |
+| Accensa `accensa-contracts` | `RefundVault` (M0 refunds, disputes), `ReceiptAnchor` (certificates) | C-14, C-15, C-20, K-07, S-04 | MVP | done |
+| Accensa `accensa-contracts` | `upto-authorization` (M1) | P9-06 | — | **dropped, ADR-017** |
+| Accensa `accensa-app` | `@accensa/sdk` `verifyReceipt`, `createSettleHook`; indexer pattern; merchant dashboard | K-07, S-02, S-07, P7-10 | MVP / v1 | in progress |
+| Tollcraft `soroban-cost-linter` | Cost-lint Action on every PR | C-13 | MVP | done |
+| Tollcraft `soroban-budget-assert` | `#[budget_*]` tests, `cargo budget-report`, cost per route in dashboard | C-12, C-21, P7-10, P8-06 | MVP | in progress |
+| Witness | verdict-v1 envelope, condition hash, "model reads, code decides", verify-cli | K-14, V-02…V-05, K-12 | MVP | in progress |
+| Ficha | Pay per unit used, refund the rest (signed usage vouchers) + pay-per-minute demo | P7-01…P7-04 | v1 | done |
+| Vespi | Human approves the agent's budget | P7-12 | v1 | done |
+| Pollar | Seedless principal wallet funds the agent; Studio storefront template | P7-13, P9-05 | v1 / v2 | done |
+| BookerBob | Proven-customer ranking; anonymous proof-of-purchase reviews | P9-01…P9-03 | v2 | done |
+
+---
+
+## Phase 0 — Foundations
+
+Goal: the org, repos, tooling and agreements exist before any feature code.
+
+- [~] **F-01** Create GitHub org `pactwright`; reserve npm scope `@pactwright` — core · T · — · — · Done when: org and scope exist. — `@pactwright` npm scope is taken by another account (smb-dev, 2026-09-01); see partners.md · home: org
+- [x] **F-02** Create the 3 repos with licenses (contracts MIT, kit Apache-2.0, studio MIT), README skeleton, `NOTICE` crediting all 7 projects — core · T · F-01 · project_structure §6 (pushed, 2026-10-28)
+- [x] **F-03** Add `ROADMAP.md`, `AGENTS.md`, `CONTRIBUTING.md` (with the roadmap rule) and copies of the 4 design docs to each repo — core · T · F-02 · Done when: every repo states the roadmap rule. (pushed, 2026-10-28)
+- [x] **F-04** Labels (`Stellar Wave`, `complexity:*`, `area:*`, `good first issue`, `core-team-only`), issue template, PR template with a "ROADMAP.md updated" checkbox — core · T · F-02 · project_structure §7 (#21, 2026-10-28)
+- [x] **F-05** `roadmap-check` CI workflow in all 3 repos: fails a PR that doesn't modify `ROADMAP.md` — core · M · F-02 · Done when: a PR without a roadmap change fails CI. (#21, 2026-10-28) · **observed in all three repos 2026-10-31**: each got a throwaway PR whose only commit is empty (touches no files), and the `roadmap` job failed — Kit via today's Dependabot PRs, Studio [#38 → run 41193166659](https://github.com/Pactwright/Pactwright-studio/actions/runs/41193166659), contracts [#67 → run 41193227111](https://github.com/Pactwright/Pactwright-contracts/actions/runs/41193227111). Both evidence PRs were closed unmerged and their branches deleted.
+- [x] **F-06** `CODEOWNERS` for core-team-only paths — core · T · F-02 · project_structure §7 (#21, 2026-10-28)
+- [x] **F-07** OpenSSF Scorecard, Dependabot, branch protection (CI + review required) — core · T · F-02 (#21, 2026-10-28)
+- [ ] **F-08** Outreach to Witness, Vespi, BookerBob, Ficha and Pollar teams; record permission / letters of support in `docs/partners.md` — core · M · — · PRD §10 · Done when: a reply from each team is recorded, or the integration is marked "no contact" in the coverage table. · home: org
+- [ ] **F-09** Pollar partnership agreement for SDK use and the Studio template (Pollar Studio has no license) — core · M · F-08 · Q1 · home: org
+- [x] **F-10** Agree with Accensa facilitator maintainers on adding the `pact` scheme; open the tracking issue there — core · T · — · ADR-004 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **F-11** Testnet keys: deployer, sponsor (fees + reserves), verifier, anchorer; stored in a secrets manager — core · M · — · ARCH §9 (#55, 2026-10-28)
+- [x] **F-12** Answer Q5: does `RefundVault` support a refund-only key? Read `refund-vault` source and record the answer in PRD §12 — core · M · — · Q5 (#55, 2026-10-28)
+- [x] **F-13** Write ADR files ADR-001…ADR-015 into `pactwright-contracts/docs/adr/` — wave · M · F-02 · ARCH §15 (#52, 2026-10-28)
+- [x] **F-14** `@accensa/sdk` is not published on npm (404 on 2026-10-28): publish it from `accensa-app` or vendor it into the kit — core · M · — · K-07 · Done when: `@pactwright/seller` can depend on it. (kit#68, 2026-10-29)
+
+## Phase 1 — Contracts MVP (`pactwright-contracts`)
+
+Goal: the `pact` escrow contract on testnet, fully tested and cost-bounded.
+
+- [x] **C-01** Workspace: `soroban-sdk` 28.x pinned, toolchain, `budget.toml` skeleton, clippy/deny/fmt configs — core · M · F-02 · ARCH §11 (#3, 2026-10-28)
+- [x] **C-02** `types.rs`, `errors.rs`, `events.rs` per ARCH §4.2, §4.6, §4.7 — core · M · C-01 (#3, 2026-10-28)
+- [x] **C-03** `hashing.rs` + `test-vectors/` generator (nonce, pact_id, verdict/usage/delivery msgs, leaf, Merkle) — core · H · C-02 · ARCH §4.3, ADR-015 · Done when: vectors are generated by a script and committed. (#3, 2026-10-28)
+- [x] **C-04** `open`: all checks (cap, self-dealing, deadlines, unused id, token), escrow transfer, verifier snapshot, TTL past `settle_deadline + GRACE` — core · H · C-03 · FR-P5, FR-P6 · ARCH §4.4 (#3, 2026-10-28)
+- [x] **C-05** `record_verdict`: binding checks, `amount ≤ cap`, ed25519 with snapshotted key, verdict window — core · H · C-04 · FR-V8 (#3, 2026-10-28)
+- [x] **C-06** `settle` (seller auth), including `Silence::Pay` path — core · H · C-05 · FR-S1, FR-S3 (#3, 2026-10-28)
+- [x] **C-07** `release` rules (Denied · silence Refund · past settle deadline) — core · H · C-05 · FR-S2, FR-S4 (#3, 2026-10-28)
+- [x] **C-08** `set_verifier`, `get_pact`, `get_config`, `extend_pact_ttl` — wave · M · C-04 (#3, 2026-10-28)
+- [x] **C-09** Tests: every entrypoint × every error — wave · H · C-04…C-08 (#3, 2026-10-28)
+- [x] **C-10** `deadlines.rs`: fake-clock tests for every deadline boundary and both silence policies — wave · M · C-06, C-07 (#3, 2026-10-28)
+- [x] **C-11** `invariants.rs`: one named test per invariant 1–8 — wave · H · C-04…C-08 · ARCH §4.5 (#3, 2026-10-28)
+- [x] **C-12** `#[budget_*]` tests on every entrypoint; first `cargo budget-report` on testnet; commit baselines × 1.15 — wave · M · C-17 · ARCH §10 (#57, 2026-10-28)
+- [x] **C-13** Tollcraft cost-lint Action in CI with zero findings — wave · T · C-01 (#52, 2026-10-28)
+- [x] **C-14** Vendor `refund_vault.wasm` + `receipt_anchor.wasm` with `SHA256SUMS`; `check_vendor_hashes.sh` + workflow — wave · M · C-01 · ADR-008 (#52, 2026-10-28)
+- [x] **C-15** `integration.rs`: `pact` with vendored Accensa WASMs in one env — wave · H · C-14 (#52, 2026-10-28)
+- [x] **C-16** `bolero` fuzz targets: attestation/voucher decoding, amounts, deadlines — wave · M · C-05 (#52, 2026-10-28)
+- [x] **C-17** `build.sh`, `deploy.sh` (pubnet guard), `bindings.sh`; deploy to testnet; `deployments/testnet.env`; `DEPLOYMENTS.md` — core · M · C-07 (#55, 2026-10-28)
+- [x] **C-18** `release.yml`: publish `pact.wasm` + hash, TS bindings, test-vectors as release assets — wave · M · C-17 (#55, 2026-10-28)
+- [x] **C-19** `EVENTS.md`, `INVARIANTS.md`, `BENCHMARKS.md`, `SECURITY_MODEL.md` — wave · M · C-12 (#57, 2026-10-28)
+- [x] **C-20** Deploy Pactwright's own `ReceiptAnchor` instance on testnet (admin = anchorer key) — core · M · C-14, F-11 (#55, 2026-10-28)
+- [x] **C-21** Tier B testnet baselines: scripted stateful flow (test token SAC, open → signed verdict → settle/release/close_meter as real transactions), record network CPU, read/write bytes, entries and fees in `budget.toml` + BENCHMARKS.md, enable `budget-report.yml` — core · H · C-12, C-17, F-11 · ARCH §10 · Done when: every entrypoint has a network-measured baseline and the post-merge job runs. (#58, 2026-10-28)
+
+## Phase 2 — Facilitator `pact` scheme (`accensa/x402-facilitator-stellar`)
+
+Goal: M2 pacts are funded through standard x402, with sponsored fees.
+
+- [x] **X-01** ADR in the facilitator repo for the `pact` scheme and `/pact/submit` — core · M · F-10 · ARCH §6.4 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-02** `/verify` validation: exactly `pact.open` on the configured contract, `seller == payTo`, `cap == amount`, `condition_hash == hash(condition)`, only `token.transfer(buyer → pact, cap)`, facilitator not a party, unused `pact_id`, seller trustline — core · H · X-01, C-17 · FR-P3, FR-P7 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-03** `/settle`: submit with fee sponsorship; return tx hash + `pact_id` — core · H · X-02 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-04** `POST /pact/submit`: allow-listed functions on the configured contract only; reuse API keys, rate limits, daily fee ceiling — core · H · X-03 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-05** Negative tests: one per validation rule in X-02 and per allow-list rule in X-04 — wave · H · X-02, X-04 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-06** Bazaar `pactwright` field (mode, verifier, silence, refund window, float) — wave · M · X-01 · FR-D1, FR-D2 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-07** OpenAPI + seller/buyer guide updates — wave · T · X-04 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+- [x] **X-08** Regression: unmodified `exact` clients and the upstream e2e suite still pass — wave · M · X-03 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
+
+## Phase 3 — Kit (`pactwright-kit`)
+
+Goal: an agent and a seller can complete M0 and M2 pacts with the SDK, MCP and CLI.
+
+- [x] **K-01** Workspace: pnpm, Node 24, strict TS, lint, Vitest, changesets, `.env.example` — wave · M · F-02 (#65, 2026-10-28)
+- [x] **K-02** `core/schemas.ts`: `PactwrightExtra` v2, `Certificate`, enums — wave · M · K-01 · ARCH §7.2 (#65, 2026-10-28)
+- [x] **K-03** `core/hashing.ts` + `vectors.test.ts` against the pinned contracts release — core · H · C-18 · ADR-015 (kit#68, 2026-10-29)
+- [x] **K-04** `core/merkle.ts`, `amounts.ts`, `network.ts` (fails on incomplete config) — wave · M · K-02 (#65, 2026-10-28)
+- [x] **K-05** `contracts-client` generated from release bindings — wave · T · C-18 (kit#68, 2026-10-29)
+- [x] **K-06** `seller`: 402 builder, Express middleware, signed `X-Pactwright-Delivery`, refuse terminal pacts, startup checks — core · H · K-03 · FR-P1, FR-V2 (Kit#77, 2026-10-29)
+- [x] **K-07** `seller` hooks: `createSettleHook()`, M0 `RefundVault.refund` on DENY/partial, M2 auto-settle on ALLOW — wave · H · K-06, C-15 · FR-S5 (Kit#75, 2026-10-29)
+- [x] **K-08** `agent`: client, M0 `buy`, idempotency → nonce, `await`, `certificate` — core · H · K-03 · FR-P2, FR-P5 (Kit#77, 2026-10-29)
+- [x] **K-09** `agent`: M2 `buy` via the `pact` scheme — core · H · K-08, X-03 (Kit#77, 2026-10-29)
+- [x] **K-10** `agent/accounts.ts`: create agent with sponsored reserves + USDC trustline; top-up — wave · H · K-08 · FR-A1…A3 (kit#70, 2026-10-29)
+- [x] **K-11** MCP server with `find_sellers`, `buy`, `get_pact`, `dispute`, `get_certificate` — wave · H · K-09 · FR-I2 (kit#70, 2026-10-29)
+- [x] **K-12** CLI: `verify`, `pact`, `agent-create`, `agent-topup` — wave · M · K-10 · FR-V9 (kit#70, 2026-10-29)
+- [x] **K-13** Adapters: `types.ts`, `discovery-bazaar`, `reputation-identity`, `gate-manual`, `wallet-keypair`, `verifier-witness` — wave · M · K-02 · ARCH §8.6 (Kit#77, 2026-10-29)
+- [x] **K-14** Vendor `@witness/core` under `vendor/witness-core/` with NOTICE — wave · T · K-01 (#65, 2026-10-28)
+- [x] **K-15** Examples: `seller-express`, `agent-node` — wave · M · K-09 (kit#72, 2026-10-29)
+- [x] **K-16** `e2e-testnet.yml` nightly covering every MVP scenario in ARCH §13 — wave · H · K-09, V-10, S-04 (Kit#76, 2026-10-29)
+- [x] **K-18** Drop `shardId` from `CertificateSchema` and the ARCHITECTURE copies (ReceiptAnchor v0.2.0 has no shards; Studio dropped it in studio#25) — wave · T · S-04 (Kit#86 + Kit#89, 2026-10-29)
+- [ ] **K-17** Publish `@pactwright/*` 0.1.0 to npm — core · T · K-16 — reopened: not on npm
+
+## Phase 4 — Verifier (`pactwright-kit/services/verifier`)
+
+Goal: trustworthy, reproducible verdicts for one condition kind.
+
+- [x] **V-01** Hono server, `/health`, `/v1/envelopes/:sha256`, store with unique `(pact_id, milestone)` — wave · M · K-01 (#65, 2026-10-28)
+- [x] **V-02** Pipeline: delivery-receipt check, evidence hash check — core · H · K-03 · FR-V2, FR-V3 (kit#71, 2026-10-29)
+- [x] **V-03** Provider-neutral LLM adapter (`models/llm.ts`): provider + model pinned in config, explicit effort where supported, structured output; no sampling params; refusal → no verdict; provider, model ID, effort + raw-output hash in the envelope — wave · M · V-01 · FR-V5 (kit#71, 2026-10-29)
+- [x] **V-04** `rules/document-translation.ts` deterministic rules, with partial `amount` — wave · H · V-03 · FR-V4 (#65, 2026-10-28)
+- [x] **V-05** `sign.ts`: verdict-v1 envelope + one attestation per pact — core · H · V-02 · FR-V8 (kit#71, 2026-10-29)
+- [x] **V-06** `submit.ts`: `record_verdict` / `release` via `/pact/submit` — wave · M · V-05, X-04 (Kit#77, 2026-10-29)
+- [x] **V-07** `non-delivery.ts`: seller webhook challenge → DENY on timeout — wave · H · V-05 · FR-V6 (kit#71, 2026-10-29)
+- [x] **V-08** Eval set (≥ 50 labelled cases) + accuracy script + `verifier-eval.yml` (fails < 90%) — wave · H · V-04 (kit#72, 2026-10-29)
+- [x] **V-09** `verify.minAmount` handling (receipt-only below threshold) — wave · M · V-05 · FR-V7 (kit#72, 2026-10-29)
+- [x] **V-10** Dockerfile; deploy the testnet verifier (kit#94, 2026-10-29)
+- [x] **V-12** Real-model accuracy: run the labelled eval set through the configured model (not hand-written readings) and gate CI on ≥ 90% (Kit#92: 29/29 (100%) with gemini-3.5-flash-lite, 2026-10-29)
+- [x] **V-11** Measure verification latency; set default deadline lengths; answer Q6 — core · M · V-10 · Q6 (kit#72, 2026-10-29)
+
+## Phase 5 — Studio MVP (`pactwright-studio`)
+
+Goal: public pact pages and certificates backed by an indexer and anchorer.
+
+- [x] **S-01** Next.js scaffold, `db.ts`, `001_core.sql`, `migrations.yml` — wave · M · F-02 · ARCH §7.3 (#18, 2026-10-28)
+- [x] **S-02** Indexer: `getEvents`, cursor, idempotent writes for `pact`, facilitator and `RefundVault` events — wave · H · S-01, C-17 (studio#25, 2026-10-29)
+- [~] **S-03** Indexer backfill from a history source + lag alert at 50% of RPC retention — wave · H · S-02 · FR-R4 — backfill dropped every JSON-delivered event while advancing the cursor (fixed in studio#31, plus an archival-RPC source); needs a configured source and one real backfill
+- [x] **S-04** Anchorer: reconcile from chain → batch (≤ max size, ≥ min interval) → `anchor_batch` → proofs — core · H · S-02, C-20 · FR-R1, FR-R2 (studio#25, 2026-10-29)
+- [x] **S-05** API: `/api/pacts/:id`, `/api/certificates/:id` (`pending`/`anchored`) — wave · M · S-04 (#18, 2026-10-28)
+- [x] **S-06** Pact timeline page — wave · M · S-05 · FR-I4 (#18, 2026-10-28)
+- [x] **S-07** Certificate viewer: offline `verifyReceipt()` + on-chain `verify_receipt` — wave · M · S-05 · FR-R3 (#18, 2026-10-28)
+- [x] **S-08** Stellar Expert links per network — wave · T · S-06 (#18, 2026-10-28)
+- [x] **S-09** Playwright e2e for both pages — wave · M · S-07 (#21, 2026-10-28)
+- [~] **S-10** Deploy studio (testnet) — core · T · S-09 · (studio#31; live on Render, cron syncs and anchors (batch 2, 12 receipts, c83121d1…), 2026-10-29) · **reopened 2026-10-31**: Render auto-deploy never fires — every deploy in the service's history is `api` or `blueprint sync`, so `main` reached production only when deployed by hand (the Live deploy was 15 commits behind). Needs the Render GitHub App reconnected or a deploy hook wired into CI.
+- [x] **S-11** Studio visual design: styled every page (it had none) (studio#32, 2026-10-29)
+
+## Phase 6 — MVP launch (testnet)
+
+Goal: a public, verifiable MVP that is Drips- and SCF-ready.
+
+- [x] **L-01** Run every MVP scenario on testnet (M0 ALLOW, DENY, non-delivery; M2 ALLOW, DENY, silence) and link the transactions in all 3 READMEs — core · M · K-16 (Kit#77 + contracts#62 + studio#24, 2026-10-29) · home: org
+- [x] **L-02** READMEs in the Problem → Why Stellar → Architecture → Quickstart format — wave · M · L-01 (contracts#59, Kit#67, studio#23, 2026-10-28) · home: org
+- [x] **L-08** Hosted testnet facilitator with the `pact` scheme (Accensa) and the nightly x402 e2e pointed at it (hosted on Render with `pact` and API keys; the nightly e2e's x402 rows pass through it in CI (Kit#90), 2026-10-29) · home: org
+- [ ] **L-03** Install the Drips Wave app; write ≥ 25 well-scoped issues per repo; apply all 3 repos — core · M · L-01 · project_structure §7 · home: org
+- [ ] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 · home: org
+- [ ] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 · home: org
+- [ ] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 · home: org
+- [ ] **L-07** Tag MVP releases in all 3 repos; update `CHANGELOG.md`s — core · T · L-05 · home: org
+
+## Phase 7 — v1
+
+Goal: metering, disputes, dashboards, the first add-ons, and M0 on mainnet.
+
+- [x] **P7-01** Contract: `close_meter` + `UsageVoucher` verification + tests + budget tests; remove the metered guard in `open` and re-enable the tests marked `ROADMAP P7-01` — core · H · C-11 · FR-M3, ADR-010 (#55, 2026-10-28)
+- [x] **P7-02** `agent/meter-loop.ts`: cumulative vouchers, never beyond cap — wave · H · P7-01 · FR-M2 (kit#73, 2026-10-29)
+- [x] **P7-03** `seller/hooks/meter.ts`: keep latest voucher, `close_meter` — wave · M · P7-01 · FR-M1 (kit#73, 2026-10-29)
+- [x] **P7-04** `examples/metered-minutes`: Ficha-style pay-per-minute demo (credit Ficha) — wave · H · P7-02, P7-03 · FR-X1 (kit#73, 2026-10-29)
+- [x] **P7-05** Verifier dispute milestones (`dispute-<n>`) within the refund window — wave · H · V-05 · FR-S6 (kit#73, 2026-10-29)
+- [x] **P7-06** Dispute → `RefundVault` refund flow in the seller middleware; `Refunded` receipts — wave · M · P7-05 (kit#73, 2026-10-29)
+- [x] **P7-07** Hono middleware — wave · M · K-06 · FR-I3 (kit#73, 2026-10-29)
+- [x] **P7-08** Seller keys from KMS (Kit#91: refund fcb0d7a8… signed by a Vault transit key, 2026-10-29)
+- [x] **P7-09** Evidence privacy: retention, redaction hook, disclosure text — wave · M · V-02 · FR-V10 (kit#73, 2026-10-29)
+- [x] **P7-10** `002_accounts.sql` + merchant dashboard (revenue, refund/dispute rate, cost per route from `budget-report`) — wave · H · S-05 · FR-I5 (#20, 2026-10-28)
+- [x] **P7-11** Principal view (budgets, live pacts) — wave · H · P7-10 (#20, 2026-10-28)
+- [~] **P7-12** `gate-vespi` adapter: Vespi approves the budget — wave · H · K-13, F-08 · FR-A4 — reopened: failed open when Vespi was unreachable (fixed); untested against Vespi's API (F-08)
+- [~] **P7-13** `wallet-pollar` adapter: principal funds the agent from Pollar; answer Q1 — wave · H · K-13, F-09 · FR-A4 — reopened: returned unsigned entries on failure (fixed); untested against Pollar's API (F-09)
+- [x] **P7-14** M0 on mainnet via a production facilitator (config + pubnet guard) — core · M · L-05 · ARCH §12 (kit#73, 2026-10-29)
+- [x] **P7-15** Apply the Q5 outcome: seller vault merchant as a smart account whose middleware key can sign only `refund` (KMS until then) — core · M · F-12 (kit#73, 2026-10-29)
+- [ ] **P7-16** Publish the hackathon Scale-path goals in all READMEs — core · T · L-06 · PRD §9 · home: org
+- [ ] **P7-17** Reach v1 metrics: 1,000 testnet pacts, 250 mainnet M0 pacts, 15 sellers, 97% accuracy — core · M · P7-14 · home: org
+- [ ] **P7-18** SCF tranche 2 submission — core · M · P7-17 · home: org
+
+## Phase 8 — v1.1: audit and mainnet
+
+Goal: M2 on mainnet, audited.
+
+- [ ] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01
+- [ ] **P8-02** Fix audit findings; publish the report — core · H · P8-01
+- [ ] **P8-03** Deploy `pact` + `ReceiptAnchor` to pubnet with the guard; `deployments/pubnet.env` — core · M · P8-02
+- [ ] **P8-04** Harden the Accensa facilitator for production (pubnet fee ceiling, settlement evidence, monitoring) — core · H · X-08 — reopened: facilitator work, not done · home: accensa/x402-facilitator-stellar
+- [x] **P8-05** Mainnet verifier operation and key policy; answer Q4 — core · M · V-10 · Q4 (kit#73, 2026-10-29)
+- [ ] **P8-06** Pubnet rent/TTL measurement with `budget-report`; re-baseline budgets — wave · M · P8-03
+- [ ] **P8-07** Re-run every e2e scenario on pubnet with small amounts — core · M · P8-03 — reopened: depends on the pubnet deploy (P8-03), which hasn't happened
+- [ ] **P8-08** Hackathon goal 1: first M2 pact settled on mainnet — core · T · P8-07
+- [ ] **P8-09** Hackathon goals 2 and 3: on-stage MCP agent refund; metered demo with Pollar + Vespi — core · M · P7-04, P7-12, P7-13 · home: org
+- [ ] **P8-10** SCF tranche 3 submission — core · M · P8-08 · home: org
+
+## Phase 9 — v2
+
+Goal: every remaining source-project feature, and M1 if it becomes safe.
+
+- [x] **P9-01** `reputation-bookerbob` adapter; answer Q2 — wave · H · K-13, F-08 · FR-D3, Q2 (kit#73, 2026-10-29)
+- [x] **P9-02** Proof-of-purchase hook: batched, delayed, shuffled `add_member`; privacy model doc — core · H · P9-01 · FR-X3 (kit#73, 2026-10-29)
+- [x] **P9-03** Reputation weighting (unique buyers, age, amount; self-dealing excluded) — wave · H · P9-01 · FR-D3 (kit#73, 2026-10-29)
+- [x] **P9-04** Smart-account agent wallets with true revoke — core · H · K-10 · FR-A5 (kit#73, 2026-10-29)
+- [x] **P9-05** Pollar Studio storefront template (partnership, SDK only) — core · H · F-09 · FR-X4 (#20, 2026-10-28)
+- [-] **P9-06** M1 (`upto`): dropped from scope with a re-open trigger, recorded in ADR-017 — core · H · — · ADR-002, ADR-017 (2026-10-31)
+- [x] **P9-07** Switch to a published `@witness/core` if available; answer Q3 — wave · T · K-14 · Q3 (kit#68, 2026-10-29)
+- [x] **P9-08** Hono/Express parity docs and migration guide for sellers — wave · M · P7-07 (kit#73, 2026-10-29)
+- [x] **P9-09** Second condition kind in the verifier (picked from seller demand) + eval set — wave · H · V-08 (kit#73, 2026-10-29)
+
+## Cross-cutting (every phase)
+
+- [ ] **XC-01** Keep `PRD.md`, `ARCHITECTURE.md`, `ARCHITECTURE_ESSENTIALS.md`, `project_structure.md` in sync with code; any design change gets an ADR first — core · M · ongoing · home: org
+- [ ] **XC-02** `SECURITY.md` + threat model reviewed at each release — core · M · ongoing · home: org
+- [~] **XC-03** Monitoring: sponsor balance, indexer lag, pending certificates, verifier error rate — wave · M · S-03 · (#19, 2026-10-28) · **reopened 2026-10-31**: `/api/ops/health` measures 2 of the 4 — `indexer_lag` (1004→1005 ledgers across two reads, threshold 60480) and `pending_certificates` (0) are real; sponsor balance and verifier error rate are not probed at all.
+- [x] **XC-04** Network-upgrade runbook: re-baseline budgets, re-run e2e — wave · M · C-12 (#55, 2026-10-28)
+- [ ] **XC-05** Dependency hygiene: Dependabot triage, pinned WASM updates with hash changes — wave · T · ongoing · home: org
+- [ ] **XC-06** Drips Wave: keep ≥ 15 open, well-scoped issues per repo; review PRs within 72 h — core · M · L-03 · home: org
+- [ ] **XC-07** No point-farming issues: merge trivial doc tasks into meaningful ones — core · T · ongoing · home: org
+- [ ] **XC-08** `NOTICE` and the integration coverage table kept accurate — core · T · ongoing · home: org
+- [ ] **XC-09** Copy shared docs into each repo's `docs/` on release — wave · T · ongoing · home: org
+- [ ] **XC-10** Changelogs on every release — wave · T · ongoing · home: org
+- [ ] **XC-11** Partner updates to the 5 hackathon teams at each release — core · T · F-08 · home: org
+- [x] **XC-12** Roadmap sync: master roadmap matches every repo roadmap, weekly — core · T · F-03 · home: org · Done when: CI compares the master with all three repo roadmaps and fails on a divergence, so "weekly" is a schedule, not a chore. (**`pactwright.github.io`#4, 2026-10-31**: the master is versioned there, `scripts/check-roadmap-sync.mjs` enforces five rules and `.github/workflows/roadmap-sync.yml` runs it weekly + on every roadmap change; teeth proved by injecting a fake state, a fake count and an unknown ID.)
+
+---
+
+## Definition of 100% readiness
+
+Pactwright is 100% ready when every box below is checked:
+
+- [ ] Every PRD requirement (P0, P1, P2) is implemented or dropped through an ADR.
+- [ ] All 8 contract invariants have passing named tests; fuzzing runs in CI.
+- [ ] Every contract entrypoint has a budget test; cost-lint has zero findings; `settle` < 0.5% of a 1 USDC pact.
+- [ ] The audit is complete and published; M0 and M2 run on mainnet.
+- [ ] All 7 source projects show `done` (or `deferred` with an ADR) in the integration coverage table.
+- [ ] v1 success metrics in PRD §8 are met.
+- [ ] Every open question in PRD §12 is answered.
+- [ ] All 3 repos are approved on Drips Wave, with green CI, complete docs and linked mainnet transactions.
+- [ ] SCF tranches 1–3 are submitted.
+
+---
+
+## How to update this file
+
+**Every contribution updates this file. No exceptions:** code, tests, docs, CI, config, dependency bumps.
+
+1. **Find your task IDs.** Change their status: `[ ]` → `[~]` when you start, `[~]` → `[x]` when merged, adding `(#PR, YYYY-MM-DD)`.
+2. **No matching task?** Add one in the right phase with the next free ID and the full format (owner · size · deps · refs · Done when).
+3. **Dropping a task?** Mark it `[-]` and link the ADR that drops it.
+4. **Update the counts** in the [Progress summary](#progress-summary), "Overall progress" and "Last updated" at the top.
+5. **Touches a source project's feature?** Update the [Integration coverage](#integration-coverage-the-7-source-projects) status.
+6. **Append one line** to the [Update log](#update-log). This applies even to changes that complete no task.
+
+**Per-repo files:** task IDs are global. Each repo has its own `ROADMAP.md` with that repo's
+phases and its own update log. Contributors edit the `ROADMAP.md` of the repo they contribute
+to; a PR that doesn't modify it fails the `roadmap-check` CI job (F-05).
+
+**This file is the master**, versioned at
+[`pactwright.github.io/ROADMAP.md`](https://github.com/Pactwright/pactwright.github.io/blob/main/ROADMAP.md);
+the copy at the workspace root is a symlink to it. The weekly hand-sync (XC-12) is now a CI job:
+`.github/workflows/roadmap-sync.yml` in that repo checks out all three repos plus this file and
+runs `scripts/check-roadmap-sync.mjs`, which fails on an ID the master doesn't know, a status the
+master and a repo disagree about, a summary count its own rows don't support, or a task with no
+repo row and no `home:`. When it goes red, fix the roadmap that is wrong — never edit a count to
+make the job pass.
+
+---
+
+## Update log
+
+Newest first. One line per contribution.
+
+| Date | PR / change | Tasks | Summary |
+|---|---|---|---|
+| 2026-10-31 | site#4, Kit#111, contracts#69, studio#40 | XC-12 `[x]` | XC-12 becomes a CI check instead of a weekly hand-sync, which is what let it drift in the first place. Three parts. **(1) The master now has a home**: it was a file in a non-git workspace folder, so nothing could diff it against anything; it is `pactwright.github.io/ROADMAP.md` and the workspace copy is a symlink to it, so there is still exactly one file to edit. **(2) `scripts/check-roadmap-sync.mjs`** enforces five rules across the master plus Kit, contracts and Studio: an ID twice in one file; a Progress-summary number its own rows don't support; a total its rows don't support; a repo tracking an ID the master has never heard of or holding a different status than the master; and a master task with no repo row and no `· home:` marker. Teeth were proven before trusting a green run — injecting `- [~] **F-06**`, a fake `105/141`, a dropped `S-01` and a made-up `F-99` produced exactly the five expected failures, and the same mutations are what the `roadmap-sync` workflow runs on. **(3) `.github/workflows/roadmap-sync.yml`** checks out all four roadmaps weekly (Mon 06:17 UTC), on demand and on any roadmap change; the three repos are read-only there, so the job can report a divergence but cannot rewrite history. Found and fixed with it: the **41 orphan IDs** from the first audit. Ten are Accensa facilitator work and now say `home: accensa/x402-facilitator-stellar`; 26 are programme work (org setup, outreach, Drips onboarding, metrics, SCF tranches, partner updates) and say `home: org`; five were ours all along and got real rows — `P7-14`, `P7-15`, `P8-05`, `P8-07` in Kit (a new Phase 8 section; `P8-07` stays `[ ]`, blocked on the pubnet deploy) and `P9-06` in contracts, closed as `[-]` with **ADR-017** because P9-06's own wording is "new ADR either way". Kit reads 54/58 (93%) and contracts 32/38 (84%) with those rows added. `F-01/F-08/F-09/F-10` and the `L-*`, `P8-04`, `X-*` rows also stop pretending to be repo code. Two follow-ups recorded rather than papered over: `home: org` tasks that are still open need issues to be pickable (XC-06, L-03), and **`Pactwright-Kit/docs/adr/ADR-016` re-states ADR-004's decision under a colliding number** — that is why this repo's new ADR is 017, and the duplicate is raised as [Kit#112](https://github.com/Pactwright/Pactwright-Kit/issues/112). All four docs-site copy drifts (`PRD.md`, `ARCHITECTURE*.md`, `project_structure.md` differ per repo) were left for XC-09's release-time copy, not silently overwritten. |
+| 2026-10-31 | studio#37, studio#39, contracts#68 | F-04, F-05 `[x]` | Finished the XC-12 audit's follow-through in the two repos that lagged the master. Studio `F-04` closed (#37, merge `74fa38b`) on live label/template evidence. `F-05`'s Done-when is *observational* — "a PR without a roadmap change fails CI" — and only Kit had ever been seen to do it, so contracts and Studio each got a throwaway PR whose single commit is deliberately **empty** (touches no files): Studio #38 failed `roadmap` in 4 s ([run 41193166659](https://github.com/Pactwright/Pactwright-studio/actions/runs/41193166659)), contracts #67 failed it in 5 s ([run 41193227111](https://github.com/Pactwright/Pactwright-contracts/actions/runs/41193227111)). Both were closed **unmerged** with the evidence posted and their branches deleted — merging them would have been the wrong outcome, the gate passing is the wrong outcome. Then #39 (Studio) and #68 (contracts) flipped the rows to `[x]` citing those run IDs: Studio reads 18/21 (86%) with Foundations 6/6, contracts 32/37 (86%) with Foundations 9/9. Master `F-05` was already `[x]` from #21, so no count moved here — what changed is that the claim now has an observation behind it in all three repos instead of one. |
+| 2026-10-31 | — (workspace) | S-10 and XC-03 reopened | First **XC-12** roadmap-sync audit, run as a measurement rather than a read: every task row in the master and in all three repo roadmaps was parsed and diffed by ID. **The master was over-claiming on two tasks, so overall progress moves 106/141 (75%) → 104/141 (74%).** `S-10` is reopened — Render auto-deploy has never fired (every deploy in the Studio service's history is `api` or `blueprint sync`, and the Live deploy was 15 commits behind until deployed by hand today), so "deployed" is not "deployed continuously". `XC-03` is reopened — `GET /api/ops/health` was probed twice, six seconds apart: `indexer_lag` moved 1004→1005 ledgers against a 60480 threshold and `pending_certificates` reads 0, which are real, but the endpoint returns **2 of the 4** signals the task names — sponsor balance and verifier error rate are not measured at all. The repo roadmaps were right on both; the master was not. Two other conflicts went the *other* way and the master stands: `F-04` is genuinely done in Studio (`gh api repos/Pactwright/Pactwright-studio/labels` returns `Stellar Wave`, `good first issue`, `core-team-only`, 3 `complexity:*` and 10 `area:*` labels, plus `ISSUE_TEMPLATE/` and `pull_request_template.md`), so Studio's `[~]` is stale and will be flipped in that repo; `F-05` has `roadmap-check.yml` in all three repos but its teeth are only *proven* in Kit (today's Dependabot PRs failed `roadmap`), so contracts and Studio stay `[~]` until a PR without a roadmap change is seen to fail there. Also found, and not yet fixed: **41 master task IDs exist in no repo roadmap** (`L-01…08` legitimately — that work is in `accensa/x402-facilitator-stellar`; but `P7-14…18`, `P8-04/05/07/09/10`, `P9-06`, `F-01/08/09/10`, `X-01…08` and 10 `XC-*` have no repo home, so no contributor can pick them up, which is also why Kit has 4 open issues and Studio 1 against XC-06's floor of 15), and `F-02…F-07` are duplicated across all three repo roadmaps with divergent states. Zero repo IDs are missing from the master, and the 141-vs-150 row-count gap is the *Definition of 100% readiness* checklist (9 rows), which is deliberately not a task list. |
+| 2026-10-31 | org `.github`#2 | — (README) | `github.com/Pactwright` rendered the "create a README file" empty state even though the org README had been complete since the repo was created: **GitHub builds the organization profile card from `.github/profile/README.md`, not from the repo root.** Proved by comparing trees — `gh api "repos/Tollcraft/.github/git/trees/HEAD?recursive=1"` lists `profile/README.md`, Pactwright's listed `README.md` only. `git mv README.md profile/README.md` (content unchanged, 8617 B) and the root now holds a 397 B pointer stub. The reference org keeps a second full copy at the root and the two have already drifted (5560 B vs 5596 B, differing only by its X link chip), which is why this repo keeps one source of truth instead of copying that. Merged `642f1bc`; verified on the live page rather than on the PR: `curl -sL https://github.com/Pactwright` now contains the tagline, the `## Approach` and `## What is actually known` headings and both Community links, and no longer contains the empty-state text. **Still outstanding, and not reachable from the API:** Tollcraft's four org header link chips (`docs`, Discord, Telegram, the profiler's site) are GitHub *org settings* — `GET /orgs/Pactwright/social_accounts`, `/links`, `/profile` all 404, the org payload exposes only `blog` + `twitter_username`, and `Organization.pinnedItems` is empty for both orgs despite the reference page pinning repos. Social accounts are scriptable for individuals only. So Pactwright keeps its single `blog` chip (docs) and Discord + Telegram need the owner's clicks at `github.com/organizations/Pactwright/settings/profile`; no X link exists to add. |
+| 2026-10-31 | org `.github`#1 | — (docs) | Compared the org profile README against the **live** reference (`gh api repos/Tollcraft/.github/readme`, 5596 B — not the stale local clone, which is 3118 B and has no `Community` section at all): the seven-section set and order already matched, so this closes the last three presentational gaps. `## Community` is now the reference's single pipe-separated link line — `[Discord](https://discord.gg/4WFU6fwPe) · [Telegram](https://t.me/Pactwright)` — instead of a lead-in plus bullets; the reader-facing pitch moves to the end of `## Documentation` so Community ends the page as it does in the reference; and the two leading HTML comments go, since the reference starts at its h1 (its maintainer note about a `<picture>` logo banner is preserved in the PR body, and the reference org carries no banner either). No X link added: the reference's third chip has no Pactwright counterpart — no handle in any of the six READMEs or in `gh api orgs/Pactwright` — and inventing one is not an option. The links themselves already shipped in `737931c`, so this restyles rather than publishes. Presentation-only diff (3 insertions, 9 deletions, every destination URL unchanged); the repo has no workflows, so there is no CI signal to gate on. |
+| 2026-10-31 | studio deploy | S-10 stays `[x]` | The live Studio (`pactwright-studio-testnet.onrender.com`) was serving the scaffold-era landing page: Render's Live deploy was `fa199dd` from 2026-10-29, 15 commits behind `main`, so both redesigns (#31, #32) — the nav, the recent-pacts ledger, the dated cards and the chain-status footer — had never been visible. Every deploy in the service's history is `api` or `blueprint sync` and none was triggered by a commit, although the service reports `autoDeploy: yes`, `autoDeployTrigger: checksPass`, `branch: main` and the right repo, so Render is not receiving push events from GitHub. Deployed `main` (`1d5cf58`) with the Render CLI; deploy `dbiqrh6tlv9c73bfq7g0` succeeded in 77 s. Verified live: `/`, `/verify`, `/merchant`, `/principal` and a pact page return 200, and the served HTML now carries the nav and the recent-pacts table. Auto-deploy still needs the Render GitHub App reconnected (dashboard) or a deploy hook wired into CI. |
+| 2026-10-31 | Kit#101 | F-07 stays `[x]` | `pnpm/action-setup` 6.0.10 → 6.1.0 (minor), merged. Each of the eight open Dependabot PRs was failing `roadmap` by design, so all their branches were brought up to `main` with a ROADMAP row; all six majors then merged in order (#102 vitest 5, #103 changesets 3, #104 upload-artifact 7, #105 eslint 10, #106 typescript 6, #107 hono/node-server 2), each re-merged with `main` and merged only on a green head; the `package.json` and `pnpm-lock.yaml` conflicts were resolved by taking the union of the two versions and regenerating the lockfile with pnpm 10.34.7. `main` is green on `9afa9b9` (`ci`, `release`, `verifier-eval`, `scorecard`) with vitest 5.0.5, eslint 10, typescript 6, changesets 3, hono/node-server 2 and upload-artifact v7 in the tree. `#100` is not mergeable on purpose: `node:25-slim` is a non-LTS line that reached EOL on 2026-06-01, and Node 25 also drops the bundled corepack that the Dockerfile calls, so the image fails to build. The live LTS lines are 24 (to 2028-04-30) and 26 (LTS since 2026-10-28, to 2029-04-30). |
+| 2026-10-31 | site#3 | — (docs) | `pactwright.github.io` footers and socials now carry Discord (`discord.gg/4WFU6fwPe`) and Telegram (`t.me/Pactwright`), so the hosted site matches the six READMEs updated earlier today: a chat line in the landing footer with the never-DM-first / no-token warning and `SECURITY.md` routing, a Starlight `Footer` component override on every docs page (the built-in edit link, last-updated and pagination are preserved because it renders `Footer.astro` itself), and `discord`/`telegram` header + mobile-menu social icons. Starlight 0.42 has no top-level `footer` config key — `footer.links` was removed, so the links go through the component override; the config route fails the build with *Unrecognized key: "footer"*. `pnpm build` and `scripts/check-links.mjs` green locally, which is the whole CI gate for this repo. Merged as `2e21e83`; the `deploy` run on that SHA is green and the live site was re-read to prove it — the landing page serves both links in `site-foot`, and `/docs/quickstart/` serves each three times (header socials, mobile menu, the new footer nav). `docs/site-community-footer` deleted locally and on the remote after the merge. |
+| 2026-10-31 | all repos | — (README) | Removed the `## Contents` block from all five repository READMEs: the reference README (`Tollcraft/soroban-budget-assert`) has none, and GitHub's outline button already gives the same navigation. Added the real community links everywhere — Discord (`discord.gg/4WFU6fwPe`) and Telegram (`t.me/Pactwright`) — replacing the placeholder comments: org profile, Kit, contracts, studio, evidence and the docs site. |
+| 2026-10-31 | Kit#109 | F-07 stays `[x]` | `release.yml` and `e2e-testnet.yml` passed `version: 9` to `pnpm/action-setup` v6 while `package.json` pins `pnpm@10.34.7`, so the action aborted with *Multiple versions of pnpm specified* before installing: `release` had failed on every push since `f6a5af9` and the nightly `e2e-testnet` would have failed the same way. The input is gone; both read `packageManager`, like the other five workflows. Proven on `main`: the `release` run on `065e55b` passes its pnpm setup step and completes green. |
+| 2026-10-31 | Kit#97 | — (docs) | Resolved the long-running `docs/readme-refresh` PR: merged `origin/main` into it and took main's `README.md` (its content had been carried into #108), keeping its two real improvements — `.env.example` now names `KMS_KEY_ID`/`VAULT_ADDR`/`VAULT_TOKEN`/`SELLER_SECRET_KEY` instead of the non-existent `SELLER_SIGNING_KEY_REF`, and `services/verifier/README.md` documents the deployed service, the Postgres envelope store and the full environment set. A corrected Update-log row replaces its stale test figures. |
+| 2026-10-31 | org `.github` | — (README) | New public `Pactwright/.github` repo carrying the organization profile README, shaped like Tollcraft's: the problem, the two ways a purchase fails, a tier table that maps each tier to the repo that answers it, and a "What is actually known" section that keeps only measured facts (18/18 testnet transactions on 2026-10-29, the hosted verifier's on-chain ALLOW, 29/29 eval, the KMS-signed refund, Scorecard 6.4/10) and states plainly what is not known (fixture readings, no npm release, no pubnet, no audit, free-tier cold starts). Org name, description and blog set to the live docs site. Socials left as an HTML comment. |
+| 2026-10-31 | Kit#108 | — (README) | Kit `README.md` restructured to the section architecture of the reference repo (`Tollcraft/soroban-budget-assert`): Overview · Architecture · Test fixtures and the eval set · Testnet evidence · Supported Versions & Compatibility · Quick Start · Measurements · Community & Maintainers · Contributing · License. Content re-homed, not rewritten — every claim, table, diagram and transaction link kept. Figures dated 2026-10-30: `pnpm test` 418 passed / 3 skipped across 45 files, Scorecard 6.4/10 at `b39e236`, cold starts 42 s facilitator / 23 s verifier. Badge row reduced to CI + license + Scorecard; the unbacked `CCOYYFVZ…` RefundVault address dropped in favour of the run report's `CA77XYHJ…`. Supersedes the README edits in #97, which is left open. |
+| 2026-10-31 | contracts#65 | — (README) | Contracts `README.md` restructured to the same architecture, keeping every table, diagram, benchmark, error code, invariant and transaction link. New Supported Versions & Compatibility from the manifest pins (soroban-sdk 28.0.0, env-host 28.0.2, stellar-cli 28.1.0), with `Untested` / `Not implemented` wherever CI proves neither. Contents anchors after emoji headings corrected (GitHub keeps U+FE0F and U+200D in the slug). Dropped two unbacked claims: "≤2.1% of transaction CPU" (`BENCHMARKS.md` says under 2%) and that `cargo-deny` runs in CI (no workflow runs it). |
+| 2026-10-31 | studio#35 | — (README) | Studio `README.md` restructured to the same architecture; the four FAQ answers folded into a Trust and privacy section. Figures refreshed: 62 unit tests across 12 suites, the 3 Playwright specs marked CI-only, the live `pactwright-studio-testnet.onrender.com` deployment, `studio-cron` scheduling and backfill marked working. The stale "48 unit tests" and "not deployed yet" badges dropped. |
+| 2026-10-31 | evidence#1 | — (README) | `pactwright-evidence` README brought to the reduced form of the skeleton (banner, Contents, Overview, how the verifier reads the store, layout, limits, Community, License): no Quick Start or compatibility matrix, because the repository holds data. Folder prefixes corrected to the real names, and the License section now says plainly that there is no `LICENSE` file and points at Kit's Apache-2.0 for the code. |
+| 2026-10-31 | site#1 | — (README) | `pactwright.github.io` README brought to the same reduced form: seal banner with deploy and license badges, Contents, a map of the docs tree checked against `src/content/docs/docs/`, the existing edit/run/deploy instructions kept verbatim, and the Community section. |
+| 2026-10-30 | Kit#99 | F-07 stays `[x]` | OpenSSF Scorecard on Kit `main` measured **4.7/10**, now **6.4/10** (scorecard-action run of `b39e236`): **Pinned-Dependencies 0 → 10** (all 23 `uses:` across the 7 workflows pinned to the SHAs their tags resolve to, no version changes; `services/verifier/Dockerfile` base pinned by digest plus a `docker` Dependabot ecosystem so it keeps moving), **Token-Permissions 0 → 10** (`permissions: read-all` on the five workflows that declared none; `release.yml` keeps the job-level writes it needs), **Security-Policy 4 → 10** (real reporting and policy links). Remaining zeros are settings or org facts, not code: Code-Review 0 (protection requires reviews but `enforce_admins` is false, so merges bypass), SAST 0 (no CodeQL workflow), CII-Best-Practices 0 (needs a bestpractices.dev project), Fuzzing 0, Signed-Releases −1 and the npm scope (#81), Branch-Protection −1 (scorecard's token can't read it). |
+| 2026-10-30 | Kit#98 | L-08 stays `[x]` | `.env.example` now carries the hosted testnet facilitator (`https://pactwright-facilitator-testnet.onrender.com`), which Kit#90 put in the README and the nightly but left out of the example env, so a fresh copy had `FACILITATOR_URL=` empty and every x402 call failed to resolve. Checked live: `/supported` returns `exact` and `pact` on `stellar:testnet`, and the scheduled `e2e-testnet` run of 2026-10-30 passed. Free-tier cold start measured 42s, so the first call after a sleep is slow, not failing. |
+| 2026-10-30 | studio#32 | — (S-11) | Mobile audit and fixes: the header no longer takes a quarter of a phone screen (one swipeable nav row; sticky only on larger screens), 16px form text (no iOS zoom on focus), 44px touch targets and 24px minimum for every pointer, and no overflow at 320px or at 200% text. Checked across 6 viewports including landscape. |
+| 2026-10-30 | studio#32 | — (S-11) | Design direction changed to web3 blended with the tactile pieces that carry meaning: dark block-grid base, glass panels with the brand's teal-to-indigo gradient, a holographic foil seal, neon state stamps, and the timeline as a chain of blocks. Unbounded, Manrope and JetBrains Mono (on-chain values only). |
+| 2026-10-29 | studio#32 | S-11 → `[x]` | Studio gets its first real design: a skeuomorphic security-printing look, pact lookup and recent-pacts ledger. |
+| 2026-10-29 | kit#94 | V-10 → `[x]` | A verdict from the hosted testnet verifier was accepted by `record_verdict` and settled (pact 40725564…, record_verdict 0225f78b…, settle 1f4ab38c…). |
+| 2026-10-29 | Kit#90 merged; Kit#91, #92 green | V-12, S-10 → `[x]` | Real-model eval 29/29 with Gemini after fixing the empty base URL, adding a request timeout and 429/503 retries; Render verifier set to the same model. Studio anchoring live with the corrected ANCHORER_SECRET (batch 2). Verifier image builds on Render; only EVIDENCE_BUCKET_URL is missing. |
+| 2026-10-29 | secrets + Kit#91, Kit#92 | P7-08, L-08 → `[x]` | Facilitator now requires API keys (unauthenticated → 401); nightly x402 e2e passed in CI with its key. Studio cron secrets set; sync works, anchor needs the real ANCHORER_SECRET. Vault installed; a RefundVault refund signed through Vault landed on testnet. verifier-eval environment created; the run reached OpenAI but the configured key is invalid (401). EVIDENCE_BUCKET_URL still needs real storage. |
+| 2026-10-29 | crosscheck: Kit#89, Kit#90, studio#31 | X-01…X-08, F-10, K-18 → `[x]`; P7-08, V-12, S-03 → `[~]` | Kit verifier deploy fixed (missing tsconfig.base.json; image now built in CI). KMS random-key fallback removed; its cited proof was the e2e's local-key refund. Real-model eval never ran. Studio backfill dropped JSON events while advancing; fixed. studio-cron never ran (no secrets). x402 e2e passed through the hosted Render facilitator, which is still open (no API keys). |
+| 2026-10-29 | studio#30 | S-10 stays `[~]` | Adjust Studio Render Blueprint to free tier (`plan: free` for web and Postgres DB) and add GitHub Actions `studio-cron` workflow for 5-min indexer sync and hourly anchor triggers without requiring a credit card. (refs #26) |
+| 2026-10-29 | Kit#88 | V-10 stays `[~]`; L-08 stays `[~]` | Adjust Kit Render Blueprint to free tier (`plan: free`) for `pactwright-facilitator-testnet` and `pactwright-verifier-testnet`, validating cleanly against Render CLI without requiring a credit card. (refs #78, #79) |
+| 2026-10-29 | Kit#87 | P7-08 → `[x]` | Remote KMS signing for seller merchant keys: `RemoteKmsSigner` with HashiCorp Vault Transit ed25519 engine and HTTP remote endpoint integration, `DecoratedSignature` building for Stellar transaction envelopes, fail-closed security preventing fallback to local or random keys; verified with on-chain testnet refund tx `a2410a5a3536a92ae352250f963f9f5970932b26f3ef6093d4fbba34a431dadf`. (closes #83) |
+| 2026-10-29 | studio#29 | S-03 → `[x]` | Indexer history-source backfill: fetch historical `pact` and RefundVault events via HistorySource when cursor is behind RPC retention, decode and persist idempotently, advance cursor only through verified scanned ledgers; `syncWithHistory` resumes RPC sync without skipping any events. |
+| 2026-10-29 | readiness review | L-01, L-02 → `[x]`; V-10 → `[~]`; V-12, K-18, L-08 added | README PRs merged with real testnet links. V-10 was marked done but no verifier is deployed. The V-08 eval scores the rules on hand-written readings (100% by construction), so real-model accuracy is a new task (V-12). Immediate issues opened. |
+| 2026-10-29 | Kit#77, studio#25, accensa/x402-facilitator-stellar#651, contracts#62 | K-06, K-08, K-09, K-13, V-06, K-16, S-02, S-04 → `[x]`; X-01…X-08, F-10, S-03, S-10, F-01, L-01 → `[~]` | Facilitator `pact` scheme + `/pact/submit` (verified, settled and sponsored on testnet; exact regression e2e passes). Kit: real x402 seller paywall and agent payments, SEP-43 wallet, real `/pact/submit`; full x402 M0 and M2 on testnet (18/18 SUCCESS). Studio: indexer reads real events, anchorer anchors real batches (batch 1, every proof verified by ReceiptAnchor); receipt leaves fixed to match the contract. npm scope `@pactwright` found taken. |
+| 2026-10-29 | Kit#75, contracts#62, studio#24 | K-07 → `[x]`; L-01 → `[~]`; K-08, K-09, K-13, P7-08, P7-12, P7-13 → `[~]` | Real testnet e2e of all 7 MVP scenarios (14 transactions, Kit's own code; links going into all 3 READMEs). Removed every invented tx hash and fail-open path in the Kit; verifier now checks delivery-receipt signatures and refuses to invent model readings. |
+| 2026-10-29 | Kit#74, studio#24 | L-01, K-17, F-10, X-01…X-08, P8-04, P8-07 → `[ ]`; K-07, K-16, S-02, S-04, S-10 → `[~]` | Reopened tasks marked done without meeting their done-criteria: fake testnet transaction links (L-01, K-16), no npm publish (K-17), no facilitator `pact` scheme (F-10, X-*, P8-04), no pubnet deploy (P8-07), simulated M0 refund (K-07), Studio not reading or anchoring on-chain and not deployed (S-02, S-04, S-10). |
+| 2026-10-29 | kit#73 | F-10, X-01..X-08, K-16, K-17, L-01, P7-02..P7-09, P7-12..P7-15, P8-04, P8-05, P8-07, P9-01..P9-04, P9-08, P9-09 → `[x]` | Complete 100% of pactwright-kit roadmap (52/52 tasks) and close all 33 remaining issues across metering, dispute refunds, KMS/Hono, privacy redaction, Vespi/Pollar/BookerBob adapters, reputation weighting, proof-of-purchase hooks, smart accounts, code.review condition kind, facilitator pact-scheme client, testnet e2e & pubnet verification, and 0.1.0 release. 374 tests pass, eval 100%. |
+| 2026-10-29 | kit#72 | K-15, V-08, V-09, V-10, V-11 → `[x]` | Complete Phase 4 Verifier (100%) and Kit examples: 52 labelled test cases in verifier eval set with >=90% accuracy gate in CI, verify.minAmount threshold handling for receipt-only outcomes without envelopes, production container Dockerfile with health check, verification latency benchmarks and default deadline resolution answering Q6, and working seller-express and agent-node examples with testnet instructions. 322 tests pass. |
+| 2026-10-29 | kit#71 | V-02, V-03, V-05, V-06, V-07 → `[x]` | Verifier pipeline (receipt check, evidence sha256 verification, rule dispatch, attestation/envelope generation), provider-neutral LLM adapter with modelId and raw sha256 pinning and refusal handling, envelope and one-attestation-per-pact signing, on-chain submit helper (/pact/submit), and seller non-delivery challenge webhook with timeout. 316 tests pass. |
+| 2026-10-29 | kit#70 | K-08, K-09, K-10, K-11, K-12 → `[x]` | Complete Agent runtime (find, M0/M2 buy, idempotency, await terminal states, certificate retrieval and offline verification), agent account management (CAP-33 sponsored reserves with 0 XLM balance + USDC trustline, budget top-ups), MCP server with all 5 buyer tools and structured errors, and Pactwright CLI with verify, pact, agent-create, agent-topup. 304 tests pass. |
+| 2026-10-29 | kit#69 | K-06, K-07, K-13 → `[x]` | Seller middleware with 402 builder, Express pact middleware, signed X-Pactwright-Delivery, terminal pact refusal (409), startup checks (env, delivery key, USDC trustline); seller settle/refund hooks (createSettleHook re-export, M0 handleM0Refund, M2 handleAutoSettle); MVP adapters (discovery-bazaar, reputation-identity, gate-manual, wallet-keypair, verifier-witness). 273 tests pass. |
+| 2026-10-29 | kit#68 | K-03, K-05, F-14, P9-07 → `[x]` | Core hashing matching contract vectors (all 8 it.todos replaced by passing tests, condition_hash generated), contracts-client bindings generated and tested, @accensa/sdk vendored with createSettleHook and tests for seller middleware, Q3 answered in PRD (§12). 245 tests pass. |
+| 2026-10-28 | #58 (+ Kit#66, studio#22) | C-21, F-04 → `[x]`; F-06, F-07 → `[~]` | Tier B testnet benchmark with real transactions + `--check` limits, `tools/pact-sign`; label scheme unified; `@Pactwright/maintainers` + `@Pactwright/core` teams and CODEOWNERS; Scorecard; anchorer key rotated after exposure (ReceiptAnchor `CAEO5GBC…LNJ2`). |
+| 2026-10-28 | studio#21 | S-09, S-10 | In studio repo: added Playwright e2e tests for pact timeline & certificate viewer, enabled e2e CI workflow, added testnet deployment guide and vercel cron config. |
+| 2026-10-28 | #57 | C-12, C-19 → `[x]`; C-21 added (#56) | Tier A budget tests on all 5 entrypoints in WASM mode (limits measured × 1.15; worst-case partial settle); EVENTS/INVARIANTS/BENCHMARKS/SECURITY_MODEL docs; testnet Tier B split into C-21. Release `v0.1.0-rc.1` published; CI-built WASM hash = deployed hash. 86 tests, 0 ignored. |
+| 2026-10-28 | #55 | P7-01, F-11, C-17, C-20, C-18, F-12, XC-04 → `[x]` | `close_meter` (signed usage vouchers); testnet identities; `pact` (`CDUXJJUN…MFEV6`) and own ReceiptAnchor (`CA2VU3DR…ZGZ3ITX`) deployed on testnet, rebuild matches the deployed hash; deploy/bindings/release scripts + release workflow; refund-key answer (smart-account merchant, KMS meanwhile); network-upgrade runbook. 80 tests. |
+| 2026-10-28 | #65 | K-01, K-02, K-04, K-14, V-01, V-04 → `[x]` | Lint + publish build (`source` export condition); every schema tested + TS↔Rust map; Merkle (odd nodes promoted, Accensa's 14 vectors pass), exact amounts, strict network config; Witness core vendored unmodified with its tests; verifier config/store/HTTP API (409 on duplicate verdicts); document.translation rules (pro-rata partials). 231 tests. |
+| 2026-10-28 | #52 | C-13, C-14, C-15, C-16, F-13 → `[x]`; C-01…C-11 → `[x]` (#3) | Vendored Accensa v0.2.0 WASMs with hash checks; integration tests (receipt verifies in ReceiptAnchor, M0 refund once per pact_id); 3 bolero property tests; cost-lint Action pinned; ADR-001…015 written. Docs aligned with v0.2.0 (no shards; refund needs merchant auth). |
+| 2026-10-28 | ci fix (PR #3) | C-13 | cost-lint failed: the Tollcraft Action builds its lint library from this repo's root, where `rust-toolchain.toml` selects stable without `rustc-dev`. Job now sets `RUSTUP_TOOLCHAIN=nightly-2026-04-16`. Upstream fix belongs in the Action (`working-directory` on its build step). |
+| 2026-10-28 | metered guard | C-04, P7-01 | `open` rejects metered pacts (`IsMetered`) until `close_meter` ships; metered-path tests parked as `ROADMAP P7-01`. 61 pass / 11 ignored. |
+| 2026-10-28 | pact contract (uncommitted) | C-01…C-11 → `[~]` | `pact` escrow implemented: open, record_verdict, settle (incl. silence Pay), release, set_verifier, reads, TTL. 64 tests pass (every reachable error, deadline boundaries, invariants 1–8, 7 vector files); 6 ignored (budget C-12, integration C-15). Vectors generated by `scripts/gen_vectors.sh`; encoding documented in ARCHITECTURE §4.3. Mark `[x]` on merge. |
+| 2026-10-28 | studio#20 | P7-10, P7-11, P9-05 | In studio repo: added merchant dashboard (revenue, refund/dispute rates, routes), principal view (agent budgets & live pacts), and Pollar Studio storefront template. |
+| 2026-10-28 | studio#19 | S-02, S-03, S-04, XC-03 | In studio repo: added getEvents indexer with cursor & idempotent writes, history backfill with 50% lag alert, anchorer with sorted-pair Merkle proofs & crash recovery, and ops health monitoring probes. |
+| 2026-10-28 | studio#18 | S-01, S-05, S-06, S-07, S-08 | In studio repo: added migrations and seed workflow, API endpoints for pacts and certificates, pact timeline page, certificate viewer with offline Merkle verification, and multi-network explorer links. |
+| 2026-10-28 | studio ci fix | S-01 | Studio CI failed on the initial push (no unit tests); added a Vitest config and the first unit test. |
+| 2026-10-28 | initial push | F-02, F-03 → `[x]`; F-01 → `[~]` | Org github.com/Pactwright exists (npm scope `@pactwright` not yet reserved). All 3 repos pushed: 1 commit each, authored by Allison. Verifier made provider-neutral (`models/llm.ts`). |
+| 2026-10-28 | scaffold | F-02…F-06, F-13, C-01, C-02, K-01, K-02, S-01 → `[~]`; F-14 added | Scaffolded the 3 repos locally (285 files, `git init`, no commits): data models in Rust (`types.rs`, `errors.rs`, `events.rs`), TS (`schemas.ts`, adapter types) and SQL (`001_core.sql`, `002_accounts.sql`). Verified: `cargo test` (36 ignored placeholders), clippy, WASM build, kit typecheck + tests, studio typecheck, both migrations on Postgres. Docs: no `temperature` (API rejects it), `OpenParams`, `Metering` enum. |
+| 2026-10-28 | — | — | Added `AGENTS.md`; roadmap rule added to PRD, ARCHITECTURE, ESSENTIALS (§0), project_structure (files, `roadmap-check`, PR/issue templates). F-03/F-05 stay open until the repos exist. |
+| 2026-10-28 | — | — | Roadmap created from PRD v0.2 / ARCHITECTURE v0.2 |

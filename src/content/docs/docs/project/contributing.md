@@ -9,6 +9,14 @@ Each repository has a `CONTRIBUTING.md` and an `AGENTS.md` with the full rules. 
 
 Each repository has a `ROADMAP.md` that tracks every task. A pull request must update it: the status of the task it touches, the progress counts, and one line in the update log. A CI check (`roadmap`) fails without it. If no task matches your change, add one.
 
+Task IDs are global and the counts are checked, not trusted. The master list is
+[`ROADMAP.md`](https://github.com/Pactwright/pactwright.github.io/blob/main/ROADMAP.md) in this repository, and a second CI job
+(`roadmap-sync`) compares it with all three repositories every week and on every change to a roadmap. It fails if a
+status disagrees between the master and a repo, if a summary number does not match the rows under its own heading, or if
+a master task has neither a row in a repo roadmap nor an explicit `· home: org` (programme work no repo owns) or
+`· home: <owner>/<repo>` (work done in another organisation's repository). When it goes red, fix the roadmap that is
+wrong — never edit a count to make the job pass.
+
 ## Before you build
 
 Read `ARCHITECTURE_ESSENTIALS.md` first. It lists the rules no change may break, including:
