@@ -8,7 +8,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check-links": "node scripts/check-links.mjs"
+    "check-links": "node scripts/check-links.mjs",
+    "check-roadmap-sync": "node scripts/check-roadmap-sync.mjs --master ROADMAP.md --repo kit=../Pactwright-Kit/ROADMAP.md --repo contracts=../Pactwright-contracts/ROADMAP.md --repo studio=../Pactwright-studio/ROADMAP.md"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.6",

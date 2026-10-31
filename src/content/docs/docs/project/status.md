@@ -69,3 +69,5 @@ The Kit's testnet suite runs every scenario as real transactions against the dep
 ## Progress
 
 Every task and its state is tracked in each repository's `ROADMAP.md`, and every pull request updates it: [contracts](https://github.com/Pactwright/Pactwright-contracts/blob/main/ROADMAP.md), [Kit](https://github.com/Pactwright/Pactwright-Kit/blob/main/ROADMAP.md), [Studio](https://github.com/Pactwright/Pactwright-studio/blob/main/ROADMAP.md).
+
+The [master roadmap](https://github.com/Pactwright/pactwright.github.io/blob/main/ROADMAP.md) holds every task across all of them and is the count of record — this page deliberately does not repeat a percentage, because a second copy of a number is a second place for it to be wrong. A CI job (`roadmap-sync`) fails if the master and a repository disagree.
