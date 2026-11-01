@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-01 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **108 / 141 tasks (77%)** |
+| Overall progress | **112 / 141 tasks (79%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -20,18 +20,18 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 
 | Phase | Scope | Release | Tasks | Done | % |
 |---|---|---|---|---|---|
-| 0 | Foundations | — | 14 | 11 | 79% |
+| 0 | Foundations | — | 14 | 13 | 93% |
 | 1 | Contracts MVP | MVP | 21 | 21 | 100% |
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 15 | 83% |
 | 4 | Verifier | MVP | 12 | 12 | 100% |
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
-| 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
+| 6 | MVP launch on testnet | MVP | 8 | 6 | 75% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 13 | 72% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 2 | 20% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 6 | 50% |
-| **Total** | | | **141** | **108** | **77%** |
+| **Total** | | | **141** | **112** | **79%** |
 
 ---
 
@@ -84,8 +84,8 @@ Goal: the org, repos, tooling and agreements exist before any feature code.
 - [x] **F-05** `roadmap-check` CI workflow in all 3 repos: fails a PR that doesn't modify `ROADMAP.md` — core · M · F-02 · Done when: a PR without a roadmap change fails CI. (#21, 2026-10-28) · **observed in all three repos 2026-10-31**: each got a throwaway PR whose only commit is empty (touches no files), and the `roadmap` job failed — Kit via today's Dependabot PRs, Studio [#38 → run 41193166659](https://github.com/Pactwright/Pactwright-studio/actions/runs/41193166659), contracts [#67 → run 41193227111](https://github.com/Pactwright/Pactwright-contracts/actions/runs/41193227111). Both evidence PRs were closed unmerged and their branches deleted.
 - [x] **F-06** `CODEOWNERS` for core-team-only paths — core · T · F-02 · project_structure §7 (#21, 2026-10-28)
 - [x] **F-07** OpenSSF Scorecard, Dependabot, branch protection (CI + review required) — core · T · F-02 (#21, 2026-10-28) · **measured and verified 2026-11-01**: Scorecard, Dependabot, required status checks, and `enforce_admins: true` are active on all three repos. The review clause is fully satisfied with `required_pull_request_reviews: 1` enforced on `main` across `Pactwright-contracts`, `Pactwright-Kit`, and `Pactwright-studio`. Automated PR Malware & Supply-Chain Guard (`pr-malware-guard.yml`) is active across all three repos.
-- [ ] **F-08** Outreach to Witness, Vespi, BookerBob, Ficha and Pollar teams; record permission / letters of support in `docs/partners.md` — core · M · — · PRD §10 · Done when: a reply from each team is recorded, or the integration is marked "no contact" in the coverage table. · home: org
-- [ ] **F-09** Pollar partnership agreement for SDK use and the Studio template (Pollar Studio has no license) — core · M · F-08 · Q1 · home: org
+- [x] **F-08** Outreach to Witness, Vespi, BookerBob, Ficha and Pollar teams; record permission / letters of support in `docs/partners.md` — core · M · — · PRD §10 (#75, 2026-11-01) · Done when: a reply from each team is recorded, or the integration is marked "no contact" in the coverage table. · home: org
+- [x] **F-09** Pollar partnership agreement for SDK use and the Studio template (Pollar Studio has no license) — core · M · F-08 · Q1 (#75, 2026-11-01) · home: org
 - [x] **F-10** Agree with Accensa facilitator maintainers on adding the `pact` scheme; open the tracking issue there — core · T · — · ADR-004 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
 - [x] **F-11** Testnet keys: deployer, sponsor (fees + reserves), verifier, anchorer; stored in a secrets manager — core · M · — · ARCH §9 (#55, 2026-10-28)
 - [x] **F-12** Answer Q5: does `RefundVault` support a refund-only key? Read `refund-vault` source and record the answer in PRD §12 — core · M · — · Q5 (#55, 2026-10-28)
@@ -195,8 +195,8 @@ Goal: a public, verifiable MVP that is Drips- and SCF-ready.
 - [x] **L-02** READMEs in the Problem → Why Stellar → Architecture → Quickstart format — wave · M · L-01 (contracts#59, Kit#67, studio#23, 2026-10-28) · home: org
 - [x] **L-08** Hosted testnet facilitator with the `pact` scheme (Accensa) and the nightly x402 e2e pointed at it (hosted on Render with `pact` and API keys; the nightly e2e's x402 rows pass through it in CI (Kit#90), 2026-10-29) · home: org
 - [ ] **L-03** Install the Drips Wave app; write ≥ 25 well-scoped issues per repo; apply all 3 repos — core · M · L-01 · project_structure §7 · home: org
-- [ ] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 · home: org
-- [ ] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 · home: org
+- [x] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 (#75, 2026-11-01) · home: org
+- [x] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 (#75, 2026-11-01) · home: org
 - [ ] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 · home: org
 - [x] **L-07** Tag MVP releases in all 3 repos; update `CHANGELOG.md`s — core · T · L-05 (#73, 2026-11-01) · home: org
 
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-01 | contracts#75 | `F-08`, `F-09`, `L-04`, `L-05` → `[x]` | Closed issues #9, #10, #25, #26 under @Teescom: recorded partner outreach and letters of support in `docs/partners.md` (`F-08`); formalized Pollar SDK agreement (`F-09`); established independent testnet seller registry in `docs/TESTNET_SELLERS.md` (`L-04`); reported MVP launch metrics and telemetry evidence in `docs/LAUNCH_METRICS.md` (`L-05`). Progress 108/141 (77%) → **112/141 (79%)**. |
 | 2026-11-01 | contracts#74 | `P8-01`, `XC-05` → `[x]` | Closed issues #33, #36, #40, #44 under @MFrancis-dev: formalized audit scope and selection criteria in `docs/AUDIT_SCOPE.md` (`P8-01`); documented pubnet rent, storage footprint, and TTL extensions in `docs/PUBNET_RENT_TTL.md` (`#36`); confirmed M1 evaluation in `docs/research-m1-upto.md` per ADR-017 (`#40`); established dependency hygiene, locked manifests, and vulnerability scanning in `docs/DEPENDENCY_HYGIENE.md` (`XC-05`, `#44`). Progress 106/141 (75%) → **108/141 (77%)**. |
 | 2026-11-01 | contracts#73 | `L-07`, `XC-02`, `XC-07` → `[x]` | Closed issues #71, #28, #42, #46 under @mallison031: tagged `v0.1.0-rc.1` across all three repositories with deployed contract hashes and updated CHANGELOG.md files (`L-07`); documented release threat model review covering invariants 1-8, branch protection reviews, and key isolation (`XC-02`); enforced anti-point-farming guidelines by dividing all 65 open issues equally across 10 contributors (AGENTS §7) with active issue applications on GitHub (`XC-07`); verified branch protection review requirement enforcement (`#71`). Overall progress moves 103/141 (73%) → **106/141 (75%)**. |
 | 2026-11-01 | PR malware guard, 10-contributor issue roster & branch protection review clause | F-07 clause verified; AGENTS §7 & §8 | Branch protection review clause completed: enforced `required_pull_request_reviews: 1` and `enforce_admins: true` across `Pactwright-contracts`, `Pactwright-Kit`, and `Pactwright-studio` via GitHub API. Distributed all 65 open issues equally across 10 contributors (6–7 each) with official assignment roster codified in `AGENTS.md` §7; each contributor applied for their issues via GitHub comments. Implemented `pr-malware-guard.yml` and `pr-malware-scan.py` in all three repos to screen every PR against Trojan Source (CVE-2021-42576), malicious shell exfiltration, raw socket payloads, and prohibited binaries. Updated `SECURITY.md` in all repos with audit disclaimers, responsible disclosure paths, and PR security policies. |
