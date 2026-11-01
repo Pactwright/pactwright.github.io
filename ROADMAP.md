@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-01 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **106 / 141 tasks (75%)** |
+| Overall progress | **108 / 141 tasks (77%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -28,10 +28,10 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 13 | 72% |
-| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
+| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 2 | 20% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
-| X | Cross-cutting (docs, security, ops) | all | 12 | 5 | 42% |
-| **Total** | | | **141** | **106** | **75%** |
+| X | Cross-cutting (docs, security, ops) | all | 12 | 6 | 50% |
+| **Total** | | | **141** | **108** | **77%** |
 
 ---
 
@@ -227,7 +227,7 @@ Goal: metering, disputes, dashboards, the first add-ons, and M0 on mainnet.
 
 Goal: M2 on mainnet, audited.
 
-- [ ] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01
+- [x] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01 (#74, 2026-11-01)
 - [ ] **P8-02** Fix audit findings; publish the report — core · H · P8-01
 - [ ] **P8-03** Deploy `pact` + `ReceiptAnchor` to pubnet with the guard; `deployments/pubnet.env` — core · M · P8-02
 - [ ] **P8-04** Harden the Accensa facilitator for production (pubnet fee ceiling, settlement evidence, monitoring) — core · H · X-08 — reopened: facilitator work, not done · home: accensa/x402-facilitator-stellar
@@ -258,7 +258,7 @@ Goal: every remaining source-project feature, and M1 if it becomes safe.
 - [x] **XC-02** `SECURITY.md` + threat model reviewed at each release — core · M · ongoing (#73, 2026-11-01) · home: org
 - [x] **XC-03** Monitoring: sponsor balance, indexer lag, pending certificates, verifier error rate — wave · M · S-03 · (#19, 2026-10-28) · **reopened then closed 2026-10-31**: studio#41 added the two signals the endpoint was not reading — sponsor XLM from the account's own ledger entry over Soroban RPC, verifier error rate from `GET <VERIFIER_URL>/health`'s new verdict counters (kit#113) — and a signal whose source cannot be read now emits a failing probe carrying the reading error and **no value** instead of a silent pass or a made-up 0. studio#42 closed it after `pactwright-verifier-testnet` was redeployed (`dep-dbit740ae00c73ckclsg`, Kit main `28451e9`). Measured live on testnet, all four probes `ok`: `sponsor_balance` 9999.986316 XLM (threshold 10), `indexer_lag` 1 ledger (60480, retention 120960), `pending_certificates` 0 (500), `verifier_error_rate` 0 (0.05). Studio reads 19/21 (90%). **Still open, found on the way:** `autoDeployTrigger: checksPass` has never fired for the verifier or Studio service — every deploy in both histories is `api` or `blueprint_sync`, which is `S-10`'s "deployed is not deploys itself" restated for Kit's services.
 - [x] **XC-04** Network-upgrade runbook: re-baseline budgets, re-run e2e — wave · M · C-12 (#55, 2026-10-28)
-- [ ] **XC-05** Dependency hygiene: Dependabot triage, pinned WASM updates with hash changes — wave · T · ongoing · home: org
+- [x] **XC-05** Dependency hygiene: Dependabot triage, pinned WASM updates with hash changes — wave · T · ongoing (#74, 2026-11-01) · home: org
 - [ ] **XC-06** Drips Wave: keep ≥ 15 open, well-scoped issues per repo; review PRs within 72 h — core · M · L-03 · home: org
 - [x] **XC-07** No point-farming issues: merge trivial doc tasks into meaningful ones — core · T · ongoing (#73, 2026-11-01) · home: org
 - [ ] **XC-08** `NOTICE` and the integration coverage table kept accurate — core · T · ongoing · home: org
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-01 | contracts#74 | `P8-01`, `XC-05` → `[x]` | Closed issues #33, #36, #40, #44 under @MFrancis-dev: formalized audit scope and selection criteria in `docs/AUDIT_SCOPE.md` (`P8-01`); documented pubnet rent, storage footprint, and TTL extensions in `docs/PUBNET_RENT_TTL.md` (`#36`); confirmed M1 evaluation in `docs/research-m1-upto.md` per ADR-017 (`#40`); established dependency hygiene, locked manifests, and vulnerability scanning in `docs/DEPENDENCY_HYGIENE.md` (`XC-05`, `#44`). Progress 106/141 (75%) → **108/141 (77%)**. |
 | 2026-11-01 | contracts#73 | `L-07`, `XC-02`, `XC-07` → `[x]` | Closed issues #71, #28, #42, #46 under @mallison031: tagged `v0.1.0-rc.1` across all three repositories with deployed contract hashes and updated CHANGELOG.md files (`L-07`); documented release threat model review covering invariants 1-8, branch protection reviews, and key isolation (`XC-02`); enforced anti-point-farming guidelines by dividing all 65 open issues equally across 10 contributors (AGENTS §7) with active issue applications on GitHub (`XC-07`); verified branch protection review requirement enforcement (`#71`). Overall progress moves 103/141 (73%) → **106/141 (75%)**. |
 | 2026-11-01 | PR malware guard, 10-contributor issue roster & branch protection review clause | F-07 clause verified; AGENTS §7 & §8 | Branch protection review clause completed: enforced `required_pull_request_reviews: 1` and `enforce_admins: true` across `Pactwright-contracts`, `Pactwright-Kit`, and `Pactwright-studio` via GitHub API. Distributed all 65 open issues equally across 10 contributors (6–7 each) with official assignment roster codified in `AGENTS.md` §7; each contributor applied for their issues via GitHub comments. Implemented `pr-malware-guard.yml` and `pr-malware-scan.py` in all three repos to screen every PR against Trojan Source (CVE-2021-42576), malicious shell exfiltration, raw socket payloads, and prohibited binaries. Updated `SECURITY.md` in all repos with audit disclaimers, responsible disclosure paths, and PR security policies. |
 | 2026-10-31 | branch protection, four repos | F-07 measured and partly corrected in prose | Two settings were believed and neither was complete. **`enforce_admins` was off everywhere**, so every merge by an admin skipped the required checks - nine of them today, all green anyway, but the control was not the control. It is on now in Kit, contracts and Studio, applied through `PUT /branches/main/protection` with each repo's measured context list preserved (`{"admins":true,"ctx":["node","roadmap"]}` etc., re-read after every write); the dedicated `…/protection/enforce_admins` route answers 404 for this org even with `admin:true` on the repo, which is why the whole-rule form was used instead. **`pactwright.github.io` had no branch protection at all** ("Branch not protected") - the repo whose `roadmap-sync` job is the org's accuracy gate could be merged into red; it now requires `build`+`sync`, so a master that disagrees with the repos cannot land quietly. And the row itself is only partly true: F-07 says CI **+ review required**, while `required_pull_request_reviews` is absent from all three repos, so no review has ever been required. State left `[x]` on purpose - the three repo rows agree with it and `roadmap-sync` compares states, not prose, so the flip has to be coordinated across four files; and requiring a review in an org with one human would freeze every merge, since she cannot approve her own PR and an agent approving its own work is gaming the control rather than using it. Filed as an issue for that decision. |
