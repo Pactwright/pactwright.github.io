@@ -18,8 +18,18 @@
   <a href="https://pactwright.github.io/"><b>Home</b></a> ·
   <a href="https://pactwright.github.io/docs/"><b>Documentation</b></a> ·
   <a href="https://pactwright.github.io/docs/quickstart/"><b>Quickstart</b></a> ·
-  <a href="https://github.com/Pactwright/pactwright.github.io/actions/workflows/deploy.yml"><b>Deploys</b></a>
+  <a href="https://github.com/Pactwright/pactwright.github.io/actions/workflows/deploy.yml"><b>Deploys</b></a> ·
+  <a href="https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/brag.mp4"><b>Watch Film (1080p)</b></a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/brag.mp4">
+    <img src="https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/film-preview.webp" width="100%" alt="Pactwright Launch Film: one agent, four purchases, four endings, each enforced on Stellar testnet">
+  </a>
+</p>
+
+> 🔊 **Turn sound on.** [Download or watch the full film (1080p, 60 fps, with music & sound)](https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/brag.mp4)  
+> *Four purchases, four different endings on Stellar testnet: paid pro rata for 3 of 4 pages, refunded for a tortilla recipe, refunded when nobody answered, and half refunded after a dispute.*
 
 ## 📖 Overview
 
