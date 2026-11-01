@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-01 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **116 / 141 tasks (82%)** |
+| Overall progress | **120 / 141 tasks (85%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -30,8 +30,8 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 15 | 83% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 3 | 30% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
-| X | Cross-cutting (docs, security, ops) | all | 12 | 6 | 50% |
-| **Total** | | | **141** | **116** | **82%** |
+| X | Cross-cutting (docs, security, ops) | all | 12 | 10 | 83% |
+| **Total** | | | **141** | **120** | **85%** |
 
 ---
 
@@ -261,10 +261,10 @@ Goal: every remaining source-project feature, and M1 if it becomes safe.
 - [x] **XC-05** Dependency hygiene: Dependabot triage, pinned WASM updates with hash changes — wave · T · ongoing (#74, 2026-11-01) · home: org
 - [ ] **XC-06** Drips Wave: keep ≥ 15 open, well-scoped issues per repo; review PRs within 72 h — core · M · L-03 · home: org
 - [x] **XC-07** No point-farming issues: merge trivial doc tasks into meaningful ones — core · T · ongoing (#73, 2026-11-01) · home: org
-- [ ] **XC-08** `NOTICE` and the integration coverage table kept accurate — core · T · ongoing · home: org
-- [ ] **XC-09** Copy shared docs into each repo's `docs/` on release — wave · T · ongoing · home: org
-- [ ] **XC-10** Changelogs on every release — wave · T · ongoing · home: org
-- [ ] **XC-11** Partner updates to the 5 hackathon teams at each release — core · T · F-08 · home: org
+- [x] **XC-08** `NOTICE` and the integration coverage table kept accurate — core · T · ongoing (#77, 2026-11-01) · home: org
+- [x] **XC-09** Copy shared docs into each repo's `docs/` on release — wave · T · ongoing (#77, 2026-11-01) · home: org
+- [x] **XC-10** Changelogs on every release — wave · T · ongoing (#77, 2026-11-01) · home: org
+- [x] **XC-11** Partner updates to the 5 hackathon teams at each release — core · T · F-08 (#77, 2026-11-01) · home: org
 - [x] **XC-12** Roadmap sync: master roadmap matches every repo roadmap, weekly — core · T · F-03 · home: org · Done when: CI compares the master with all three repo roadmaps and fails on a divergence, so "weekly" is a schedule, not a chore. (**`pactwright.github.io`#4, 2026-10-31**: the master is versioned there, `scripts/check-roadmap-sync.mjs` enforces five rules and `.github/workflows/roadmap-sync.yml` runs it weekly + on every roadmap change; teeth proved by injecting a fake state, a fake count and an unknown ID.)
 
 ---
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-01 | contracts#77 | `XC-08`, `XC-09`, `XC-10`, `XC-11` → `[x]` | Closed issues #47, #48, #49, #50 under @YazarAyobami: verified NOTICE accuracy and integration alignment (`XC-08`); implemented shared docs sync script `scripts/sync-shared-docs.sh` (`XC-09`); updated CHANGELOG.md for release tracking (`XC-10`); logged release communications in `docs/partners.md` (`XC-11`). Progress 116/141 (82%) → **120/141 (85%)**. |
 | 2026-11-01 | contracts#76 | `L-06`, `P7-16`, `P7-18`, `P8-10` → `[x]` | Closed issues #27, #30, #32, #39 under @TemiMustapha: compiled SCF tranche 1 submission package in `docs/scf/TRANCHE_1_SUBMISSION.md` (`L-06`); published hackathon Scale-path goals in `README.md` (`P7-16`); compiled SCF tranche 2 submission in `docs/scf/TRANCHE_2_SUBMISSION.md` (`P7-18`); compiled SCF tranche 3 submission in `docs/scf/TRANCHE_3_SUBMISSION.md` (`P8-10`). Progress 112/141 (79%) → **116/141 (82%)**. |
 | 2026-11-01 | contracts#75 | `F-08`, `F-09`, `L-04`, `L-05` → `[x]` | Closed issues #9, #10, #25, #26 under @Teescom: recorded partner outreach and letters of support in `docs/partners.md` (`F-08`); formalized Pollar SDK agreement (`F-09`); established independent testnet seller registry in `docs/TESTNET_SELLERS.md` (`L-04`); reported MVP launch metrics and telemetry evidence in `docs/LAUNCH_METRICS.md` (`L-05`). Progress 108/141 (77%) → **112/141 (79%)**. |
 | 2026-11-01 | contracts#74 | `P8-01`, `XC-05` → `[x]` | Closed issues #33, #36, #40, #44 under @MFrancis-dev: formalized audit scope and selection criteria in `docs/AUDIT_SCOPE.md` (`P8-01`); documented pubnet rent, storage footprint, and TTL extensions in `docs/PUBNET_RENT_TTL.md` (`#36`); confirmed M1 evaluation in `docs/research-m1-upto.md` per ADR-017 (`#40`); established dependency hygiene, locked manifests, and vulnerability scanning in `docs/DEPENDENCY_HYGIENE.md` (`XC-05`, `#44`). Progress 106/141 (75%) → **108/141 (77%)**. |
