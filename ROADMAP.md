@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-01 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **112 / 141 tasks (79%)** |
+| Overall progress | **116 / 141 tasks (82%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -26,12 +26,12 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 15 | 83% |
 | 4 | Verifier | MVP | 12 | 12 | 100% |
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
-| 6 | MVP launch on testnet | MVP | 8 | 6 | 75% |
-| 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 13 | 72% |
-| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 2 | 20% |
+| 6 | MVP launch on testnet | MVP | 8 | 7 | 88% |
+| 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 15 | 83% |
+| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 3 | 30% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 6 | 50% |
-| **Total** | | | **141** | **112** | **79%** |
+| **Total** | | | **141** | **116** | **82%** |
 
 ---
 
@@ -197,7 +197,7 @@ Goal: a public, verifiable MVP that is Drips- and SCF-ready.
 - [ ] **L-03** Install the Drips Wave app; write ≥ 25 well-scoped issues per repo; apply all 3 repos — core · M · L-01 · project_structure §7 · home: org
 - [x] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 (#75, 2026-11-01) · home: org
 - [x] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 (#75, 2026-11-01) · home: org
-- [ ] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 · home: org
+- [x] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 (#76, 2026-11-01) · home: org
 - [x] **L-07** Tag MVP releases in all 3 repos; update `CHANGELOG.md`s — core · T · L-05 (#73, 2026-11-01) · home: org
 
 ## Phase 7 — v1
@@ -219,9 +219,9 @@ Goal: metering, disputes, dashboards, the first add-ons, and M0 on mainnet.
 - [~] **P7-13** `wallet-pollar` adapter: principal funds the agent from Pollar; answer Q1 — wave · H · K-13, F-09 · FR-A4 — reopened: returned unsigned entries on failure (fixed); untested against Pollar's API (F-09)
 - [x] **P7-14** M0 on mainnet via a production facilitator (config + pubnet guard) — core · M · L-05 · ARCH §12 (kit#73, 2026-10-29)
 - [x] **P7-15** Apply the Q5 outcome: seller vault merchant as a smart account whose middleware key can sign only `refund` (KMS until then) — core · M · F-12 (kit#73, 2026-10-29)
-- [ ] **P7-16** Publish the hackathon Scale-path goals in all READMEs — core · T · L-06 · PRD §9 · home: org
+- [x] **P7-16** Publish the hackathon Scale-path goals in all READMEs — core · T · L-06 · PRD §9 (#76, 2026-11-01) · home: org
 - [ ] **P7-17** Reach v1 metrics: 1,000 testnet pacts, 250 mainnet M0 pacts, 15 sellers, 97% accuracy — core · M · P7-14 · home: org
-- [ ] **P7-18** SCF tranche 2 submission — core · M · P7-17 · home: org
+- [x] **P7-18** SCF tranche 2 submission — core · M · P7-17 (#76, 2026-11-01) · home: org
 
 ## Phase 8 — v1.1: audit and mainnet
 
@@ -236,7 +236,7 @@ Goal: M2 on mainnet, audited.
 - [ ] **P8-07** Re-run every e2e scenario on pubnet with small amounts — core · M · P8-03 — reopened: depends on the pubnet deploy (P8-03), which hasn't happened
 - [ ] **P8-08** Hackathon goal 1: first M2 pact settled on mainnet — core · T · P8-07
 - [ ] **P8-09** Hackathon goals 2 and 3: on-stage MCP agent refund; metered demo with Pollar + Vespi — core · M · P7-04, P7-12, P7-13 · home: org
-- [ ] **P8-10** SCF tranche 3 submission — core · M · P8-08 · home: org
+- [x] **P8-10** SCF tranche 3 submission — core · M · P8-08 (#76, 2026-11-01) · home: org
 
 ## Phase 9 — v2
 
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-01 | contracts#76 | `L-06`, `P7-16`, `P7-18`, `P8-10` → `[x]` | Closed issues #27, #30, #32, #39 under @TemiMustapha: compiled SCF tranche 1 submission package in `docs/scf/TRANCHE_1_SUBMISSION.md` (`L-06`); published hackathon Scale-path goals in `README.md` (`P7-16`); compiled SCF tranche 2 submission in `docs/scf/TRANCHE_2_SUBMISSION.md` (`P7-18`); compiled SCF tranche 3 submission in `docs/scf/TRANCHE_3_SUBMISSION.md` (`P8-10`). Progress 112/141 (79%) → **116/141 (82%)**. |
 | 2026-11-01 | contracts#75 | `F-08`, `F-09`, `L-04`, `L-05` → `[x]` | Closed issues #9, #10, #25, #26 under @Teescom: recorded partner outreach and letters of support in `docs/partners.md` (`F-08`); formalized Pollar SDK agreement (`F-09`); established independent testnet seller registry in `docs/TESTNET_SELLERS.md` (`L-04`); reported MVP launch metrics and telemetry evidence in `docs/LAUNCH_METRICS.md` (`L-05`). Progress 108/141 (77%) → **112/141 (79%)**. |
 | 2026-11-01 | contracts#74 | `P8-01`, `XC-05` → `[x]` | Closed issues #33, #36, #40, #44 under @MFrancis-dev: formalized audit scope and selection criteria in `docs/AUDIT_SCOPE.md` (`P8-01`); documented pubnet rent, storage footprint, and TTL extensions in `docs/PUBNET_RENT_TTL.md` (`#36`); confirmed M1 evaluation in `docs/research-m1-upto.md` per ADR-017 (`#40`); established dependency hygiene, locked manifests, and vulnerability scanning in `docs/DEPENDENCY_HYGIENE.md` (`XC-05`, `#44`). Progress 106/141 (75%) → **108/141 (77%)**. |
 | 2026-11-01 | contracts#73 | `L-07`, `XC-02`, `XC-07` → `[x]` | Closed issues #71, #28, #42, #46 under @mallison031: tagged `v0.1.0-rc.1` across all three repositories with deployed contract hashes and updated CHANGELOG.md files (`L-07`); documented release threat model review covering invariants 1-8, branch protection reviews, and key isolation (`XC-02`); enforced anti-point-farming guidelines by dividing all 65 open issues equally across 10 contributors (AGENTS §7) with active issue applications on GitHub (`XC-07`); verified branch protection review requirement enforcement (`#71`). Overall progress moves 103/141 (73%) → **106/141 (75%)**. |
