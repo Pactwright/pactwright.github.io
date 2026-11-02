@@ -5,6 +5,8 @@ description: Escrow, verdicts and receipts for purchases made by AI agents on St
 
 AI agents can already pay for things over HTTP. With [x402](https://developers.stellar.org/docs/build/agentic-payments/x402), a seller answers `402 Payment Required`, the agent pays in USDC on Stellar and retries. That covers paying. It doesn't cover what happens when the purchase goes wrong: the translation comes back in the wrong language, half the pages are missing, or nothing arrives at all. An agent has no one to call, so the rules for getting the money back have to be part of the payment.
 
+This is not a small market. Chainalysis counted more than 138 million x402 transactions on Base by October 2026, and more than 87% of them were worth 10 cents or less ([CoinDesk, 14 October 2026](https://www.coindesk.com/business/2026/10/14/ai-agents-make-138-million-crypto-payments-as-u-s-dominates-spending-on-ai-models)). Nobody files a dispute by hand over a few cents, so at that scale a refund either happens automatically or not at all.
+
 Pactwright makes each purchase a **pact**:
 
 1. Before paying, the buyer and seller agree on a **condition**, for example "a Portuguese translation of at least 4 pages". Only its hash goes on-chain, so it can't change later.
