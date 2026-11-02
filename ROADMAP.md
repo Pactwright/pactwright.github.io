@@ -6,9 +6,9 @@
 
 | | |
 |---|---|
-| Last updated | 2026-11-01 |
+| Last updated | 2026-11-02 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **120 / 141 tasks (85%)** |
+| Overall progress | **121 / 141 tasks (86%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -28,10 +28,10 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
 | 6 | MVP launch on testnet | MVP | 8 | 7 | 88% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 15 | 83% |
-| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 3 | 30% |
+| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 4 | 40% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 10 | 83% |
-| **Total** | | | **141** | **120** | **85%** |
+| **Total** | | | **141** | **121** | **86%** |
 
 ---
 
@@ -228,7 +228,7 @@ Goal: metering, disputes, dashboards, the first add-ons, and M0 on mainnet.
 Goal: M2 on mainnet, audited.
 
 - [x] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01 (#74, 2026-11-01)
-- [ ] **P8-02** Fix audit findings; publish the report — core · H · P8-01
+- [x] **P8-02** Fix audit findings; publish the report — core · H · P8-01 (contracts#81, 2026-11-02)
 - [ ] **P8-03** Deploy `pact` + `ReceiptAnchor` to pubnet with the guard; `deployments/pubnet.env` — core · M · P8-02
 - [ ] **P8-04** Harden the Accensa facilitator for production (pubnet fee ceiling, settlement evidence, monitoring) — core · H · X-08 — reopened: facilitator work, not done · home: accensa/x402-facilitator-stellar
 - [x] **P8-05** Mainnet verifier operation and key policy; answer Q4 — core · M · V-10 · Q4 (kit#73, 2026-10-29)
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-02 | contracts#81 | `P8-02` → `[x]` | Remediated audit findings H-01 (enforced `verdict_deadline < settle_deadline` preventing `Silence::Pay` deadlock) and M-01 (enforced `max_pact_ledgers > 0` in constructor preventing bricked instances); published formal audit report in `docs/AUDIT_REPORT_PRE_PUBNET.md`; added 87th regression test. Progress 120/141 (85%) → **121/141 (86%)**. |
 | 2026-11-02 | contracts#80 | P8-01 | Aligned AUDIT_SCOPE.md with contract implementation: corrected state enums (Funded, Allowed, Denied, Settled, Released), types, and error codes; accurately documented precondition subtraction and saturating math; added cross-deployment signature replay and metered key attack vectors to threat model. |
 | 2026-11-01 | #22 | — | Embedded the Pactwright product launch film and animated preview on the repository README, linked to the 1080p release asset. |
 | 2026-11-01 | scorecard-hardening | F-07 | Hardened OpenSSF Scorecard rating: pinned all GitHub Actions dependencies to full 40-character commit SHAs across all workflows, enforced least-privilege top-level permissions, added CodeQL SAST workflow, and updated scorecard configuration. |
