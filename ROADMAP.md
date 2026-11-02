@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-02 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **121 / 141 tasks (86%)** |
+| Overall progress | **111 / 141 tasks (79%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -20,18 +20,18 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 
 | Phase | Scope | Release | Tasks | Done | % |
 |---|---|---|---|---|---|
-| 0 | Foundations | — | 14 | 13 | 93% |
+| 0 | Foundations | — | 14 | 11 | 79% |
 | 1 | Contracts MVP | MVP | 21 | 21 | 100% |
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 15 | 83% |
 | 4 | Verifier | MVP | 12 | 12 | 100% |
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
-| 6 | MVP launch on testnet | MVP | 8 | 7 | 88% |
-| 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 15 | 83% |
-| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 4 | 40% |
+| 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
+| 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 14 | 78% |
+| 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
-| X | Cross-cutting (docs, security, ops) | all | 12 | 10 | 83% |
-| **Total** | | | **141** | **121** | **86%** |
+| X | Cross-cutting (docs, security, ops) | all | 12 | 9 | 75% |
+| **Total** | | | **141** | **111** | **79%** |
 
 ---
 
@@ -67,8 +67,8 @@ This table ensures that no source project's idea gets lost. Update it when a rel
 | Tollcraft `soroban-budget-assert` | `#[budget_*]` tests, `cargo budget-report`, cost per route in dashboard | C-12, C-21, P7-10, P8-06 | MVP | in progress |
 | Witness | verdict-v1 envelope, condition hash, "model reads, code decides", verify-cli | K-14, V-02…V-05, K-12 | MVP | in progress |
 | Ficha | Pay per unit used, refund the rest (signed usage vouchers) + pay-per-minute demo | P7-01…P7-04 | v1 | done |
-| Vespi | Human approves the agent's budget | P7-12 | v1 | done |
-| Pollar | Seedless principal wallet funds the agent; Studio storefront template | P7-13, P9-05 | v1 / v2 | done |
+| Vespi | Human approves the agent's budget | P7-12 | v1 | in progress |
+| Pollar | Seedless principal wallet funds the agent; Studio storefront template | P7-13, P9-05 | v1 / v2 | in progress |
 | BookerBob | Proven-customer ranking; anonymous proof-of-purchase reviews | P9-01…P9-03 | v2 | done |
 
 ---
@@ -84,8 +84,8 @@ Goal: the org, repos, tooling and agreements exist before any feature code.
 - [x] **F-05** `roadmap-check` CI workflow in all 3 repos: fails a PR that doesn't modify `ROADMAP.md` — core · M · F-02 · Done when: a PR without a roadmap change fails CI. (#21, 2026-10-28) · **observed in all three repos 2026-10-31**: each got a throwaway PR whose only commit is empty (touches no files), and the `roadmap` job failed — Kit via today's Dependabot PRs, Studio [#38 → run 41193166659](https://github.com/Pactwright/Pactwright-studio/actions/runs/41193166659), contracts [#67 → run 41193227111](https://github.com/Pactwright/Pactwright-contracts/actions/runs/41193227111). Both evidence PRs were closed unmerged and their branches deleted.
 - [x] **F-06** `CODEOWNERS` for core-team-only paths — core · T · F-02 · project_structure §7 (#21, 2026-10-28)
 - [x] **F-07** OpenSSF Scorecard, Dependabot, branch protection (CI + review required) — core · T · F-02 (#21, 2026-10-28) · **measured and verified 2026-11-01**: Scorecard, Dependabot, required status checks, and `enforce_admins: true` are active on all three repos. The review clause is fully satisfied with `required_pull_request_reviews: 1` enforced on `main` across `Pactwright-contracts`, `Pactwright-Kit`, and `Pactwright-studio`. Automated PR Malware & Supply-Chain Guard (`pr-malware-guard.yml`) is active across all three repos.
-- [x] **F-08** Outreach to Witness, Vespi, BookerBob, Ficha and Pollar teams; record permission / letters of support in `docs/partners.md` — core · M · — · PRD §10 (#75, 2026-11-01) · Done when: a reply from each team is recorded, or the integration is marked "no contact" in the coverage table. · home: org
-- [x] **F-09** Pollar partnership agreement for SDK use and the Studio template (Pollar Studio has no license) — core · M · F-08 · Q1 (#75, 2026-11-01) · home: org
+- [ ] **F-08** Outreach to Witness, Vespi, BookerBob, Ficha and Pollar teams; record permission / letters of support in `docs/partners.md` — core · M · — · PRD §10 · Done when: a reply from each team is recorded, or the integration is marked "no contact" in the coverage table. · **reopened 2026-11-02**: no message has been sent and no reply exists; the replies and letters recorded in contracts#75 were not real (`docs/partners.md` corrected) · home: org
+- [ ] **F-09** Pollar partnership agreement for SDK use and the Studio template (Pollar Studio has no license) — core · M · F-08 · Q1 · **reopened 2026-11-02**: no agreement with Pollar exists; the one recorded in contracts#75 was not real · home: org
 - [x] **F-10** Agree with Accensa facilitator maintainers on adding the `pact` scheme; open the tracking issue there — core · T · — · ADR-004 (accensa/x402-facilitator-stellar#651, 2026-10-29) · home: accensa/x402-facilitator-stellar
 - [x] **F-11** Testnet keys: deployer, sponsor (fees + reserves), verifier, anchorer; stored in a secrets manager — core · M · — · ARCH §9 (#55, 2026-10-28)
 - [x] **F-12** Answer Q5: does `RefundVault` support a refund-only key? Read `refund-vault` source and record the answer in PRD §12 — core · M · — · Q5 (#55, 2026-10-28)
@@ -195,9 +195,9 @@ Goal: a public, verifiable MVP that is Drips- and SCF-ready.
 - [x] **L-02** READMEs in the Problem → Why Stellar → Architecture → Quickstart format — wave · M · L-01 (contracts#59, Kit#67, studio#23, 2026-10-28) · home: org
 - [x] **L-08** Hosted testnet facilitator with the `pact` scheme (Accensa) and the nightly x402 e2e pointed at it (hosted on Render with `pact` and API keys; the nightly e2e's x402 rows pass through it in CI (Kit#90), 2026-10-29) · home: org
 - [ ] **L-03** Install the Drips Wave app; write ≥ 25 well-scoped issues per repo; apply all 3 repos — core · M · L-01 · project_structure §7 · home: org
-- [x] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 (#75, 2026-11-01) · home: org
-- [x] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 (#75, 2026-11-01) · home: org
-- [x] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 (#76, 2026-11-01) · home: org
+- [ ] **L-04** Onboard 3 independent testnet sellers — core · M · L-01 · **reopened 2026-11-02**: 0 of 3; the three sellers in contracts#75 have invalid Stellar keys and domains that do not resolve (`docs/TESTNET_SELLERS.md` corrected) · home: org
+- [~] **L-05** Reach MVP metrics: 100 testnet pacts, 90% verdict accuracy, `settle` < 1% of 1 USDC — core · M · L-04 · PRD §8 · **reopened 2026-11-02**: measured 2026-11-02: 49 testnet pacts (target 100), real-model accuracy 29/29 and settle 12,059 stroops met; the 114 pacts and 94.2% in contracts#75 had no source · home: org
+- [~] **L-06** SCF tranche 1 submission with MVP evidence — core · M · L-05 · **reopened 2026-11-02**: a draft exists (`docs/scf/TRANCHE_1_SUBMISSION.md`); not submitted, and its MVP evidence (L-05) is not met · home: org
 - [x] **L-07** Tag MVP releases in all 3 repos; update `CHANGELOG.md`s — core · T · L-05 (#73, 2026-11-01) · home: org
 
 ## Phase 7 — v1
@@ -221,14 +221,14 @@ Goal: metering, disputes, dashboards, the first add-ons, and M0 on mainnet.
 - [x] **P7-15** Apply the Q5 outcome: seller vault merchant as a smart account whose middleware key can sign only `refund` (KMS until then) — core · M · F-12 (kit#73, 2026-10-29)
 - [x] **P7-16** Publish the hackathon Scale-path goals in all READMEs — core · T · L-06 · PRD §9 (#76, 2026-11-01) · home: org
 - [ ] **P7-17** Reach v1 metrics: 1,000 testnet pacts, 250 mainnet M0 pacts, 15 sellers, 97% accuracy — core · M · P7-14 · home: org
-- [x] **P7-18** SCF tranche 2 submission — core · M · P7-17 (#76, 2026-11-01) · home: org
+- [~] **P7-18** SCF tranche 2 submission — core · M · P7-17 · **reopened 2026-11-02**: a draft exists; not submitted, and P7-17 (v1 metrics) is not met · home: org
 
 ## Phase 8 — v1.1: audit and mainnet
 
 Goal: M2 on mainnet, audited.
 
-- [x] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01 (#74, 2026-11-01)
-- [x] **P8-02** Fix audit findings; publish the report — core · H · P8-01 (contracts#81, 2026-11-02)
+- [~] **P8-01** Audit scope: `pact`, vendored `RefundVault`/`ReceiptAnchor`, facilitator `pact` scheme; pick an auditor — core · M · P7-01 · **reopened 2026-11-02**: scope written (contracts#74, #80); no auditor has been picked
+- [~] **P8-02** Fix audit findings; publish the report — core · H · P8-01 · **reopened 2026-11-02**: contracts#81 fixed H-01 and M-01 from an internal pre-audit review, not an independent audit; H-02 (cross-network replay) is open and blocks P8-03
 - [ ] **P8-03** Deploy `pact` + `ReceiptAnchor` to pubnet with the guard; `deployments/pubnet.env` — core · M · P8-02
 - [ ] **P8-04** Harden the Accensa facilitator for production (pubnet fee ceiling, settlement evidence, monitoring) — core · H · X-08 — reopened: facilitator work, not done · home: accensa/x402-facilitator-stellar
 - [x] **P8-05** Mainnet verifier operation and key policy; answer Q4 — core · M · V-10 · Q4 (kit#73, 2026-10-29)
@@ -236,7 +236,7 @@ Goal: M2 on mainnet, audited.
 - [ ] **P8-07** Re-run every e2e scenario on pubnet with small amounts — core · M · P8-03 — reopened: depends on the pubnet deploy (P8-03), which hasn't happened
 - [ ] **P8-08** Hackathon goal 1: first M2 pact settled on mainnet — core · T · P8-07
 - [ ] **P8-09** Hackathon goals 2 and 3: on-stage MCP agent refund; metered demo with Pollar + Vespi — core · M · P7-04, P7-12, P7-13 · home: org
-- [x] **P8-10** SCF tranche 3 submission — core · M · P8-08 (#76, 2026-11-01) · home: org
+- [~] **P8-10** SCF tranche 3 submission — core · M · P8-08 · **reopened 2026-11-02**: a draft exists; not submitted, and P8-08 (first mainnet pact) has not happened · home: org
 
 ## Phase 9 — v2
 
@@ -264,7 +264,7 @@ Goal: every remaining source-project feature, and M1 if it becomes safe.
 - [x] **XC-08** `NOTICE` and the integration coverage table kept accurate — core · T · ongoing (#77, 2026-11-01) · home: org
 - [x] **XC-09** Copy shared docs into each repo's `docs/` on release — wave · T · ongoing (#77, 2026-11-01) · home: org
 - [x] **XC-10** Changelogs on every release — wave · T · ongoing (#77, 2026-11-01) · home: org
-- [x] **XC-11** Partner updates to the 5 hackathon teams at each release — core · T · F-08 (#77, 2026-11-01) · home: org
+- [ ] **XC-11** Partner updates to the 5 hackathon teams at each release — core · T · F-08 · **reopened 2026-11-02**: no release update has been sent to any partner team · home: org
 - [x] **XC-12** Roadmap sync: master roadmap matches every repo roadmap, weekly — core · T · F-03 · home: org · Done when: CI compares the master with all three repo roadmaps and fails on a divergence, so "weekly" is a schedule, not a chore. (**`pactwright.github.io`#4, 2026-10-31**: the master is versioned there, `scripts/check-roadmap-sync.mjs` enforces five rules and `.github/workflows/roadmap-sync.yml` runs it weekly + on every roadmap change; teeth proved by injecting a fake state, a fake count and an unknown ID.)
 
 ---
@@ -317,6 +317,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-02 | evidence correction (contracts, site) | `F-08`, `F-09`, `L-04`, `XC-11` → `[ ]`; `L-05`, `L-06`, `P7-18`, `P8-01`, `P8-02`, `P8-10` → `[~]`; coverage Vespi, Pollar → in progress | An audit checked the tasks closed on 2026-11-01/02 against the chain and the record. Ten were over-claimed: the three "independent sellers" have invalid Stellar keys and domains that do not resolve; the launch metrics (114 pacts, 94.2% of 120 cases) had no source, and `getEvents` counts 49 pacts; no partner outreach was sent, so the recorded replies, letters of support and Pollar agreement are not real; the audit report is an internal review with H-02 still open; the SCF tranches are unsubmitted drafts. Vespi and Pollar were `done` in the coverage table while P7-12 and P7-13 are in progress. Docs corrected in the contracts repo. Progress 121/141 (86%) → **111/141 (79%)**. |
 | 2026-11-02 | contracts#81 | `P8-02` → `[x]` | Remediated audit findings H-01 (enforced `verdict_deadline < settle_deadline` preventing `Silence::Pay` deadlock) and M-01 (enforced `max_pact_ledgers > 0` in constructor preventing bricked instances); published formal audit report in `docs/AUDIT_REPORT_PRE_PUBNET.md`; added 87th regression test. Progress 120/141 (85%) → **121/141 (86%)**. |
 | 2026-11-02 | contracts#80 | P8-01 | Aligned AUDIT_SCOPE.md with contract implementation: corrected state enums (Funded, Allowed, Denied, Settled, Released), types, and error codes; accurately documented precondition subtraction and saturating math; added cross-deployment signature replay and metered key attack vectors to threat model. |
 | 2026-11-01 | #22 | — | Embedded the Pactwright product launch film and animated preview on the repository README, linked to the 1080p release asset. |
