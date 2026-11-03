@@ -1,6 +1,6 @@
 ---
 title: What is Pactwright?
-description: Escrow, verdicts and receipts for purchases made by AI agents on Stellar.
+description: Refunds for AI-agent purchases on Stellar, through escrow, verdicts and receipts.
 ---
 
 AI agents can already pay for things over HTTP. With [x402](https://developers.stellar.org/docs/build/agentic-payments/x402), a seller answers `402 Payment Required`, the agent pays in USDC on Stellar and retries. That covers paying. It doesn't cover what happens when the purchase goes wrong: the translation comes back in the wrong language, half the pages are missing, or nothing arrives at all. An agent has no one to call, so the rules for getting the money back have to be part of the payment.

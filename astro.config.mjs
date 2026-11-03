@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Pactwright",
-      description: "Escrow, verdicts and receipts for purchases made by AI agents on Stellar.",
+      description: "Refunds for AI-agent purchases on Stellar, through escrow, verdicts and receipts.",
       logo: { src: "./src/assets/seal.svg", alt: "Pactwright" },
       favicon: "/favicon.svg",
       social: [

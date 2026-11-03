@@ -6,9 +6,9 @@
 
 | | |
 |---|---|
-| Last updated | 2026-11-02 |
+| Last updated | 2026-11-03 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **111 / 141 tasks (79%)** |
+| Overall progress | **111 / 142 tasks (78%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -24,14 +24,14 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 1 | Contracts MVP | MVP | 21 | 21 | 100% |
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 15 | 83% |
-| 4 | Verifier | MVP | 12 | 12 | 100% |
+| 4 | Verifier | MVP | 13 | 12 | 92% |
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 14 | 78% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 9 | 75% |
-| **Total** | | | **141** | **111** | **79%** |
+| **Total** | | | **142** | **111** | **78%** |
 
 ---
 
@@ -170,6 +170,7 @@ Goal: trustworthy, reproducible verdicts for one condition kind.
 - [x] **V-10** Dockerfile; deploy the testnet verifier (kit#94, 2026-10-29)
 - [x] **V-12** Real-model accuracy: run the labelled eval set through the configured model (not hand-written readings) and gate CI on ≥ 90% (Kit#92: 29/29 (100%) with gemini-3.5-flash-lite, 2026-10-29)
 - [x] **V-11** Measure verification latency; set default deadline lengths; answer Q6 — core · M · V-10 · Q6 (kit#72, 2026-10-29)
+- [ ] **V-13** The envelope hash commits to the signed envelope, not the proof hash; unique store key; test vector (ADR-018) — core · M · V-05
 
 ## Phase 5 — Studio MVP (`pactwright-studio`)
 
@@ -317,6 +318,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-03 | site#27, kit#139 | `V-13` added `[ ]` | Mirrors kit#139: ADR-018 (Proposed) and V-13, the envelope hash committing to the signed envelope. The landing page, docs and README now lead with "refunds for AI-agent purchases" (site#27). |
 | 2026-11-02 | wave readiness (contracts, kit, studio, site) | `S-10` stays `[~]`; `XC-03` | Playbook-audit fixes. Studio's `VERIFIER_URL` set on Render and its verifier probe now survives the free-tier cold start. All 24 open issues rewritten with checkbox acceptance criteria and a tech stack, and the issue forms ask for both. Four Wave-eligible contracts issues (#84–#87). Kit#78 and Kit#79 closed with their evidence. READMEs trimmed (803→312, 612→348, 367→256 lines), detail kept in each repo's `docs/OVERVIEW.md`, maintainer tables added. Docs: the intro cites the x402 market size (CoinDesk/Chainalysis, 138M transactions), and the modes page has worked numbers from real testnet pacts. |
 | 2026-11-02 | evidence correction (contracts, site) | `F-08`, `F-09`, `L-04`, `XC-11` → `[ ]`; `L-05`, `L-06`, `P7-18`, `P8-01`, `P8-02`, `P8-10` → `[~]`; coverage Vespi, Pollar → in progress | An audit checked the tasks closed on 2026-11-01/02 against the chain and the record. Ten were over-claimed: the three "independent sellers" have invalid Stellar keys and domains that do not resolve; the launch metrics (114 pacts, 94.2% of 120 cases) had no source, and `getEvents` counts 49 pacts; no partner outreach was sent, so the recorded replies, letters of support and Pollar agreement are not real; the audit report is an internal review with H-02 still open; the SCF tranches are unsubmitted drafts. Vespi and Pollar were `done` in the coverage table while P7-12 and P7-13 are in progress. Docs corrected in the contracts repo. Progress 121/141 (86%) → **111/141 (79%)**. |
 | 2026-11-02 | contracts#81 | `P8-02` → `[x]` | Remediated audit findings H-01 (enforced `verdict_deadline < settle_deadline` preventing `Silence::Pay` deadlock) and M-01 (enforced `max_pact_ledgers > 0` in constructor preventing bricked instances); published formal audit report in `docs/AUDIT_REPORT_PRE_PUBNET.md`; added 87th regression test. Progress 120/141 (85%) → **121/141 (86%)**. |
