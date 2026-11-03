@@ -69,6 +69,7 @@ export default defineConfig({
           label: "Guides",
           items: [
             { label: "Sell behind a pact", slug: "docs/guides/seller" },
+            { label: "Become a launch seller", slug: "docs/guides/launch-sellers" },
             { label: "Buy as an agent", slug: "docs/guides/agent" },
             { label: "Run a verifier", slug: "docs/guides/verifier" },
             { label: "Check a certificate", slug: "docs/guides/certificates" },
