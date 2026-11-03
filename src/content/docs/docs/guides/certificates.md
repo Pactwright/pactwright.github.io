@@ -42,4 +42,4 @@ Open Studio's [certificate viewer](https://pactwright-studio.vercel.app/verify),
 
 ## On-chain
 
-The same check runs on-chain as `verify_receipt` on the `ReceiptAnchor` contract (`CAEO5GBC…NJ2` on testnet). The Kit's `verifyProof` and the CLI's `pactwright verify` give the same answer as the contract.
+The same check runs on-chain as `verify_receipt` on the `ReceiptAnchor` contract (`CCLPJIYC…EDXZ` on testnet). The Kit's `verifyProof` and the CLI's `pactwright verify` give the same answer as the contract.
