@@ -42,6 +42,8 @@ On 29 October 2026, an escrow pact was opened with fresh accounts, the delivery 
 
 The pact in Studio: [`40725564…5c55`](https://pactwright-studio.vercel.app/pact/4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55).
 
+On 3 November the same flow passed against the verifier on Vercel: pact [`ae002d93…04ea`](https://pactwright-studio.vercel.app/pact/ae002d9304129bd4c35fbb63dee5a6b01deada9bdcca4dae54a935533e8b04ea), ALLOW 1 USDC, `record_verdict` and settle accepted. The run is in the [80-second product demo](https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/pactwright-product-flow.mp4).
+
 ## Every scenario, end to end
 
 The Kit's testnet suite runs every scenario as real transactions against the deployed contract, with real testnet USDC. It runs nightly in CI; these are from its run on 29 October 2026. In this suite the model's reading is a fixture, so the outcomes test the rules, the contract and the payment flow.
