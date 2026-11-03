@@ -9,7 +9,7 @@ Pactwright isn't on npm yet, so you work from the repositories. This page gets y
 
 On 29 October 2026 an escrow pact was judged by the hosted verifier and settled on testnet. Open it in Studio:
 
-[`pactwright-studio-testnet.onrender.com/pact/40725564…5c55`](https://pactwright-studio-testnet.onrender.com/pact/4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55)
+[`pactwright-studio.vercel.app/pact/40725564…5c55`](https://pactwright-studio.vercel.app/pact/4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55)
 
 You'll see the three steps it went through: **opened** (1 USDC locked), **verdict** (ALLOW 1 USDC, signed by the verifier), **settled** (1 USDC to the seller). Each step links to its transaction on Stellar Expert. The hosted services run on a free tier, so the first page can take up to a minute to load.
 

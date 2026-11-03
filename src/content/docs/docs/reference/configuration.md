@@ -27,7 +27,7 @@ Every Pactwright service refuses to start when its configuration is missing or i
 
 ## Secrets
 
-Keep keys out of repositories and logs. On Render, secret values are set as `sync: false` in the blueprint and entered in the dashboard. The seller key that signs refunds and settlements can live in a KMS, so it never exists on the seller's server:
+Keep keys out of repositories and logs. On Vercel, set them as sensitive environment variables (`vercel env add <NAME> production`), which are never shown again after they are saved. The seller key that signs refunds and settlements can live in a KMS, so it never exists on the seller's server:
 
 | Variables | Signs with |
 |---|---|

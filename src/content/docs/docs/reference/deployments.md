@@ -26,12 +26,12 @@ The `pact` contract was constructed with:
 
 | Service | URL |
 |---|---|
-| Verifier | `https://pactwright-verifier-testnet.onrender.com` |
-| x402 facilitator (Accensa, with the `pact` scheme) | `https://pactwright-facilitator-testnet.onrender.com`. Requires an API key |
-| Studio | [`https://pactwright-studio-testnet.onrender.com`](https://pactwright-studio-testnet.onrender.com) |
+| Verifier | `https://pactwright-verifier.vercel.app` |
+| x402 facilitator (Accensa, with the `pact` scheme) | `https://pactwright-facilitator.vercel.app`. Requires an API key |
+| Studio | [`https://pactwright-studio.vercel.app`](https://pactwright-studio.vercel.app) |
 | Evidence store | [`Pactwright/pactwright-evidence`](https://github.com/Pactwright/pactwright-evidence), served from `raw.githubusercontent.com` |
 
-They run on a free tier and sleep when idle, so the first request can take up to a minute.
+They run on Vercel. The first request after a quiet period can take a few seconds longer while a function starts.
 
 ## Identities
 

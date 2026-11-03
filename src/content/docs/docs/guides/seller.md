@@ -18,9 +18,9 @@ The middleware reads its settings from the environment and refuses to start, lis
 | `SELLER_ADDRESS` | Yes | Your Stellar address; payments go here |
 | `SELLER_DELIVERY_KEY` | Yes | A 32-byte hex ed25519 seed that signs your delivery receipts. Keep it secret |
 | `VERIFIER_PUBLIC_KEY` | Yes | The verifier you name in your terms (32-byte hex). On testnet: `4efdaeb6c34ef1babbc844909afe576b288a36a2afe43a8bf6fcff82c9ffe4ff` |
-| `VERIFIER_URL` | Yes | That verifier's URL. On testnet: `https://pactwright-verifier-testnet.onrender.com` |
+| `VERIFIER_URL` | Yes | That verifier's URL. On testnet: `https://pactwright-verifier.vercel.app` |
 | `USDC_SAC_ID` | Yes | The USDC contract. On testnet: `CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA` |
-| `FACILITATOR_URL` | Yes | The x402 facilitator. On testnet: `https://pactwright-facilitator-testnet.onrender.com` |
+| `FACILITATOR_URL` | Yes | The x402 facilitator. On testnet: `https://pactwright-facilitator.vercel.app` |
 | `FACILITATOR_API_KEY` | If the facilitator requires one | Sent as `Authorization: Bearer …`. The hosted testnet facilitator does require one |
 | `PACT_CONTRACT_ID` | For escrow (M2) | The `pact` contract. On testnet: `CDUXJJUNYFILEYHE3LITANJEKCDFERNAABOSG75OWATFVM776BCMFEV6` |
 | `SELLER_REFUND_VAULT_ID` | For exact refund (M0) | Your Accensa `RefundVault` |

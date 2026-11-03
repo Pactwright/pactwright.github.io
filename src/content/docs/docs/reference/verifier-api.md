@@ -3,7 +3,7 @@ title: Verifier HTTP API
 description: Endpoints, request body and responses of the verifier service.
 ---
 
-The hosted testnet verifier is at `https://pactwright-verifier-testnet.onrender.com`.
+The hosted testnet verifier is at `https://pactwright-verifier.vercel.app`.
 
 ## `GET /health`
 

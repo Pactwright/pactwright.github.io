@@ -23,8 +23,8 @@ const wallet = new WalletKeypair(Keypair.fromSecret(process.env.AGENT_SECRET_KEY
 const pactwright = createPactwright({
   network: loadNetworkConfig(process.env), // refuses to load, listing every problem, if incomplete
   wallet,
-  verifierUrl: "https://pactwright-verifier-testnet.onrender.com",
-  facilitatorUrl: "https://pactwright-facilitator-testnet.onrender.com",
+  verifierUrl: "https://pactwright-verifier.vercel.app",
+  facilitatorUrl: "https://pactwright-facilitator.vercel.app",
   adapters: {
     discovery: new DiscoveryBazaar({ listings: [/* sellers you know about */] }),
     reputation: new ReputationIdentity(),
