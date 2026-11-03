@@ -21,7 +21,7 @@ The process refuses to start, listing every problem at once, if anything require
 | `EVIDENCE_BUCKET_URL` | Yes | An `https` prefix the verifier can read evidence from. Evidence outside it is refused before any fetch |
 | `STELLAR_RPC_URL` | Yes | A Soroban RPC. Each escrow attestation is stamped with its latest ledger, which the contract requires |
 | `FACILITATOR_URL` | Yes | The x402 facilitator, for submitting verdicts |
-| `VERIFIER_PUBLIC_URL` | Yes, unless on Render | Where this verifier is reachable; envelope links point at `<url>/v1/envelopes/<sha256>`. On Render, `RENDER_EXTERNAL_URL` is used when this is unset |
+| `VERIFIER_PUBLIC_URL` | Yes, unless on Vercel | Where this verifier is reachable; envelope links point at `<url>/v1/envelopes/<sha256>`. On Vercel, the project's production domain is used when this is unset |
 | `DATABASE_URL` (or `VERIFIER_DATABASE_URL`) | In production | Postgres for verdict envelopes, so they survive restarts. With `NODE_ENV=production` (as in the Docker image) the verifier refuses to start without it |
 | `PORT` / `VERIFIER_PORT` | No | Listening port; `VERIFIER_PORT` wins, then the host's `PORT`, then 8787 |
 
@@ -37,7 +37,7 @@ docker run -p 10000:10000 \
   -e VERIFIER_LLM_API_KEY=… \
   -e EVIDENCE_BUCKET_URL=https://raw.githubusercontent.com/Pactwright/pactwright-evidence/main/ \
   -e STELLAR_RPC_URL=https://soroban-testnet.stellar.org \
-  -e FACILITATOR_URL=https://pactwright-facilitator-testnet.onrender.com \
+  -e FACILITATOR_URL=https://pactwright-facilitator.vercel.app \
   -e VERIFIER_PUBLIC_URL=http://localhost:10000 \
   -e DATABASE_URL=postgres://… \
   pactwright-verifier
@@ -47,9 +47,17 @@ curl http://localhost:10000/health
 
 `/health` returns the verifier's public key, both as a Stellar address and as the hex that sellers put in their terms. Check it matches before pointing anyone at your verifier.
 
-## Deploy on Render
+## Deploy on Vercel
 
-The Kit's [`render.yaml`](https://github.com/Pactwright/Pactwright-Kit/blob/main/render.yaml) describes the hosted testnet verifier and facilitator. In Render, choose **New → Blueprint**, select the repository, and fill in the secret values when asked. They stay in Render's secret store.
+The hosted testnet verifier runs as one Vercel Function. From `services/verifier` in the Kit:
+
+```sh
+vercel link
+pnpm run build:vercel            # bundles the verifier into .vercel/output
+vercel deploy --prebuilt --prod
+```
+
+Set the variables above as Production environment variables (`vercel env add <NAME> production`). Until they are complete, every request answers `503` with the names of the missing settings. The Kit's [`deploy/facilitator`](https://github.com/Pactwright/Pactwright-Kit/tree/main/deploy/facilitator) does the same for the x402 facilitator.
 
 ## Evidence
 

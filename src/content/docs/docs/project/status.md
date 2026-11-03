@@ -40,7 +40,9 @@ On 29 October 2026, an escrow pact was opened with fresh accounts, the delivery 
 | `record_verdict` | 5453761 | [`0225f78b…`](https://stellar.expert/explorer/testnet/tx/0225f78b5c3e9b321e1fd5311bc54a61ca9904fa82dbd2b4aeb9f379bc8650db) |
 | `settle` | 5453762 | [`1f4ab38c…`](https://stellar.expert/explorer/testnet/tx/1f4ab38c3881892633c2dcf8d7c99c22bc49831d09512eb1b700e62e23e44924) |
 
-The pact in Studio: [`40725564…5c55`](https://pactwright-studio-testnet.onrender.com/pact/4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55).
+The pact in Studio: [`40725564…5c55`](https://pactwright-studio.vercel.app/pact/4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55).
+
+On 3 November the same flow passed against the verifier on Vercel: pact [`ae002d93…04ea`](https://pactwright-studio.vercel.app/pact/ae002d9304129bd4c35fbb63dee5a6b01deada9bdcca4dae54a935533e8b04ea), ALLOW 1 USDC, `record_verdict` and settle accepted. The run is in the [80-second product demo](https://github.com/Pactwright/Pactwright-studio/releases/download/v0.1.0-rc.1/pactwright-product-flow.mp4).
 
 ## Every scenario, end to end
 

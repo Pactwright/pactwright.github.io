@@ -7,7 +7,7 @@ A certificate proves that a pact ended the way it says it did. You don't need to
 
 ## In Studio
 
-Open Studio's [certificate viewer](https://pactwright-studio-testnet.onrender.com/verify), paste the certificate JSON and choose **Inspect & Verify**. The check runs in your browser; nothing is sent anywhere.
+Open Studio's [certificate viewer](https://pactwright-studio.vercel.app/verify), paste the certificate JSON and choose **Inspect & Verify**. The check runs in your browser; nothing is sent anywhere.
 
 | Result | Means |
 |---|---|
