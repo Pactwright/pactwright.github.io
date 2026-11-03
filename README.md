@@ -5,7 +5,7 @@
 <h1 align="center">pactwright.github.io</h1>
 
 <p align="center">
-  <b>The Pactwright website and documentation.</b><br>
+  <b>Refunds for AI-agent purchases on Stellar: the Pactwright website and documentation.</b><br>
   Landing page and docs, served at <a href="https://pactwright.github.io/">pactwright.github.io</a>.
 </p>
 
