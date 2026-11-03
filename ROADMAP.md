@@ -318,6 +318,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-03 | render retired | — | Testnet hosting moved off Render. The verifier and the x402 facilitator run on Vercel (kit#138) and Studio too (studio#73), with Studio and the verifier on a Neon Postgres. The Render services and database are suspended, and `render.yaml` is removed (kit#162, studio#95). The deployed contracts are unchanged. AGENTS §8 now names `vercel.json` and `deploy/` as the protected deployment configs. |
 | 2026-11-03 | site#29, kit#161 | `L-04` work | *Become a launch seller* guide (account, trustline, delivery key, route, 402 check, first settled pact, registry PR) and a `seller-onboarding` issue form in the Kit. L-04 stays at 0 of 3 sellers. |
 | 2026-11-03 | site#28 | `S-10`, `V-10` (hosting) | Testnet hosting moved from Render to Vercel (kit#138, studio#73): the docs point at `pactwright-{verifier,facilitator,studio}.vercel.app`, the verifier guide describes the prebuilt Vercel deploy, and the status page links the 80 s product demo of a hosted run on 2026-11-03 (pact `ae002d93…`, ALLOW 1 USDC, settled). |
 | 2026-11-03 | site#27, kit#139 | `V-13` added `[ ]` | Mirrors kit#139: ADR-018 (Proposed) and V-13, the envelope hash committing to the signed envelope. The landing page, docs and README now lead with "refunds for AI-agent purchases" (site#27). |
