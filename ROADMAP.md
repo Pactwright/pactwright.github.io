@@ -6,9 +6,9 @@
 
 | | |
 |---|---|
-| Last updated | 2026-11-03 |
+| Last updated | 2026-11-05 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **111 / 142 tasks (78%)** |
+| Overall progress | **112 / 143 tasks (78%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -23,7 +23,7 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 0 | Foundations | — | 14 | 11 | 79% |
 | 1 | Contracts MVP | MVP | 21 | 21 | 100% |
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
-| 3 | Kit (SDK, MCP, CLI) | MVP | 18 | 15 | 83% |
+| 3 | Kit (SDK, MCP, CLI) | MVP | 19 | 16 | 84% |
 | 4 | Verifier | MVP | 13 | 12 | 92% |
 | 5 | Studio MVP | MVP | 11 | 8 | 73% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
@@ -31,7 +31,7 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 9 | 75% |
-| **Total** | | | **142** | **111** | **78%** |
+| **Total** | | | **143** | **112** | **78%** |
 
 ---
 
@@ -152,6 +152,7 @@ Goal: an agent and a seller can complete M0 and M2 pacts with the SDK, MCP and C
 - [x] **K-15** Examples: `seller-express`, `agent-node` — wave · M · K-09 (kit#72, 2026-10-29)
 - [x] **K-16** `e2e-testnet.yml` nightly covering every MVP scenario in ARCH §13 — wave · H · K-09, V-10, S-04 (Kit#76, 2026-10-29)
 - [x] **K-18** Drop `shardId` from `CertificateSchema` and the ARCHITECTURE copies (ReceiptAnchor v0.2.0 has no shards; Studio dropped it in studio#25) — wave · T · S-04 (Kit#86 + Kit#89, 2026-10-29)
+- [x] **K-19** State the four MCP behaviour hints (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`) on every tool, from what the handler actually does — wave · T · K-11 · FR-I2 (`feat/mcp-tool-annotations`, 2026-11-05)
 - [ ] **K-17** Publish `@pactwright/*` 0.1.0 to npm — core · T · K-16 — reopened: not on npm
 
 ## Phase 4 — Verifier (`pactwright-kit/services/verifier`)
@@ -318,6 +319,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-05 | `feat/mcp-tool-annotations` | `K-19` added `[x]` | Every MCP tool now states the four behaviour hints a host warns users from, and `ToolDefinition` requires them so a tool cannot be added without them — the OpenAI and Anthropic directories reject a tool where any hint is missing. Values describe the handlers: `buy` is not read-only and is destructive (it moves USDC and opens a pact) and is not marked idempotent, because the same key cannot double-buy but a retry throws on the seller's 409 instead of returning the first result; `get_pact` and `dispute` report `openWorldHint: false` because both refuse before any request leaves the process. Two new tests assert the values on the `tools/list` wire. Kit 52/59 → 53/60. Overall progress moves 111/142 (78%) → **112/143 (78%)**. |
 | 2026-11-03 | anchorer rotation | — | The testnet `ReceiptAnchor` moved to `CCLPJIYC…EDXZ` (new admin `GBWCL7DD…5Y5F`) after the old anchorer key `GAKQTGNQ…M4KZ` was exposed (contracts#111). Studio re-anchored all 42 receipts into its batch 1 (`72017e67…`). References to `CAEO5GBC…LNJ2` now point at the new contract. |
 | 2026-11-03 | render retired | — | Testnet hosting moved off Render. The verifier and the x402 facilitator run on Vercel (kit#138) and Studio too (studio#73), with Studio and the verifier on a Neon Postgres. The Render services and database are suspended, and `render.yaml` is removed (kit#162, studio#95). The deployed contracts are unchanged. AGENTS §8 now names `vercel.json` and `deploy/` as the protected deployment configs. |
 | 2026-11-03 | site#29, kit#161 | `L-04` work | *Become a launch seller* guide (account, trustline, delivery key, route, 402 check, first settled pact, registry PR) and a `seller-onboarding` issue form in the Kit. L-04 stays at 0 of 3 sellers. |
