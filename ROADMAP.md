@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-05 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **113 / 144 tasks (78%)** |
+| Overall progress | **114 / 145 tasks (79%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -25,13 +25,13 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 19 | 16 | 84% |
 | 4 | Verifier | MVP | 13 | 12 | 92% |
-| 5 | Studio MVP | MVP | 12 | 9 | 75% |
+| 5 | Studio MVP | MVP | 13 | 10 | 77% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 14 | 78% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 9 | 75% |
-| **Total** | | | **144** | **113** | **78%** |
+| **Total** | | | **145** | **114** | **79%** |
 
 ---
 
@@ -179,7 +179,7 @@ Goal: public pact pages and certificates backed by an indexer and anchorer.
 
 - [x] **S-01** Next.js scaffold, `db.ts`, `001_core.sql`, `migrations.yml` — wave · M · F-02 · ARCH §7.3 (#18, 2026-10-28)
 - [~] **S-02** Indexer: `getEvents`, cursor, idempotent writes for `pact`, facilitator and `RefundVault` events — wave · H · S-01, C-17 (studio#25, 2026-10-29) · **reopened 2026-10-31**, on the task's own three named event kinds and its own word *cursor*: (1) `contractEvents` stopped at the first page shorter than the `limit: 200` it asked for, but the page size is the RPC's choice — measured on testnet, one request returned 100, another 200, over a window holding **355** — so the loop broke mid-range and `advance()` moved the cursor to the tip, marking events that were never read as read; fixed in studio#44, which now follows the cursor to an empty page, de-duplicates by event id, reports the ledger a pass really covered, and bounds a catch-up at 50 pages. (2) There is no facilitator source at all: `sources()` returns `pact` + `refund_vault:<id>`, nothing in `app/` or `lib/` reads `FACILITATOR_URL` even though `.env.example`, `render.yaml` and the README all set it, and `sync_state`'s comment plus `seed.sql` carry a `'facilitator'` cursor no pass touches. 2 of 3 event kinds.
-- [~] **S-03** Indexer backfill from a history source + lag alert at 50% of RPC retention — wave · H · S-02 · FR-R4 — backfill dropped every JSON-delivered event while advancing the cursor (fixed in studio#31, plus an archival-RPC source); needs a configured source and one real backfill
+- [~] **S-03** Indexer backfill from a history source + lag alert at 50% of RPC retention — wave · H · S-02 · FR-R4 — backfill dropped every JSON-delivered event while advancing the cursor (fixed in studio#31, plus an archival-RPC source); needs a configured source and one real backfill — `GET /api/backfill` now reaches `syncWithHistory()` behind the `CRON_SECRET` guard (studio#49), so the path is callable; still needs one real gap closed on the deployed database
 - [x] **S-04** Anchorer: reconcile from chain → batch (≤ max size, ≥ min interval) → `anchor_batch` → proofs — core · H · S-02, C-20 · FR-R1, FR-R2 (studio#25, 2026-10-29)
 - [x] **S-05** API: `/api/pacts/:id`, `/api/certificates/:id` (`pending`/`anchored`) — wave · M · S-04 (#18, 2026-10-28)
 - [x] **S-06** Pact timeline page — wave · M · S-05 · FR-I4 (#18, 2026-10-28)
@@ -189,6 +189,7 @@ Goal: public pact pages and certificates backed by an indexer and anchorer.
 - [~] **S-10** Deploy studio (testnet) — core · T · S-09 · (studio#31; live on Render, cron syncs and anchors (batch 2, 12 receipts, c83121d1…), 2026-10-29) · **reopened 2026-10-31**: Render auto-deploy never fires — every deploy in the service's history is `api` or `blueprint sync`, so `main` reached production only when deployed by hand (the Live deploy was 15 commits behind). Needs the Render GitHub App reconnected or a deploy hook wired into CI.
 - [x] **S-11** Studio visual design: styled every page (it had none) (studio#32, 2026-10-29)
 - [x] **S-12** Never lose an event whose pact has not been indexed: hold it and replay it — core · M · S-02, S-03 · studio#51 (`feat/indexer-deferred-events`, 2026-11-05)
+- [x] **S-13** One source that cannot be read must not stall the indexing pass, and a retention gap must be backfillable by a call — core · M · S-02, S-03 · studio#49 (`fix/indexer-source-isolation-and-backfill-route`, 2026-11-05)
 
 ## Phase 6 — MVP launch (testnet)
 
@@ -320,6 +321,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-05 | `fix/indexer-source-isolation-and-backfill-route` | `S-13` added `[x]`, `S-03` text | One stale cursor stopped the whole indexer. `sync()` looped its sources serially and let `OutsideRetentionError` escape the loop, so a RefundVault whose cursor fell behind the RPC's retention froze the `pact` source with it — nothing was indexed for any contract until a human moved that row — and `/api/sync` answered 500 `{error:"Sync failed"}` for it, identical to a transient hiccup the next tick would clear. Each source's read is now its own `try`: the failure becomes a `SourceFailure` naming source, reason, its cursor and the oldest ledger, that source's cursor stays put so an unread range is never marked read, the other sources are indexed, the deferred events are still replayed, and the pass raises `SyncFailuresError` at the end rather than going silently green. `/api/sync` answers **503** with an `outsideRetention` body when a source needs a backfill and **500** when a read merely failed, reporting what it did index in both. The second half of the issue was reachability: `backfill()`, `syncWithHistory()` and both history sources existed but were called only from tests, so `S-03`'s recovery path needed a REPL; `GET /api/backfill` now runs it behind the same `CRON_SECRET` guard (extracted to `lib/cron-auth.ts`) and answers 503 `noHistorySource` naming the variables to set. 17 new tests, mutation-checked one at a time — reintroducing the escape-the-loop throw fails 7, swallowing the failures without reporting them fails 6, `latestLedger` in place of `throughLedger` fails 1, flattening the 503 and deleting the config guard fails 3. `S-03` stays `[~]`: the route makes a backfill callable, but no gap has been closed on the deployed database and no scheduler calls it. Studio 19/22 → 20/23. Overall progress moves 113/144 (78%) → **114/145 (79%)**. |
 | 2026-11-05 | `feat/indexer-deferred-events` | `S-12` added `[x]` | Studio was discarding refunds it could not yet place. `pact_events.pact_id` references `pacts`, so a RefundVault refund whose pact Studio has not written cannot be inserted; the indexer counted it `skipped` and `sync` still advanced the source's cursor past it, which lost it permanently. Because no facilitator source exists, an M0 pact is never written to `pacts` at all, so **every M0 refund hit that path**. Migration `005_deferred_events.sql` retains the event (no foreign key, attempt count, unique on `(tx_hash, stage, pact_id)`) and `sync` replays it at the end of every pass, forgetting it once its pact exists — retention rather than a cursor clamp, which would park a whole vault behind one refund whose pact never arrives. `SyncResult.skipped` is now `deferred`, `sync()` returns a `SyncReport` with `replayed`/`deferred` so the backlog is visible, and Studio's README status table no longer says those refunds are skipped. 5 new unit tests reproduce the issue's acceptance case against a strict Postgres double (real foreign key, real rollback, throws on unknown SQL); mutation-checked, and separately verified against real Postgres 16 with all five migrations applied. Studio 18/21 → 19/22. Overall progress moves 112/143 (78%) → **113/144 (78%)**. |
 | 2026-11-05 | `feat/mcp-tool-annotations` | `K-19` added `[x]` | Every MCP tool now states the four behaviour hints a host warns users from, and `ToolDefinition` requires them so a tool cannot be added without them — the OpenAI and Anthropic directories reject a tool where any hint is missing. Values describe the handlers: `buy` is not read-only and is destructive (it moves USDC and opens a pact) and is not marked idempotent, because the same key cannot double-buy but a retry throws on the seller's 409 instead of returning the first result; `get_pact` and `dispute` report `openWorldHint: false` because both refuse before any request leaves the process. Two new tests assert the values on the `tools/list` wire. Kit 52/59 → 53/60. Overall progress moves 111/142 (78%) → **112/143 (78%)**. |
 | 2026-11-03 | anchorer rotation | — | The testnet `ReceiptAnchor` moved to `CCLPJIYC…EDXZ` (new admin `GBWCL7DD…5Y5F`) after the old anchorer key `GAKQTGNQ…M4KZ` was exposed (contracts#111). Studio re-anchored all 42 receipts into its batch 1 (`72017e67…`). References to `CAEO5GBC…LNJ2` now point at the new contract. |
