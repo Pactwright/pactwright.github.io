@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-05 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **112 / 143 tasks (78%)** |
+| Overall progress | **113 / 144 tasks (78%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -25,13 +25,13 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 19 | 16 | 84% |
 | 4 | Verifier | MVP | 13 | 12 | 92% |
-| 5 | Studio MVP | MVP | 11 | 8 | 73% |
+| 5 | Studio MVP | MVP | 12 | 9 | 75% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 18 | 14 | 78% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 12 | 9 | 75% |
-| **Total** | | | **143** | **112** | **78%** |
+| **Total** | | | **144** | **113** | **78%** |
 
 ---
 
@@ -188,6 +188,7 @@ Goal: public pact pages and certificates backed by an indexer and anchorer.
 - [x] **S-09** Playwright e2e for both pages — wave · M · S-07 (#21, 2026-10-28)
 - [~] **S-10** Deploy studio (testnet) — core · T · S-09 · (studio#31; live on Render, cron syncs and anchors (batch 2, 12 receipts, c83121d1…), 2026-10-29) · **reopened 2026-10-31**: Render auto-deploy never fires — every deploy in the service's history is `api` or `blueprint sync`, so `main` reached production only when deployed by hand (the Live deploy was 15 commits behind). Needs the Render GitHub App reconnected or a deploy hook wired into CI.
 - [x] **S-11** Studio visual design: styled every page (it had none) (studio#32, 2026-10-29)
+- [x] **S-12** Never lose an event whose pact has not been indexed: hold it and replay it — core · M · S-02, S-03 · studio#51 (`feat/indexer-deferred-events`, 2026-11-05)
 
 ## Phase 6 — MVP launch (testnet)
 
@@ -319,6 +320,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-05 | `feat/indexer-deferred-events` | `S-12` added `[x]` | Studio was discarding refunds it could not yet place. `pact_events.pact_id` references `pacts`, so a RefundVault refund whose pact Studio has not written cannot be inserted; the indexer counted it `skipped` and `sync` still advanced the source's cursor past it, which lost it permanently. Because no facilitator source exists, an M0 pact is never written to `pacts` at all, so **every M0 refund hit that path**. Migration `005_deferred_events.sql` retains the event (no foreign key, attempt count, unique on `(tx_hash, stage, pact_id)`) and `sync` replays it at the end of every pass, forgetting it once its pact exists — retention rather than a cursor clamp, which would park a whole vault behind one refund whose pact never arrives. `SyncResult.skipped` is now `deferred`, `sync()` returns a `SyncReport` with `replayed`/`deferred` so the backlog is visible, and Studio's README status table no longer says those refunds are skipped. 5 new unit tests reproduce the issue's acceptance case against a strict Postgres double (real foreign key, real rollback, throws on unknown SQL); mutation-checked, and separately verified against real Postgres 16 with all five migrations applied. Studio 18/21 → 19/22. Overall progress moves 112/143 (78%) → **113/144 (78%)**. |
 | 2026-11-05 | `feat/mcp-tool-annotations` | `K-19` added `[x]` | Every MCP tool now states the four behaviour hints a host warns users from, and `ToolDefinition` requires them so a tool cannot be added without them — the OpenAI and Anthropic directories reject a tool where any hint is missing. Values describe the handlers: `buy` is not read-only and is destructive (it moves USDC and opens a pact) and is not marked idempotent, because the same key cannot double-buy but a retry throws on the seller's 409 instead of returning the first result; `get_pact` and `dispute` report `openWorldHint: false` because both refuse before any request leaves the process. Two new tests assert the values on the `tools/list` wire. Kit 52/59 → 53/60. Overall progress moves 111/142 (78%) → **112/143 (78%)**. |
 | 2026-11-03 | anchorer rotation | — | The testnet `ReceiptAnchor` moved to `CCLPJIYC…EDXZ` (new admin `GBWCL7DD…5Y5F`) after the old anchorer key `GAKQTGNQ…M4KZ` was exposed (contracts#111). Studio re-anchored all 42 receipts into its batch 1 (`72017e67…`). References to `CAEO5GBC…LNJ2` now point at the new contract. |
 | 2026-11-03 | render retired | — | Testnet hosting moved off Render. The verifier and the x402 facilitator run on Vercel (kit#138) and Studio too (studio#73), with Studio and the verifier on a Neon Postgres. The Render services and database are suspended, and `render.yaml` is removed (kit#162, studio#95). The deployed contracts are unchanged. AGENTS §8 now names `vercel.json` and `deploy/` as the protected deployment configs. |
