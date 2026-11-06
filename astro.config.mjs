@@ -9,7 +9,7 @@ export default defineConfig({
     starlight({
       title: "Pactwright",
       description: "Refunds for AI-agent purchases on Stellar, through escrow, verdicts and receipts.",
-      logo: { src: "./src/assets/seal.svg", alt: "Pactwright" },
+      logo: { src: "./src/assets/pactwright-mark.png", alt: "Pactwright" },
       favicon: "/favicon.svg",
       social: [
         { icon: "github", label: "Pactwright on GitHub", href: "https://github.com/Pactwright" },

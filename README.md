@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/seal.svg" alt="Pactwright" width="96">
+  <img src="public/pactwright-mark.png" alt="Pactwright" width="96">
 </p>
 
 <h1 align="center">pactwright.github.io</h1>
@@ -84,7 +84,7 @@ pnpm check-links    # after a build: every internal link and #anchor must resolv
   internal link, and publishes it to GitHub Pages on each push to `main`. Pull requests get the
   build and the link check.
 
-## 🤝 Community & Maintainers
+## 🤝 Community
 
 Join the discussion and get support:
 
