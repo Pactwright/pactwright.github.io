@@ -68,6 +68,7 @@ header.header {
 .site-title img {
   height: 2rem;
   width: auto;
+  border-radius: 50%;
   filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
 }
 

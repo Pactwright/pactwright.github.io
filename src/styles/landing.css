@@ -75,6 +75,8 @@ a {
 }
 
 .brand img {
+  border-radius: 50%;
+  display: block;
   filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
 }
 
@@ -375,6 +377,7 @@ main,
 
 .seal img {
   display: block;
+  border-radius: 50%;
 }
 
 /* ---------- Neon stamps ---------- */
