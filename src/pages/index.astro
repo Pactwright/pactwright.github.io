@@ -84,6 +84,114 @@ const steps = [
         </article>
       </section>
 
+      <section class="band" id="simulator" aria-labelledby="sim-title">
+        <div class="band-header">
+          <h2 id="sim-title" class="band-title">Try the settlement simulator</h2>
+          <p class="band-intro">
+            Toggle between scenarios to see how Soroban smart contract escrow settles on Stellar in real time—from full delivery to partial completions, hallucinations, and timeouts.
+          </p>
+        </div>
+
+        <div class="simulator-stage" data-ui aria-label="Interactive Settlement Simulator">
+          <div class="simulator-tabs-bar" role="tablist" aria-label="Simulation Scenarios">
+            <button
+              type="button"
+              class="sim-tab active"
+              role="tab"
+              aria-selected="true"
+              data-scenario="full"
+              id="tab-full"
+            >
+              Full Delivery (100%)
+            </button>
+            <button
+              type="button"
+              class="sim-tab"
+              role="tab"
+              aria-selected="false"
+              data-scenario="partial"
+              id="tab-partial"
+            >
+              Partial (75% / 25%)
+            </button>
+            <button
+              type="button"
+              class="sim-tab"
+              role="tab"
+              aria-selected="false"
+              data-scenario="denied"
+              id="tab-denied"
+            >
+              Hallucinated (Refund)
+            </button>
+            <button
+              type="button"
+              class="sim-tab"
+              role="tab"
+              aria-selected="false"
+              data-scenario="timeout"
+              id="tab-timeout"
+            >
+              Timeout (Silence)
+            </button>
+          </div>
+
+          <div class="simulator-body">
+            <div class="sim-meta-header">
+              <div class="sim-id-block">
+                <span class="label">Simulated Pact ID</span>
+                <p class="pact-id mono" id="sim-pact-id">{PACT}</p>
+                <div style="margin-top: 10px;">
+                  <span class="stamp stamp--large" id="sim-stamp" data-ink="teal">Settled</span>
+                </div>
+              </div>
+              <div class="sim-seal-wrap" role="img" aria-label="Pactwright mark">
+                <img src="/pactwright-mark.png" alt="" width="68" height="68" />
+              </div>
+            </div>
+
+            <!-- Pipeline Visual -->
+            <div class="sim-pipeline">
+              <div class="sim-pipe-step">
+                <span class="label">1. Locked Escrow</span>
+                <span class="sim-pipe-val mono" id="sim-pipe-cap">1.00 USDC</span>
+              </div>
+              <div class="sim-pipe-step">
+                <span class="label">2. Verifier Verdict</span>
+                <span class="sim-pipe-val mono" id="sim-pipe-verdict">ALLOW 1.00</span>
+              </div>
+              <div class="sim-pipe-step">
+                <span class="label">3. Settlement Execution</span>
+                <span class="sim-pipe-val mono" id="sim-pipe-action">Full Seller Payout</span>
+              </div>
+            </div>
+
+            <!-- Balances -->
+            <div class="sim-balances">
+              <div class="sim-balance-card">
+                <span class="label">Paid to Seller</span>
+                <span class="sim-balance-amount seller-amount mono" id="sim-seller-amount">1.00 USDC</span>
+              </div>
+              <div class="sim-balance-card">
+                <span class="label">Refunded to Buyer</span>
+                <span class="sim-balance-amount refund-amount mono" id="sim-buyer-amount">0.00 USDC</span>
+              </div>
+            </div>
+
+            <div class="sim-verdict-quote" id="sim-quote">
+              "The hosted verifier validated translation quality: 4 of 4 pages approved. 1.00 USDC paid to seller."
+            </div>
+
+            <div class="sim-footer">
+              <span class="mono" id="sim-hash-meta">Testnet Ledger #5453762 · Settle Tx: 1f4ab38c…</span>
+              <a href={`https://pactwright-studio.vercel.app/pact/${PACT}`} target="_blank" rel="noreferrer">
+                Inspect in Studio Explorer ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="band" aria-labelledby="wrong-title">
         <div class="panel">
           <h2 id="wrong-title">What happens when a purchase goes wrong</h2>
@@ -160,5 +268,97 @@ const steps = [
       </p>
       <p>Runs on Stellar testnet. Not audited, so don't put real money in it yet.</p>
     </footer>
+
+    <script>
+      // Scenario definitions for Simulator
+      const scenarios = {
+        full: {
+          cap: "1.00 USDC",
+          verdict: "ALLOW 1.00",
+          action: "Full Seller Payout",
+          seller: "1.00 USDC",
+          buyer: "0.00 USDC",
+          stampText: "Settled",
+          stampInk: "teal",
+          quote: "The hosted verifier validated translation quality: 4 of 4 pages approved. 1.00 USDC paid to seller.",
+          hashMeta: "Testnet Ledger #5453762 · Settle Tx: 1f4ab38c…",
+        },
+        partial: {
+          cap: "1.00 USDC",
+          verdict: "ALLOW 0.75",
+          action: "Atomic 75/25 Split",
+          seller: "0.75 USDC",
+          buyer: "0.25 USDC",
+          stampText: "Partial Settle",
+          stampInk: "indigo",
+          quote: "Verifier approved 3 of 4 delivered pages (0.75 USDC). 0.25 USDC returned to buyer in the same ledger transaction.",
+          hashMeta: "Testnet Ledger #5453910 · Settle Tx: a40f92b1…",
+        },
+        denied: {
+          cap: "1.00 USDC",
+          verdict: "DENY 0.00",
+          action: "Full Buyer Refund",
+          seller: "0.00 USDC",
+          buyer: "1.00 USDC",
+          stampText: "Full Refund",
+          stampInk: "rose",
+          quote: "Payload failed schema validation (corrupt output). Verifier signed DENY: 100% of cap refunded immediately.",
+          hashMeta: "Testnet Ledger #5454045 · Settle Tx: 7820ec19…",
+        },
+        timeout: {
+          cap: "1.00 USDC",
+          verdict: "NO VERDICT",
+          action: "Timeout Reclaim",
+          seller: "0.00 USDC",
+          buyer: "1.00 USDC",
+          stampText: "Timeout Refund",
+          stampInk: "amber",
+          quote: "Seller server dropped offline. Timeout deadline reached: buyer called reclaim to retrieve full 1.00 USDC.",
+          hashMeta: "Testnet Ledger #5454180 · Reclaim Tx: e891d45a…",
+        },
+      };
+
+      // Wire simulator tabs
+      const simTabs = document.querySelectorAll<HTMLButtonElement>(".sim-tab");
+      const pipeCap = document.getElementById("sim-pipe-cap");
+      const pipeVerdict = document.getElementById("sim-pipe-verdict");
+      const pipeAction = document.getElementById("sim-pipe-action");
+      const sellerAmount = document.getElementById("sim-seller-amount");
+      const buyerAmount = document.getElementById("sim-buyer-amount");
+      const stamp = document.getElementById("sim-stamp");
+      const quote = document.getElementById("sim-quote");
+      const hashMeta = document.getElementById("sim-hash-meta");
+
+      simTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          simTabs.forEach((t) => {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+
+          const key = tab.getAttribute("data-scenario") as keyof typeof scenarios;
+          const data = scenarios[key];
+          if (!data) return;
+
+          if (pipeCap) pipeCap.textContent = data.cap;
+          if (pipeVerdict) pipeVerdict.textContent = data.verdict;
+          if (pipeAction) pipeAction.textContent = data.action;
+          if (sellerAmount) sellerAmount.textContent = data.seller;
+          if (buyerAmount) buyerAmount.textContent = data.buyer;
+          if (quote) quote.textContent = `"${data.quote}"`;
+          if (hashMeta) hashMeta.textContent = data.hashMeta;
+
+          if (stamp) {
+            stamp.textContent = data.stampText;
+            stamp.setAttribute("data-ink", data.stampInk);
+            stamp.style.animation = "none";
+            stamp.offsetHeight; // trigger reflow
+            stamp.style.animation = "";
+          }
+        });
+      });
+    </script>
   </body>
 </html>

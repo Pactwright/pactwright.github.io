@@ -751,3 +751,177 @@ main,
     transition: none;
   }
 }
+
+/* ---------- Interactive Settlement Simulator Section ---------- */
+
+.band-header {
+  margin-bottom: 28px;
+}
+
+.band-intro {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 1.0625rem;
+  max-width: 44em;
+}
+
+.simulator-stage {
+  border-radius: 20px;
+  border: 1px solid var(--glass-edge);
+  background: var(--surface);
+  box-shadow: var(--float), var(--glass-shine);
+  overflow: hidden;
+}
+
+.simulator-tabs-bar {
+  display: flex;
+  background: rgba(10, 16, 34, 0.85);
+  border-bottom: 1px solid var(--hairline);
+  overflow-x: auto;
+}
+
+.sim-tab {
+  flex: 1;
+  min-width: 160px;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: var(--text-face);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 120ms ease;
+}
+
+.sim-tab:hover {
+  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.sim-tab.active {
+  color: var(--text-strong);
+  background: rgba(45, 212, 191, 0.08);
+  border-bottom-color: var(--teal);
+}
+
+.simulator-body {
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.sim-meta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.sim-id-block {
+  min-width: 0;
+  flex: 1;
+}
+
+.sim-seal-wrap img {
+  border-radius: 50%;
+  display: block;
+  filter: drop-shadow(0 0 14px rgba(45, 212, 191, 0.4));
+}
+
+.sim-pipeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.sim-pipe-step {
+  background: rgba(13, 20, 40, 0.7);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sim-pipe-val {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.sim-balances {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.sim-balance-card {
+  background: rgba(13, 20, 40, 0.7);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-balance-amount {
+  font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  font-weight: 700;
+}
+
+.seller-amount {
+  color: var(--teal);
+}
+
+.refund-amount {
+  color: #fb7185;
+}
+
+.sim-verdict-quote {
+  padding: 14px 18px;
+  border-left: 3px solid var(--teal);
+  background: rgba(22, 32, 66, 0.45);
+  border-radius: 0 10px 10px 0;
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.sim-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.sim-footer a {
+  color: var(--link);
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .sim-pipeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sim-balances {
+    grid-template-columns: 1fr;
+  }
+  .sim-seal-wrap img {
+    width: 56px;
+    height: 56px;
+  }
+}
