@@ -517,11 +517,10 @@ main,
   content: "";
   position: absolute;
   left: var(--rail);
-  top: 18px;
-  bottom: 18px;
-  width: 2px;
-  background: var(--teal);
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.5);
+  top: 32px;
+  bottom: 32px;
+  width: 1px;
+  background: var(--hairline-strong);
 }
 
 .block {
@@ -537,14 +536,26 @@ main,
 .block::before {
   content: "";
   position: absolute;
-  left: calc(var(--rail) * -1 - 10px);
-  top: 26px;
-  width: 14px;
-  height: 14px;
-  transform: rotate(45deg);
+  left: calc(var(--rail) * -1 - 9px);
+  top: 27px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   background: var(--void);
   border: 2px solid var(--teal);
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.6);
+  box-shadow: 0 0 0 4px var(--void);
+  z-index: 2;
+}
+
+.block::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 - 4px);
+  top: 31px;
+  width: calc(var(--rail) + 4px);
+  height: 1px;
+  background: var(--hairline-strong);
+  z-index: 1;
 }
 
 .block-head {
