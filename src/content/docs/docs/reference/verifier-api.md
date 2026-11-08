@@ -25,7 +25,7 @@ Asks for a verdict on one pact and milestone.
 |---|---|---|
 | `terms` | Yes | The pact terms: `pactId`, `mode`, `buyer`, `seller`, `cap`, `nonce`, `conditionHash`, `condition`, `verifier`, `deliveryKey`, and so on |
 | `evidence` | Yes, at least one | Items of `{ type, uri, sha256, mimeType, uploader, createdAt }`. Each `uri` must resolve under the verifier's evidence store, and the fetched bytes must match `sha256` |
-| `deliveryReceipt` | No | The seller's `X-Pactwright-Delivery` value: `sha256=<hex>; sig=<base64>`. Without it, the verifier challenges the seller for one |
+| `deliveryReceipt` | No | The seller's `X-Pactwright-Delivery` value: `sha256=<hex>; sig=<base64>`. Without it there is no verdict (`202`), unless the pact's own seller answers a challenge ([ADR-020](https://github.com/Pactwright/Pactwright-Kit/blob/main/docs/adr/ADR-020-non-delivery-needs-the-seller.md)) |
 | `minAmount` | No | Below this, the purchase gets a receipt only |
 | `milestone` | No | `delivery` (default), or `dispute-<n>` for a later dispute |
 
@@ -43,6 +43,7 @@ account's key or its published `pactwright.delivery_key`.
 | `201` | `{ envelope, envelopeRef, amount, attestation }`. For escrow pacts, `attestation` holds the signed `VerdictAttestation` to submit with `record_verdict` |
 | `200` | `{ receiptOnly: true, amount, … }`: below `minAmount`, no verification |
 | `202` | `{ verdict: null, reason: "model_refusal" }`: the model refused, so there is no verdict and the silence policy applies |
+| `202` | `{ verdict: null, reason: "no_delivery_receipt" }`: no delivery receipt and no answer from the pact's own seller, so there is no verdict and the silence policy applies |
 | `400` | `{ error: "invalid_request", issues }` |
 | `409` | `{ error: "verdict_exists", envelopeSha256 }`: this pact and milestone already have a verdict |
 | `422` | `{ error: "terms_mismatch", problems }`: the terms don't match the pact on the chain; nothing was judged or signed |

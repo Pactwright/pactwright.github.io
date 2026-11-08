@@ -8,7 +8,7 @@
 |---|---|
 | Last updated | 2026-11-08 |
 | Design baseline | PRD v0.2 · ARCHITECTURE v0.2 |
-| Overall progress | **126 / 157 tasks (80%)** |
+| Overall progress | **127 / 158 tasks (80%)** |
 | Current phase | Phase 6 — MVP launch on testnet |
 
 Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
@@ -24,14 +24,14 @@ Companion docs: [`PRD.md`](PRD.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md) ·
 | 1 | Contracts MVP | MVP | 21 | 21 | 100% |
 | 2 | Facilitator `pact` scheme | MVP | 8 | 8 | 100% |
 | 3 | Kit (SDK, MCP, CLI) | MVP | 19 | 16 | 84% |
-| 4 | Verifier | MVP | 14 | 13 | 93% |
+| 4 | Verifier | MVP | 15 | 14 | 93% |
 | 5 | Studio MVP | MVP | 16 | 13 | 81% |
 | 6 | MVP launch on testnet | MVP | 8 | 4 | 50% |
 | 7 | v1 — metering, disputes, dashboards, add-ons | v1 | 23 | 19 | 83% |
 | 8 | v1.1 — audit and mainnet | v1.1 | 10 | 1 | 10% |
 | 9 | v2 — reputation, smart accounts, M1 | v2 | 9 | 8 | 89% · `P9-06` dropped (ADR-017) |
 | X | Cross-cutting (docs, security, ops) | all | 15 | 12 | 80% |
-| **Total** | | | **157** | **126** | **80%** |
+| **Total** | | | **158** | **127** | **80%** |
 
 ---
 
@@ -173,6 +173,7 @@ Goal: trustworthy, reproducible verdicts for one condition kind.
 - [x] **V-11** Measure verification latency; set default deadline lengths; answer Q6 — core · M · V-10 · Q6 (kit#72, 2026-10-29)
 - [ ] **V-13** The envelope hash commits to the signed envelope, not the proof hash; unique store key; test vector (ADR-018) — core · M · V-05
 - [x] **V-14** The verifier judges the pact on the chain, not the terms it is sent: condition hash and `pact_id` recomputed, escrow terms read with `get_pact`, delivery key bound to the seller account (ADR-019) — core · H · V-02, V-05 · ADR-019 (kit#176, 2026-11-08)
+- [x] **V-15** A non-delivery DENY needs an answer from the pact's own seller: no receipt and no trusted seller endpoint → no verdict, the `SELLER_WEBHOOK_URL` fallback removed (ADR-020, FR-V6) — core · H · V-07 · ADR-020 (kit#177, 2026-11-08)
 
 ## Phase 5 — Studio MVP (`pactwright-studio`)
 
@@ -333,6 +334,7 @@ Newest first. One line per contribution.
 
 | Date | PR / change | Tasks | Summary |
 |---|---|---|---|
+| 2026-11-08 | kit#177, site | `V-15` added `[x]` | Pre-launch review finding #2: a verdict request without a delivery receipt got a signed DENY at once, so anyone could refund any escrow pact after delivery. Now a non-delivery DENY needs a `2xx` answer without a receipt from the pact's own seller; otherwise there is no verdict and the silence policy decides (ADR-020). The verifier API page lists the new `202 no_delivery_receipt`. Overall progress moves 126/157 (80%) → **127/158 (80%)**. |
 | 2026-11-08 | kit#176, site | `V-14` added `[x]` | Pre-launch review finding #1: the verifier signed attestations for whatever terms a caller sent, so a seller could get ALLOW for an easier condition and a buyer could sign its own delivery receipt to get DENY. It now checks each request against the chain before judging (ADR-019) and refuses mismatches with 422. The seller guide says how to publish a delivery key on the seller account; the verifier API page lists the new 422 and 503. Overall progress moves 125/156 (80%) → **126/157 (80%)**. |
 | 2026-11-07 | `feat/a11y-axe` (studio) | `XC-15` added `[x]`, X 14/11 → 15/12, total 155/124 → 156/125 | Studio's suite proved a page renders, not that a keyboard or a screen reader can use it. `apps/web/test/e2e/a11y.spec.ts` now audits the seven routes Studio owns in both Playwright projects — desktop and Pixel 5 at 390 px — 14 axe audits and 4 guard tests, the studio suite 70 → 88. An audit refuses to run until a per-route precondition proves it is on the page it claims to audit, so a 404 cannot report zero violations, and axe must name itself, give a version and evaluate ≥40 rules (measured 90) before its clean answer counts. Exemptions are an exact set compared both ways with a stale-key guard, so a new rule fails and a rule that disappeared has to be deleted rather than left as a blindfold. One serious violation is listed, not silenced: `scrollable-region-focusable` on `/merchant` at 390 px from `.ledger-wrap`, which is studio#78's file to make keyboard-scrollable. Merged after studio#126 gave the performance budget back its headroom, because this branch changed no page and still went red on it. |
 | 2026-11-07 | `perf/seal-webp` (studio) | `P7-23` added `[x]`, Phase 7 22/18 → 23/19, total 154/123 → 155/124 | The brand mark is the LCP element on `/` and `/pact` — the failing artifact names `span.seal > img`, 132 × 132 at 390 px, `fetchpriority=high` — and it arrived as a 54,335-byte PNG. It is now delivered as a 4,502-byte WebP generated from the untouched source with `cwebp -q 90 -m 6 -alpha_q 100`, painted through a `<picture>` that keeps the PNG as the fallback, so −49,833 bytes (−91.7%) on the critical path of every page that shows the brand and home's budget samples move 88, 91, 88 → 93, 93, 93. Fidelity measured in Chromium rather than eyeballed: mean per-channel error 0.48/255, 135 of 65,536 pixels over a 30-point RGB difference. Refused and reported: `brand/pactwright-mark.svg` is 789 bytes but is a different drawing, and the three webfonts (107,568 bytes on home) are now the largest cost — both are brand calls, not perf ones. No artwork was redrawn, resized or cropped. |
