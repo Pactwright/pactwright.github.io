@@ -10,25 +10,25 @@
   --sl-font: var(--text-face);
   --sl-font-mono: var(--mono-face);
   --sl-color-white: var(--text-strong);
-  --sl-color-gray-1: #dfe4f2;
-  --sl-color-gray-2: #c3cae0;
+  --sl-color-gray-1: var(--text-strong);
+  --sl-color-gray-2: var(--text);
   --sl-color-gray-3: var(--muted);
   --sl-color-gray-4: var(--faint);
-  --sl-color-gray-5: #2a3560;
-  --sl-color-gray-6: #141c38;
-  --sl-color-gray-7: #0d1428;
+  --sl-color-gray-5: var(--surface-active);
+  --sl-color-gray-6: var(--surface);
+  --sl-color-gray-7: var(--deep);
   --sl-color-black: var(--void);
-  --sl-color-accent-low: rgba(99, 102, 241, 0.18);
-  --sl-color-accent: var(--indigo);
-  --sl-color-accent-high: var(--link);
-  --sl-color-text: #c3cae0;
-  --sl-color-text-accent: var(--link);
-  --sl-color-text-invert: var(--void);
+  --sl-color-accent-low: var(--accent-subtle);
+  --sl-color-accent: var(--accent);
+  --sl-color-accent-high: var(--accent-text);
+  --sl-color-text: var(--text);
+  --sl-color-text-accent: var(--accent-text);
+  --sl-color-text-invert: var(--accent-ink);
   --sl-color-bg: var(--void);
-  --sl-color-bg-nav: rgba(7, 11, 23, 0.72);
+  --sl-color-bg-nav: var(--void);
   --sl-color-bg-sidebar: transparent;
-  --sl-color-bg-inline-code: rgba(129, 140, 248, 0.14);
-  --sl-color-bg-accent: var(--indigo);
+  --sl-color-bg-inline-code: var(--bone-subtle);
+  --sl-color-bg-accent: var(--accent);
   --sl-color-hairline-light: var(--hairline-strong);
   --sl-color-hairline: var(--hairline);
   --sl-color-hairline-shade: var(--void);
@@ -50,12 +50,10 @@ body {
 
 /* ---------- Chrome ---------- */
 
-/* Glass: the page scrolling under the fixed header is frosted. */
+/* One flat tone, not a frost: the register has no translucent surfaces. */
 header.header {
-  background: rgba(10, 16, 34, 0.62);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-edge);
+  background: var(--void);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .site-title {
@@ -69,7 +67,6 @@ header.header {
   height: 2rem;
   width: auto;
   border-radius: 50%;
-  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
 }
 
 .sidebar-pane {
@@ -89,11 +86,12 @@ nav.sidebar a {
   font-size: 0.9375rem;
   color: var(--muted);
   border-radius: 8px;
+  transition: color 160ms ease, background-color 160ms ease;
 }
 
 nav.sidebar a:hover {
   color: var(--text-strong);
-  background: rgba(129, 140, 248, 0.08);
+  background: var(--surface-hover);
 }
 
 /* The current page: a lit block. */
@@ -101,8 +99,8 @@ nav.sidebar a[aria-current="page"],
 nav.sidebar a[aria-current="page"]:hover {
   color: var(--text-strong);
   font-weight: 600;
-  background: rgba(45, 212, 191, 0.14);
-  box-shadow: inset 2px 0 0 var(--teal);
+  background: var(--moss-subtle);
+  box-shadow: inset 2px 0 0 var(--moss);
 }
 
 .right-sidebar {
@@ -121,32 +119,25 @@ main {
   position: relative;
   margin: 1.75rem clamp(0.75rem, 2.5vw, 2rem) 3rem;
   padding: 1rem 0 0.5rem;
-  border: 1px solid rgba(45, 212, 191, 0.3);
-  border-radius: 20px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
   background: var(--surface);
-  box-shadow: var(--float), var(--glass-shine);
   overflow: hidden;
 }
 
-/* Glass, where the browser can frost what's behind it: the page panel, and the cards inside it
-   (notes, cautions, Previous/Next) as pale frosted glass with a bright edge and a shine. */
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  main {
-    background: var(--glass);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
-  }
-  .sl-markdown-content .starlight-aside,
-  main .pagination-links a {
-    background: var(--card-glass);
-    border-color: var(--card-edge);
-    box-shadow: var(--card-shine);
-    -webkit-backdrop-filter: var(--card-blur);
-    backdrop-filter: var(--card-blur);
-  }
-  main .pagination-links a:hover {
-    background: var(--card-glass-hover);
-  }
+/* Cards inside the page share the register's rules: one tone step, one hairline edge. */
+.sl-markdown-content .starlight-aside,
+main .pagination-links a {
+  background: var(--surface-raised);
+  border-color: var(--hairline);
+}
+
+main .pagination-links a {
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+main .pagination-links a:hover {
+  background: var(--surface-hover);
 }
 
 main > * {
@@ -195,17 +186,19 @@ main h1#_top {
 
 .sl-markdown-content a {
   color: var(--link);
-  text-decoration-color: rgba(165, 180, 252, 0.35);
+  text-decoration-color: var(--accent-border);
   text-underline-offset: 3px;
+  transition: color 160ms ease;
 }
 
 .sl-markdown-content a:hover {
+  color: var(--accent-text);
   text-decoration-color: currentColor;
 }
 
 .sl-markdown-content :not(pre) > code {
   font-size: 0.86em;
-  color: #dfe4f2;
+  color: var(--text-strong);
   padding: 0.1em 0.35em;
   border-radius: 6px;
   overflow-wrap: anywhere;
@@ -249,20 +242,20 @@ main h1#_top {
 
 /* Asides */
 .sl-markdown-content .starlight-aside {
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--surface-raised);
   border: 1px solid var(--hairline);
-  border-inline-start: 3px solid var(--indigo);
+  border-inline-start: 3px solid var(--accent);
   border-radius: 0 12px 12px 0;
 }
 
 .sl-markdown-content .starlight-aside--caution {
-  background: rgba(251, 191, 36, 0.08);
-  border-inline-start-color: #fbbf24;
+  background: var(--brass-subtle);
+  border-inline-start-color: var(--brass);
 }
 
 .sl-markdown-content .starlight-aside--danger {
-  background: rgba(251, 113, 133, 0.08);
-  border-inline-start-color: var(--ink-rose);
+  background: var(--rust-subtle);
+  border-inline-start-color: var(--rust);
 }
 
 .sl-markdown-content .starlight-aside__title {
@@ -275,7 +268,7 @@ main h1#_top {
 main .pagination-links a {
   border: 1px solid var(--hairline);
   border-radius: 12px;
-  background: rgba(7, 11, 23, 0.45);
+  background: var(--surface-raised);
   box-shadow: none;
 }
 
@@ -359,11 +352,8 @@ main .meta a {
 
 @media (max-width: 50rem) {
   /* On phones the sidebar is the full-screen menu: it must be opaque, or the page shows through it. */
-  /* Frosted, but nearly opaque: this panel covers the page text, which must not show through. */
   .sidebar-pane {
-    background: rgba(7, 11, 23, 0.94);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    background: var(--void);
   }
   main {
     margin: 1rem 0.5rem 2rem;

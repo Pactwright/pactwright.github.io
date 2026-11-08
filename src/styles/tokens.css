@@ -1,52 +1,81 @@
 /*
  * Pactwright tokens, shared by the landing page and the docs (same values as Studio).
- * Web3 base (dark block grid, frosted glass surfaces, solid teal and indigo; no gradients) with the
- * pieces that carry meaning kept tactile: the seal, neon state stamps, and the pact as a chain of blocks.
+ *
+ * The identity is a register: an ink-black ledger cover, bone ink, and one seal of vermilion
+ * wax. Nothing here is blue or violet, and nothing is a gradient — every surface is one flat
+ * tone, every edge is a hairline, every field of colour is a solid stamp.
+ *
+ * Four data hues, and only four, because a pact's state is the one place colour carries meaning:
+ * moss for settled, brass for waiting, rust for denied, bone for in escrow.
  */
 :root {
-  --void: #070b17;
-  --deep: #0d1428;
-  --hairline: rgba(129, 140, 248, 0.16);
-  --hairline-strong: rgba(129, 140, 248, 0.3);
+  /* Ground: warm near-black, stepped in four tones. Opaque — nothing blurs behind anything. */
+  --void: #12100e;
+  --deep: #17130f;
+  --surface: #1d1814;
+  --surface-raised: #251f19;
+  --surface-hover: #2e2720;
+  --surface-active: #3a3129;
+  --hairline: rgba(214, 197, 175, 0.16);
+  --hairline-strong: rgba(214, 197, 175, 0.34);
 
-  --text: #e6eaf5;
-  --text-strong: #f4f6fc;
-  --muted: #8c96b3;
-  --faint: #66708f;
-  --link: #a5b4fc;
+  /* Ink: aged paper, lifted off pure white so it sits in a dark room without glaring. */
+  --text: #d9cdbb;
+  --text-strong: #eeece9;
+  --muted: #a99c8a;
+  --faint: #8a7e6d;
+  --bone: #c9bda9;
 
-  --teal: #2dd4bf;
-  --indigo: #6366f1;
-  --brand: var(--teal);
-  --surface: #111a33;
-  --surface-raised: #16213f;
+  /* The one brand accent: the red of a sealing-wax stamp. */
+  --accent: #e0505f;
+  --accent-ink: #1a0f0a;
+  --accent-subtle: rgba(224, 80, 95, 0.14);
+  --accent-border: rgba(224, 80, 95, 0.42);
+  --accent-hover: #ea6170;
+  --accent-text: #f07a86;
+  --brand: var(--accent);
+  --link: var(--accent-text);
+  --focus: var(--accent);
+  --teal: var(--accent);
+  --indigo: var(--bone);
 
-  /* Glass: a translucent fill that frosts what's behind it (the grid, scrolling content), a light edge,
-     and a 1px shine along the top. Without backdrop-filter support, surfaces fall back to --surface. */
-  --glass: rgba(22, 32, 66, 0.5);
-  --glass-raised: rgba(28, 42, 84, 0.56);
-  --glass-edge: rgba(255, 255, 255, 0.1);
-  --glass-blur: blur(18px) saturate(160%);
-  --glass-shine: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  /* Data states only: a pact's state is the one place hue carries meaning. */
+  --moss: #8fbf6d; /* settled */
+  --brass: #d9a441; /* waiting on a deadline */
+  --rust: #e08078; /* denied */
+  --moss-subtle: rgba(143, 191, 109, 0.14);
+  --brass-subtle: rgba(217, 164, 65, 0.14);
+  --rust-subtle: rgba(224, 128, 120, 0.14);
+  --bone-subtle: rgba(201, 189, 169, 0.14);
+  --moss-border: rgba(143, 191, 109, 0.42);
+  --brass-border: rgba(217, 164, 65, 0.42);
+  --rust-border: rgba(224, 128, 120, 0.42);
+  --bone-border: rgba(201, 189, 169, 0.42);
+  --ink-teal: var(--moss);
+  --ink-rose: var(--rust);
+  --ink-indigo: var(--bone);
+  --ink-amber: var(--brass);
+  --amber: var(--brass);
 
-  /* Cards: classic frosted glass, a pale white tint and a bright edge, over flat colour shapes. */
-  --card-glass: rgba(255, 255, 255, 0.06);
-  --card-glass-hover: rgba(255, 255, 255, 0.09);
-  --card-edge: rgba(255, 255, 255, 0.16);
-  --card-blur: blur(22px) saturate(170%);
-  --card-shine: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  --ink-teal: #2dd4bf;
-  --ink-rose: #fb7185;
-  --ink-indigo: #818cf8;
-  --focus: #5eead4;
+  /* Surfaces are one flat tone. These names remain because the two stylesheets reach for them. */
+  --glass: var(--surface);
+  --glass-raised: var(--surface-raised);
+  --glass-edge: var(--hairline);
+  --glass-shine: none;
+  --card-glass: var(--surface-raised);
+  --card-glass-hover: var(--surface-hover);
+  --card-edge: var(--hairline);
+  --card-shine: none;
 
   --display: "Unbounded Variable", "Unbounded", system-ui, sans-serif;
   --text-face: "Manrope Variable", "Manrope", system-ui, sans-serif;
   --mono-face: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
 
-  --float: 0 30px 60px -30px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  /* Flat 1px grid lines (drawn with gradient syntax, but they render as solid lines, not a gradient). */
-  --block-grid:
-    linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px) 0 0 / 56px 56px;
+  /* Rest has no elevation. A surface is one tone step from the page, and that is all. */
+  --float: none;
+  --lift: 0 18px 44px rgba(0, 0, 0, 0.55);
+
+  /* Ruled paper, drawn as one flat tile: a hairline every 56px, no gradient anywhere. */
+  --rule-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M0 55.5H56M55.5 0V56' fill='none' stroke='%23d6c5af' stroke-opacity='.055'/%3E%3C/svg%3E");
+  --block-grid: var(--rule-tile) 0 0 / 56px 56px;
 }

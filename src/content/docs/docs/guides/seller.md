@@ -26,6 +26,27 @@ The middleware reads its settings from the environment and refuses to start, lis
 | `SELLER_REFUND_VAULT_ID` | For exact refund (M0) | Your Accensa `RefundVault` |
 | `STELLAR_NETWORK` | No | `testnet` (default) or `pubnet` |
 
+## Publish your delivery key
+
+The verifier only accepts delivery receipts signed by a key it can tie to your account: your
+account's own key, or a key you publish on your account once as the data entry
+`pactwright.delivery_key` ([ADR-019](https://github.com/Pactwright/Pactwright-Kit/blob/main/docs/adr/ADR-019-verdict-terms-from-chain.md)).
+Without it, every verdict request for your pacts is refused with `422 terms_mismatch`.
+
+Get the public half of `SELLER_DELIVERY_KEY` as hex:
+
+```bash
+node -e 'const {Keypair}=require("@stellar/stellar-base");console.log(Keypair.fromRawEd25519Seed(Buffer.from(process.env.SELLER_DELIVERY_KEY,"hex")).rawPublicKey().toString("hex"))'
+```
+
+Then publish it from your seller account:
+
+```bash
+stellar tx new manage-data --source-account <seller-identity> --data-name pactwright.delivery_key --data-value <delivery-public-key-hex> --network testnet
+```
+
+If you rotate the delivery key, publish the new one before you start signing with it.
+
 ## Protect a route
 
 ```ts

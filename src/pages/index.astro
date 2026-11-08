@@ -1,9 +1,11 @@
 ---
+import StageRail from "../components/StageRail.astro";
 import "@fontsource-variable/unbounded";
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/jetbrains-mono";
 import "../styles/tokens.css";
 import "../styles/landing.css";
+import "../styles/illustrations.css";
 
 // The pact in the hero is real: opened, judged by the hosted verifier and settled on testnet.
 const PACT = "4072556402d709463f7cb888a4a9e03b061d906f0b7ca5c49ebb2eec4e7d5c55";
@@ -46,7 +48,7 @@ const steps = [
     </header>
 
     <main id="main">
-      <section class="hero">
+      <section class="hero scroll-reveal">
         <div class="hero-copy">
           <h1>Every agent purchase is a pact.</h1>
           <p class="lede">
@@ -84,7 +86,7 @@ const steps = [
         </article>
       </section>
 
-      <section class="band" id="simulator" aria-labelledby="sim-title">
+      <section class="band scroll-reveal" id="simulator" aria-labelledby="sim-title">
         <div class="band-header">
           <h2 id="sim-title" class="band-title">Try the settlement simulator</h2>
           <p class="band-intro">
@@ -192,7 +194,7 @@ const steps = [
         </div>
       </section>
 
-      <section class="band" aria-labelledby="wrong-title">
+      <section class="band scroll-reveal" aria-labelledby="wrong-title">
         <div class="panel">
           <h2 id="wrong-title">What happens when a purchase goes wrong</h2>
           <p class="prose">An agent has no one to call. So the rules for getting money back are part of the payment.</p>
@@ -211,8 +213,11 @@ const steps = [
         </div>
       </section>
 
-      <section class="band" aria-labelledby="steps-title">
+      <section class="band scroll-reveal" aria-labelledby="steps-title">
         <h2 id="steps-title" class="band-title">The same pact, step by step</h2>
+        <div class="rail-plate">
+          <StageRail title="One pact moving through five stages: opened, funded, delivered, verified and settled, with the wax struck on the last" />
+        </div>
         <ol class="chain">
           {steps.map((s) => (
             <li class="block">
@@ -232,7 +237,7 @@ const steps = [
         </p>
       </section>
 
-      <section class="band" aria-labelledby="who-title">
+      <section class="band scroll-reveal" aria-labelledby="who-title">
         <h2 id="who-title" class="band-title">Where to start</h2>
         <div class="tiles">
           <a class="tile" href="/docs/guides/agent/">
@@ -329,8 +334,7 @@ const steps = [
       const hashMeta = document.getElementById("sim-hash-meta");
 
       simTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          simTabs.forEach((t) => {
+        tab.addEventListener("click", () => {          simTabs.forEach((t) => {
             t.classList.remove("active");
             t.setAttribute("aria-selected", "false");
           });
@@ -358,6 +362,24 @@ const steps = [
           }
         });
       });
+
+      // The page arrives in order. Nothing is hidden until js-ready is set here, so a page
+      // without JavaScript renders complete from the first paint.
+      const sections = document.querySelectorAll(".scroll-reveal");
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("js-ready");
+        const arrive = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              arrive.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.05, rootMargin: "0px 0px -40px 0px" },
+        );
+        sections.forEach((section) => arrive.observe(section));
+      }
     </script>
   </body>
 </html>
