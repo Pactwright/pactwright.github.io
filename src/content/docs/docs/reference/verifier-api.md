@@ -29,6 +29,13 @@ Asks for a verdict on one pact and milestone.
 | `minAmount` | No | Below this, the purchase gets a receipt only |
 | `milestone` | No | `delivery` (default), or `dispute-<n>` for a later dispute |
 
+Before reading any evidence, the verifier checks `terms` against the chain
+([ADR-019](https://github.com/Pactwright/Pactwright-Kit/blob/main/docs/adr/ADR-019-verdict-terms-from-chain.md)):
+`conditionHash` must be the hash of `condition`, `pactId` must be derived from the buyer, seller,
+nonce and that hash, an escrow pact must exist on the `pact` contract with the same buyer, seller,
+cap and condition hash and still be waiting for its verdict, and `deliveryKey` must be the seller
+account's key or its published `pactwright.delivery_key`.
+
 ### Responses
 
 | Status | Body |
@@ -38,7 +45,9 @@ Asks for a verdict on one pact and milestone.
 | `202` | `{ verdict: null, reason: "model_refusal" }`: the model refused, so there is no verdict and the silence policy applies |
 | `400` | `{ error: "invalid_request", issues }` |
 | `409` | `{ error: "verdict_exists", envelopeSha256 }`: this pact and milestone already have a verdict |
+| `422` | `{ error: "terms_mismatch", problems }`: the terms don't match the pact on the chain; nothing was judged or signed |
 | `501` | `{ error: "not_implemented", roadmapTask }`: no rules exist yet for this condition kind |
+| `503` | `{ error: "chain_unavailable" }`: the chain couldn't be read, so nothing was signed |
 
 `envelopeRef` has the form `verdict-v1 sha256=<hex> uri=<where the envelope is served>`.
 
